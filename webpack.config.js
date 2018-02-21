@@ -7,7 +7,7 @@ console.log(DIST_DIR)
 const config = {
   entry: `${SRC_DIR}/index.jsx`,
   output: {
-    path: path.resolve(__dirname, '/Client/dist'),
+    path: DIST_DIR,
     filename: 'bundle.js'
   },
   module: {

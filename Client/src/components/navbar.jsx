@@ -8,19 +8,30 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import axios from 'axios';
 
 export default class Bar extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      value: 1,
+      value: '/',
     };
   }
 
-  handleChange(event, index, value) { 
+  handleChange = (event, index, value) => { 
     this.setState({value}) 
   };
+
+  componentDidMount() {
+    axios.get(`http://localhost:1337/${this.state.value}`).then(res => {
+      console.log(res);
+    }).catch(function(error) {
+      if (error) {
+        console.log(error);
+      }
+    })
+  }
 
   render() {
     return (
@@ -28,11 +39,11 @@ export default class Bar extends React.Component {
         <Toolbar>
           <ToolbarGroup firstChild={true}>
             <DropDownMenu value={this.state.value} onChange={this.handleChange}>
-              <MenuItem value={1} primaryText="Home / Feed" />
-              <MenuItem value={2} primaryText="Explore" />
-              <MenuItem value={3} primaryText="Create" />
-              <MenuItem value={4} primaryText="Account" />
-              <MenuItem value={5} onClick={this.props.logout} primaryText="Logout" />
+              <MenuItem value={'/'} primaryText="Home / Feed" />
+              <MenuItem value={'/explore'} primaryText="Explore" />
+              <MenuItem value={'/create'} primaryText="Create" />
+              <MenuItem value={'/account'} primaryText="Account" />
+              <MenuItem value={'/logout'} primaryText="Logout" />
             </DropDownMenu>
           </ToolbarGroup>
         </Toolbar>

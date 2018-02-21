@@ -9,7 +9,6 @@ let app = express();
 
 
 // MYSQL DB CONNECTION
-// mysql connection works, but we get an error (Error: connect ECONNREFUSED 127.0.0.1:3306)
 let connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',

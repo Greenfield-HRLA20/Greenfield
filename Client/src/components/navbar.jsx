@@ -1,21 +1,42 @@
 import React from 'react';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+// import IconMenu from 'material-ui/IconMenu';
+// import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
+import MenuItem from 'material-ui/MenuItem';
+import {cyan500} from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
-import FontIcon from 'material-ui/FontIcon';
-import ActionHome from 'material-ui/svg-icons/action/home';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import RaisedButton from 'material-ui/RaisedButton';
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
+export default class Bar extends React.Component {
 
-const Bar = () => (
-  <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-    <AppBar title="Navigation" 
-    iconElementLeft={<IconButton tooltip="Home">
-      <ActionHome />
-    </IconButton>}
-    />
-  </MuiThemeProvider>
-);
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: 1,
+    };
+  }
 
-export default Bar;
+  handleChange(event, index, value) { 
+    this.setState({value}) 
+  };
+
+  render() {
+    return (
+      <MuiThemeProvider>
+        <Toolbar>
+          <ToolbarGroup firstChild={true}>
+            <DropDownMenu value={this.state.value} onChange={this.handleChange}>
+              <MenuItem value={1} primaryText="Home / Feed" />
+              <MenuItem value={2} primaryText="Explore" />
+              <MenuItem value={3} primaryText="Create" />
+              <MenuItem value={4} primaryText="Account" />
+              <MenuItem value={5} onClick={this.props.logout} primaryText="Logout" />
+            </DropDownMenu>
+          </ToolbarGroup>
+        </Toolbar>
+      </MuiThemeProvider>
+    );
+  }
+}

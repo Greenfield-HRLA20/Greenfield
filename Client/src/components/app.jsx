@@ -21,7 +21,7 @@ class App extends React.Component {
   render() {
     return (
     <div>
-      <h1><Bar /></h1>
+      <h1><Bar logout={this.logout}/></h1>
       <button onClick={this.logout}>Logout</button>
     </div>
     )

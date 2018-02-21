@@ -2,8 +2,6 @@ const path = require('path')
 var SRC_DIR = path.join(__dirname, '/Client/src');
 var DIST_DIR = path.join(__dirname, '/Client/dist');
 
-console.log(DIST_DIR)
-
 const config = {
   entry: `${SRC_DIR}/index.jsx`,
   output: {

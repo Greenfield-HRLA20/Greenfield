@@ -2,8 +2,9 @@
   "name": "greenfield",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server/server.js",
   "scripts": {
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "webpack": "webpack -w"
@@ -25,6 +26,10 @@
     "express": "^4.16.2",
     "firebase": "^4.10.0",
     "morgan": "^1.9.0",
-    "react-native-firebase": "^3.2.5"
+    "mysql": "github:mysqljs/mysql",
+    "mysql2": "^1.5.2",
+    "nodemon": "^1.15.1",
+    "react-native-firebase": "^3.2.5",
+    "sequelize": "^4.33.4"
   }
 }

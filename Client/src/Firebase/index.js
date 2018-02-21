@@ -1,4 +1,5 @@
-const api = require('../../../firebase.config');
+const firebase = require('firebase')
+const api = require('../../../firebase.config.js');
 
 var config = {
   apiKey: api.key,
@@ -10,3 +11,5 @@ var config = {
 };
 
 firebase.initializeApp(config);
+
+module.exports = firebase;

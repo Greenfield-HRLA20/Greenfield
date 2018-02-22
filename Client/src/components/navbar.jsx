@@ -1,10 +1,7 @@
 import React from 'react';
-<<<<<<< HEAD
-=======
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
->>>>>>> saved npm module
 import MenuItem from 'material-ui/MenuItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -20,20 +17,23 @@ export default class Bar extends React.Component {
     this.state = {
       value: '/',
     };
+
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(event, index, value) { 
-    this.setState({value}) 
+    console.log('clicked', event, index, value) 
+    this.setState({value}, console.log(this.state)) 
   };
 
   componentDidMount() {
-    axios.get(`http://localhost:1337/${this.state.value}`).then(res => {
-      console.log(res);
-    }).catch(function(error) {
-      if (error) {
-        console.log(error);
-      }
-    })
+    // axios.get(`http://localhost:1337/${this.state.value}`).then(res => {
+    //   console.log(res);
+    // }).catch(function(error) {
+    //   if (error) {
+    //     console.log(error);
+    //   }
+    // })
   }
 
   render() {
@@ -42,7 +42,7 @@ export default class Bar extends React.Component {
         <Toolbar>
           <ToolbarGroup firstChild={true}>
             <DropDownMenu value={this.state.value} onChange={this.handleChange}>
-              <MenuItem value={'/'} primaryText="Home / Feed" />
+              <MenuItem value={'<Feed />'} primaryText="Home / Feed" />
               <MenuItem value={'/explore'} primaryText="Explore" />
               <MenuItem value={'/create'} primaryText="Create" />
               <MenuItem value={'/account'} primaryText="Account" />

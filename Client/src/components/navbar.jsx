@@ -1,4 +1,10 @@
 import React from 'react';
+<<<<<<< HEAD
+=======
+import IconMenu from 'material-ui/IconMenu';
+import IconButton from 'material-ui/IconButton';
+import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
+>>>>>>> saved npm module
 import MenuItem from 'material-ui/MenuItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';

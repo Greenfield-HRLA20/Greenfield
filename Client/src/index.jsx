@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import App from './components/app.jsx';
 import Login from './components/login.jsx';
 import firebase from './Firebase'
-import {BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
+import {BrowserRouter, Router, Route, Link, Redirect} from 'react-router-dom';
 
 
 
@@ -30,11 +30,13 @@ class Main extends React.Component {
 
   render() {
     return (
-        <div>
-        
-        {/* <Route path="/login" component={Login} /> */}
-        <Route exact path="/" component={Bar} />
-        </div>
+      
+      <div>
+        <BrowserRouter>
+      
+      <Route path="/" component={Login} />
+        </BrowserRouter>
+      </div>
       
     )
   }

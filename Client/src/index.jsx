@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 import App from './components/app.jsx';
 import Login from './components/login.jsx';
 import firebase from './Firebase'
+import {BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
+
 
 
 class Main extends React.Component {
@@ -14,6 +16,7 @@ class Main extends React.Component {
   }
 
   componentDidMount() {
+    <Redirect to={{pathname:'/login'}}/>
     this.authSubscription = firebase.auth().onAuthStateChanged((user) => {
       this.setState({
         loading: false,
@@ -27,13 +30,25 @@ class Main extends React.Component {
   }
 
   render() {
-    if (this.state.loading) return null;
-
-    if (this.state.user) return <App />
-
-    return <Login />
+    return (
+        <div>
+        
+        {/* <Route path="/login" component={Login} /> */}
+        <Route exact path="/" component={Bar} />
+        </div>
+      
+    )
   }
 }
+// if (this.state.loading) { 
+//   return null;
+// }
+
+// if (this.state.user) { 
+//   return <App />
+// }
+
+// return <Login />
 
 const app = document.getElementById('app')
 ReactDOM.render(<Main />, app)

@@ -30,18 +30,23 @@ const User = connection.define('user', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
+    unique: true
   },
   firstName: Sequelize.STRING,
   lastName: Sequelize.STRING,
-  handle: Sequelize.STRING,
+  handle: {
+    type: Sequelize.STRING,
+    unique: true
+  },
 });
 
 const Post = connection.define('post', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
+    unique: true
   },
   caption: Sequelize.STRING,
   user_id: {
@@ -51,6 +56,7 @@ const Post = connection.define('post', {
       key: 'id'
     }
   },
+  url: Sequelize.STRING,
   createdAt: Sequelize.DATE,
 });
 
@@ -58,7 +64,8 @@ const Comment = connection.define('comment', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
+    unique: true
   },
   message: Sequelize.STRING,
   user_id: {
@@ -82,7 +89,8 @@ const Like = connection.define('like', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
+    unique: true
   },
   user_id: {
     type: Sequelize.INTEGER,
@@ -101,7 +109,21 @@ const Like = connection.define('like', {
 });
 
 const Follow = connection.define('follow', {
-
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  user_id: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: 'user',
+      key: 'id'
+    }
+  },
+  follower_id: {
+    type: Sequelize.INTEGER
+  }
 });
 
 // // force: true will drop the table if it already exists
@@ -128,10 +150,4 @@ connection.sync().then(() => {
   // User.findById(1).then(users => {
   //   console.log('Find All Users query: ', users.dataValues);
   // })
-})
-
-
-// // QUERYING FOR ALL USERS
-// User.findAll().then(users => {
-//   console.log(users)
-// })
+});

@@ -1,14 +1,5 @@
-<<<<<<< HEAD
-firebase.config.js
-Client/dist/bundle.js
-<<<<<<< HEAD
 node_modules
-=======
-node_modules/
-=======
-Client/dist/bundle.js
+/Client/dist/bundle.js
 firebase.config.js
-node_modules
 package-lock.json
->>>>>>> [Client] Using firebase UI
->>>>>>> [Client] Using firebase UI
+

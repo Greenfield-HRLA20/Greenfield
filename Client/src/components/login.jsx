@@ -35,11 +35,7 @@ class Login extends React.Component {
   render() {
     return (
     <div>
-<<<<<<< HEAD
-      <h1>Login</h1>
-=======
       {/* <h1>Hello from Login!</h1>
->>>>>>> [Client] Using firebase UI
       <input name="username" placeholder="Enter Username" onChange={this.setInput} />
       <input name="password" type="password" placeholder="Enter Password" onChange={this.setInput} />
       <button onClick={() => this.sumbitEntry(this.state.username, this.state.password)}>Login</button> */}

@@ -16,7 +16,6 @@ class Main extends React.Component {
   }
 
   componentDidMount() {
-    <Redirect to={{pathname:'/login'}}/>
     this.authSubscription = firebase.auth().onAuthStateChanged((user) => {
       this.setState({
         loading: false,

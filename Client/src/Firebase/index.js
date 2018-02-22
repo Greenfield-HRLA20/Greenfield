@@ -16,15 +16,16 @@ var ui = new firebaseui.auth.AuthUI(firebase.auth());
 
 var uiConfig = {
   callbacks: {
-    signInSuccess: function(currentUser, credential, redirectUrl) {
+    signInSuccess: function(currentUser, credential) {
       return true;
     },
     uiShown: function() {
-
+      
       document.getElementById('loader').style.display = 'none';
     }
   },
   signInFlow: 'popup',
+  // signInSuccessUrl: '/',
   signInOptions: [
     // Leave the lines as is for the providers you want to offer your users.
     // firebase.auth.GoogleAuthProvider.PROVIDER_ID,

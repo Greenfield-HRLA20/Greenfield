@@ -1,13 +1,23 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react';
+import ReactDOM from 'react-dom';
 import App from './components/app.jsx';
 import Login from './components/login.jsx';
-import auth from './Firebase'
+import auth from './Firebase';
+import { Provider, connect } from 'react-redux';
+import store from "./redux";
+import actions from './redux/actions/index'
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateUser: user => dispatch(actions.updateUser(user))
+  };
+};
 
 
-class Main extends React.Component {
-  constructor() {
-    super();
+class ConnectedMain extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log(this.props.updateUser);
     this.state = {
       loading: true,
     };
@@ -16,9 +26,9 @@ class Main extends React.Component {
   componentDidMount() {
     this.authSubscription = auth.firebase.auth().onAuthStateChanged((user) => {
       this.setState({
-        loading: false,
-        user,
+        loading: false
       })
+      this.props.updateUser({user})
     });
   }
 
@@ -31,7 +41,7 @@ class Main extends React.Component {
         return null;
       }
       
-      if (this.state.user) { 
+      if (this.state.currentUser) { 
         return <App />
       } else {
         return <Login />
@@ -39,6 +49,10 @@ class Main extends React.Component {
   }
 }
 
+const Main = connect(null, mapDispatchToProps)(ConnectedMain);
 
 const app = document.getElementById('app')
-ReactDOM.render(<Main />, app)
+ReactDOM.render(
+<Provider store={store}> 
+<Main />
+</Provider>, app)

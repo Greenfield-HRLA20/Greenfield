@@ -1,6 +1,7 @@
 import React from 'react'
 import firebase from '../Firebase'
 
+
 class Login extends React.Component {
   constructor() {
     super();
@@ -31,7 +32,7 @@ class Login extends React.Component {
   render() {
     return (
     <div>
-      <h1>Hello from Login!</h1>
+      <h1>Login</h1>
       <input name="username" placeholder="Enter Username" onChange={this.setInput} />
       <input name="password" type="password" placeholder="Enter Password" onChange={this.setInput} />
       <button onClick={() => this.sumbitEntry(this.state.username, this.state.password)}>Login</button>

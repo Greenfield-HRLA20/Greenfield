@@ -22442,7 +22442,7 @@ var Main = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this));
 
     _this.state = {
-      loading: true
+      loggedin: false
     };
     return _this;
   }
@@ -22450,21 +22450,21 @@ var Main = function (_React$Component) {
   _createClass(Main, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this2 = this;
-
-      this.authSubscription = _Firebase2.default.auth().onAuthStateChanged(function (user) {
-        _this2.setState({
-          loading: false,
+      var user = _Firebase2.default.auth().currentUser;
+      // firebase.auth().onAuthStateChanged((user) => {
+      console.log(user);
+      if (user) {
+        this.setState({
+          loggedin: true,
           user: user
         }, function () {
-          return console.log(_this2.state);
+          return _react2.default.createElement(_reactRouterDom.Redirect, { to: { pathname: '/explore' } });
         });
-      });
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.authSubscription();
+      } else {
+        console.log('not logged in');
+        _react2.default.createElement(_reactRouterDom.Redirect, { to: { pathname: '/login' } });
+      }
+      // });
     }
   }, {
     key: 'render',
@@ -22475,7 +22475,12 @@ var Main = function (_React$Component) {
         _react2.default.createElement(
           _reactRouterDom.BrowserRouter,
           null,
-          _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _login2.default })
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _login2.default }),
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/explore', component: _app2.default })
+          )
         )
       );
     }

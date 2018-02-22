@@ -1,10 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+<<<<<<< HEAD
 import App from './components/app.jsx';
 import Login from './components/login.jsx';
 import firebase from './Firebase'
 import {BrowserRouter, Router, Route, Link, Redirect} from 'react-router-dom';
 
+=======
+import App from './components/app.jsx'
+import Login from './components/login.jsx'
+import auth from './Firebase'
+>>>>>>> [Client] Using firebase UI
 
 
 class Main extends React.Component {
@@ -16,6 +22,7 @@ class Main extends React.Component {
   }
 
   componentDidMount() {
+<<<<<<< HEAD
     var user = firebase.auth().currentUser;
     // firebase.auth().onAuthStateChanged((user) => {
       console.log(user);
@@ -30,6 +37,18 @@ class Main extends React.Component {
         <Redirect to={{pathname:'/login'}} />
       }
     // });
+=======
+    this.authSubscription = auth.firebase.auth().onAuthStateChanged((user) => {
+      this.setState({
+        loading: false,
+        user,
+      }, () => console.log(this.state))
+    });
+  }
+
+  componentWillUnmount() {
+    this.authSubscription();
+>>>>>>> [Client] Using firebase UI
   }
 
   render() {
@@ -56,6 +75,7 @@ class Main extends React.Component {
 // }
 
 // return <Login />
+
 
 const app = document.getElementById('app')
 ReactDOM.render(<Main />, app)

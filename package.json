@@ -26,13 +26,24 @@
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "firebase": "^4.10.0",
+<<<<<<< HEAD
     "material-ui": "^0.20.0",
+=======
+    "firebaseui": "^2.6.1",
+>>>>>>> [Client] Using firebase UI
     "morgan": "^1.9.0",
     "mysql": "^2.15.0",
     "mysql2": "^1.5.2",
     "nodemon": "^1.15.1",
+<<<<<<< HEAD
     "react-native-firebase": "^3.2.5",
     "react-router-dom": "^4.2.2",
+=======
+    "react-redux": "^5.0.7",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+>>>>>>> [Client] Using firebase UI
     "sequelize": "^4.33.4"
   }
 }

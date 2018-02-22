@@ -1,7 +1,11 @@
 import React from 'react'
+<<<<<<< HEAD
 import firebase from '../Firebase'
 import Bar from "../components/navbar.jsx"
 import {Router, Route, Link} from 'react-router-dom';
+=======
+import auth from '../Firebase'
+>>>>>>> [Client] Using firebase UI
 
 class App extends React.Component {
   constructor() {
@@ -9,7 +13,7 @@ class App extends React.Component {
   }
 
   logout () {
-    firebase.auth().signOut().then(function() {
+    auth.firebase.auth().signOut().then(function() {
       console.log('Logged Out');
     }).catch(function(error) {
       var errorCode = error.code;

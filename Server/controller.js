@@ -1,92 +1,35 @@
-const { connection, User, Post, Like, Follow, Comment } = require('./db/index');
-// const { connection, User } = require('./db/index');
+const connection = require('./db/index');
+const User = require('./db/models/User');
+const Post = require('./db/models/Post');
+const Comment = require('./db/models/Comment');
+const Like = require('./db/models/Like');
+const Follow = require('./db/models/Follow');
+const bluebird = require('bluebird');
 
-
-connection.sync().then(() => {
-  // // finding all users query
-  // User.findAll().then(users => {
-  //   console.log('Find All Users query: ', users.dataValues);
-  // })
-
-  // // finding number of all users query
-  // User.findAll().then(users => {
-  //   console.log('Find All Users query: ', users.length);
-  // })
-
-  // // finding user by id query
-  // User.findById(1).then(users => {
-  //   console.log('Find All Users query: ', users.dataValues);
-  // })
-});
-
-// CREATING DUMMY DATA
-//
-
-// remove {force: true} when live -- overrides/replaces previous data with same name
-User.sync({force: true}).then(() => {
-  return User.create({
-    id: 1,
-    firstName: 'John',
-    lastName: 'Hancock',
-    handle: 'jhancock'
-  });
-});
-
-Post.sync({force: true}).then(() => {
-  return Post.create({
-    id: 1,
-    caption: 'Check out the view!',
-    user_id: 1,
-    url: 'www.google.com'
-  });
-});
-
-Comment.sync({force: true}).then(() => {
-  return Comment.create({
-    id: 1,
-    message: 'Cool Picture!',
-    user_id: 2,
-    post_id: 1,
-  });
-});
-
-Comment.sync({force: true}).then(() => {
-  return Comment.create({
-    id: 2,
-    message: 'Thanks!',
-    user_id: 1,
-    post_id: 1,
-  });
-});
-
-Like.sync({force: true}).then(() => {
-  return Like.create({
-    id: 1,
-    user_id: 2,
-    post_id: 1,
-  });
-});
-
-Follow.sync({force: true}).then(() => {
-  return Follow.create({
-    id: 1,
-    user_id: 2,
-    follower_id: 1,
-  });
-});
-
-User.sync({force: true}).then(() => {
-  return User.create({
-    id: 2,
-    firstName: 'Bob',
-    lastName: 'Smith',
-    handle: 'bsmith'
-  });
-});
-
-//
-// END DUMMY DATA
-
+// connection.authenticate().then(() => {
+//   User.sync().then(() => {
+    
+//     Post.sync().then(() => {
+//       User.create({
+//         firstName: 'John',
+//         lastName: 'Hancock',
+//         handle: 'jhancock'
+//       });
+    
+//       User.create({
+//         firstName: 'Bob',
+//         lastName: 'Smith',
+//         handle: 'bsmith'
+//       }).then((user) => {
+//         console.log(user);
+//         Post.create({
+//           userId: user.dataValues.id,
+//           caption: 'Check out the view!',
+//           url: 'www.google.com',
+//         });
+//       })
+//     });
+//   });
 
 module.exports.handleHomePage = (req, res) => {
   connection.sync().then(() => {

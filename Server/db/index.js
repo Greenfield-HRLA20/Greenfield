@@ -24,130 +24,91 @@
 //   .catch(err => {
 //     console.error('Unable to connect to the database:', err);
 //   });
+const Post = connection.define('post', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+    unique: true
+  },
+  caption: Sequelize.STRING,
+  user_id: {
+    type: Sequelize.INTEGER,
+    // references: {
+    //   model: 'user',
+    //   key: 'id'
+    // }
+  },
+  url: Sequelize.STRING,
+  createdAt: Sequelize.DATE,
+});
 
-// // SEQUELIZE MODEL
-// const User = connection.define('user', {
-//   id: {
-//     type: Sequelize.INTEGER,
-//     primaryKey: true,
-//     autoIncrement: true,
-//     unique: true
-//   },
-//   firstName: Sequelize.STRING,
-//   lastName: Sequelize.STRING,
-//   handle: {
-//     type: Sequelize.STRING,
-//     unique: true
-//   },
-// });
+const Comment = connection.define('comment', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+    unique: true
+  },
+  message: Sequelize.STRING,
+  user_id: {
+    type: Sequelize.INTEGER,
+    // references: {
+    //   model: 'user',
+    //   key: 'id'
+    // }
+  },
+  post_id: {
+    type: Sequelize.INTEGER,
+    // references: {
+    //   model: 'post',
+    //   key: 'id'
+    // }
+  },
+  createdAt: Sequelize.DATE,
+});
 
-// const Post = connection.define('post', {
-//   id: {
-//     type: Sequelize.INTEGER,
-//     primaryKey: true,
-//     autoIncrement: true,
-//     unique: true
-//   },
-//   caption: Sequelize.STRING,
-//   user_id: {
-//     type: Sequelize.INTEGER,
-//     references: {
-//       model: 'user',
-//       key: 'id'
-//     }
-//   },
-//   url: Sequelize.STRING,
-//   createdAt: Sequelize.DATE,
-// });
+const Like = connection.define('like', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+    unique: true
+  },
+  user_id: {
+    type: Sequelize.INTEGER,
+    // references: {
+    //   model: 'user',
+    //   key: 'id'
+    // }
+  },
+  post_id: {
+    type: Sequelize.INTEGER,
+    // references: {
+    //   model: 'post',
+    //   key: 'id'
+    // }
+  }
+});
 
-// const Comment = connection.define('comment', {
-//   id: {
-//     type: Sequelize.INTEGER,
-//     primaryKey: true,
-//     autoIncrement: true,
-//     unique: true
-//   },
-//   message: Sequelize.STRING,
-//   user_id: {
-//     type: Sequelize.INTEGER,
-//     references: {
-//       model: 'user',
-//       key: 'id'
-//     }
-//   },
-//   post_id: {
-//     type: Sequelize.INTEGER,
-//     references: {
-//       model: 'post',
-//       key: 'id'
-//     }
-//   },
-//   createdAt: Sequelize.DATE,
-// });
+const Follow = connection.define('follow', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  user_id: {
+    type: Sequelize.INTEGER,
+    // references: {
+    //   model: 'user',
+    //   key: 'id'
+    // }
+  },
+  follower_id: {
+    type: Sequelize.INTEGER
+  }
+});
 
-// const Like = connection.define('like', {
-//   id: {
-//     type: Sequelize.INTEGER,
-//     primaryKey: true,
-//     autoIncrement: true,
-//     unique: true
-//   },
-//   user_id: {
-//     type: Sequelize.INTEGER,
-//     references: {
-//       model: 'user',
-//       key: 'id'
-//     }
-//   },
-//   post_id: {
-//     type: Sequelize.INTEGER,
-//     references: {
-//       model: 'post',
-//       key: 'id'
-//     }
-//   }
-// });
 
-// const Follow = connection.define('follow', {
-//   id: {
-//     type: Sequelize.INTEGER,
-//     primaryKey: true,
-//     autoIncrement: true
-//   },
-//   user_id: {
-//     type: Sequelize.INTEGER,
-//     references: {
-//       model: 'user',
-//       key: 'id'
-//     }
-//   },
-//   follower_id: {
-//     type: Sequelize.INTEGER
-//   }
-// });
-
-// // // force: true will drop the table if it already exists
-// // User.sync({force: true}).then(() => {
-// //   // Table created
-// //   return User.create({
-// //     firstName: 'John',
-// //     lastName: 'Hancock'
-// //   });
-// // });
-
-// connection.sync().then(() => {
-//   // // finding all users query
-//   // User.findAll().then(users => {
-//   //   console.log('Find All Users query: ', users.dataValues);
-//   // })
-
-//   // // finding number of all users query
-//   // User.findAll().then(users => {
-//   //   console.log('Find All Users query: ', users.length);
-//   // })
-
-//   // // finding user by id query
-//   // User.findById(1).then(users => {
-//   //   console.log('Find All Users query: ', users.dataValues);
-//   // })
-// });
+module.exports = { connection, User, Post, Like, Follow, Comment };
+// module.exports = { connection, User };

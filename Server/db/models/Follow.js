@@ -1,4 +1,5 @@
-const connection = require('../../controller');
+const connection = require('../index.js');
+const Sequelize = require('sequelize');
 
 const Follow = connection.define('follow', {
 });

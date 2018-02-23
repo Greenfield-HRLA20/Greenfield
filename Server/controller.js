@@ -6,42 +6,45 @@ const Like = require('./db/models/Like');
 const Follow = require('./db/models/Follow');
 const bluebird = require('bluebird');
 
-// connection.authenticate().then(() => {
-//   User.sync().then(() => {
+connection.authenticate().then(() => {
+  console.log('connected');
+  // User.sync().then(() => {
+  
+  //   Post.sync().then(() => {
+  //     User.create({
+  //       firstName: 'John',
+  //       lastName: 'Hancock',
+  //       handle: 'jhancock'
+  //     });
     
-//     Post.sync().then(() => {
-//       User.create({
-//         firstName: 'John',
-//         lastName: 'Hancock',
-//         handle: 'jhancock'
-//       });
-    
-//       User.create({
-//         firstName: 'Bob',
-//         lastName: 'Smith',
-//         handle: 'bsmith'
-//       }).then((user) => {
-//         console.log(user);
-//         Post.create({
-//           userId: user.dataValues.id,
-//           caption: 'Check out the view!',
-//           url: 'www.google.com',
-//         });
-//       })
-//     });
-//   });
+  //     User.create({
+  //       firstName: 'Bob',
+  //       lastName: 'Smith',
+  //       handle: 'bsmith'
+  //     }).then((user) => {
+  //       console.log(user);
+  //       Post.create({
+  //         userId: user.dataValues.id,
+  //         caption: 'Check out the view!',
+  //         url: 'www.google.com',
+  //       });
+  //     })
+  //   });
+  }).catch((err) => {
+    console.log(err);
+  });
 
 module.exports.handleHomePage = (req, res) => {
-  connection.sync().then(() => {
+  // connection.sync().then(() => {
 
-    User.findById(2).then(users => {
-      console.log(users)
-      // users.forEach(user => {
-      //   console.log("this is console per user!", user.dataValues);
-      // })
-    });
-    res.send('Hello from the main page!');
-  })
+  //   User.findById(2).then(users => {
+  //     console.log(users)
+  //     // users.forEach(user => {
+  //     //   console.log("this is console per user!", user.dataValues);
+  //     // })
+  //   });
+  //   res.send('Hello from the main page!');
+  // })
 }
 
 /* Handle requests to each page */

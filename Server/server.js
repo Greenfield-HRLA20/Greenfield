@@ -13,8 +13,6 @@ app.use(logger('tiny'));
 
 app.use('/', express.static(path.join(__dirname, "../Client/dist")));
 
-
-
 app.listen(1337, () => {
   console.log('Connected to Instagram Clone Server!');
 });

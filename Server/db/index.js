@@ -12,5 +12,4 @@ const connection = new Sequelize('instaDB', 'root', 'password', {
   },
  });
  
-
-module.exports = { connection };
+ module.exports = connection;

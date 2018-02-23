@@ -1,11 +1,11 @@
 import React from 'react'
 import Bar from './navbar.jsx'
 
-const Feed = () => (
+const Explore = () => (
   <div>
     <h1><Bar /></h1>
-    Render Feed Here!
+    Render Explore Here!
   </div>
 )
 
-export default Feed
+export default Explore

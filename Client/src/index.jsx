@@ -9,12 +9,14 @@ import actions from './redux/actions/index'
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateUser: user => dispatch(actions.updateUser(user))
+    updateUser: user => dispatch(actions.updateUser(user)),
+    updateCurrentView: view => dispatch(actions.updateCurrentView(view))
   };
 };
 
 const mapStateToProps = state => {
-  return {currentUser: state.currentUser}
+  return {currentUser: state.currentUser,
+          currentView: state.currentView}
 }
 
 
@@ -47,7 +49,8 @@ class ConnectedMain extends React.Component {
       }
       
       if (this.props.currentUser) { 
-        return <App />
+        this.props.updateCurrentView(<App />)
+        return this.props.currentView
       } else {
         return <Login />
       }

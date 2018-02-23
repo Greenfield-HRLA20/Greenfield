@@ -1,5 +1,47 @@
+const connection = require('./db/index');
+const User = require('./db/models/User');
+const Post = require('./db/models/Post');
+const Comment = require('./db/models/Comment');
+const Like = require('./db/models/Like');
+const Follow = require('./db/models/Follow');
+const bluebird = require('bluebird');
+
+// connection.authenticate().then(() => {
+//   User.sync().then(() => {
+    
+//     Post.sync().then(() => {
+//       User.create({
+//         firstName: 'John',
+//         lastName: 'Hancock',
+//         handle: 'jhancock'
+//       });
+    
+//       User.create({
+//         firstName: 'Bob',
+//         lastName: 'Smith',
+//         handle: 'bsmith'
+//       }).then((user) => {
+//         console.log(user);
+//         Post.create({
+//           userId: user.dataValues.id,
+//           caption: 'Check out the view!',
+//           url: 'www.google.com',
+//         });
+//       })
+//     });
+//   });
+
 module.exports.handleHomePage = (req, res) => {
-  res.send('Hello from the main page!');
+  connection.sync().then(() => {
+
+    User.findById(2).then(users => {
+      console.log(users)
+      // users.forEach(user => {
+      //   console.log("this is console per user!", user.dataValues);
+      // })
+    });
+    res.send('Hello from the main page!');
+  })
 }
 
 /* Handle requests to each page */

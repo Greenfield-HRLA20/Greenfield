@@ -35,6 +35,7 @@ class ConnectedMain extends React.Component {
       })
       if (user) {
         this.props.updateUser(user)
+        this.props.updateCurrentView(<App />)
       }
     });
   }
@@ -49,7 +50,6 @@ class ConnectedMain extends React.Component {
       }
       
       if (this.props.currentUser) { 
-        this.props.updateCurrentView(<App />)
         return this.props.currentView
       } else {
         return <Login />

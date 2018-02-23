@@ -20,10 +20,6 @@ const mapStateToProps = state => {
 class ConnectedApp extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      currentView: <Feed />
-    }
-
     this.logout = this.logout.bind(this);
   }
 
@@ -41,7 +37,6 @@ class ConnectedApp extends React.Component {
     return (
       <div>
           <h1><Bar /></h1>
-          {this.state.currentView}
           <button onClick={this.logout}>Logout</button>
         </div>
     )

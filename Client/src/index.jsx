@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/app.jsx';
+import Feed from './components/feed.jsx';
 import Login from './components/login.jsx';
 import auth from './Firebase';
 import { Provider, connect } from 'react-redux';
@@ -35,7 +35,7 @@ class ConnectedMain extends React.Component {
       })
       if (user) {
         this.props.updateUser(user)
-        this.props.updateCurrentView(<App />)
+        this.props.updateCurrentView(<Feed />)
       }
     });
   }

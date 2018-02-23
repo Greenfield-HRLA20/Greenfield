@@ -17,7 +17,7 @@ var ui = new firebaseui.auth.AuthUI(firebase.auth());
 var uiConfig = {
   callbacks: {
     signInSuccess: function(currentUser, credential) {
-      return true;
+      return false;
     },
     uiShown: function() {
       

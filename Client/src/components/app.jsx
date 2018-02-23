@@ -3,20 +3,28 @@ import {connect} from 'react-redux'
 import auth from '../Firebase'
 import Bar from "../components/navbar.jsx"
 import Feed from "./feed.jsx"
+import actions from '../redux/actions/index'
 
-const mapDispatchtoProps = dispatch => {
+
+const mapDispatchToProps = dispatch => {
   return {
-    auth: user => dispatch(auth(user))
-  }
+    logoutUser: () => dispatch(actions.logoutUser())
+  };
+};
+
+const mapStateToProps = state => {
+  return {currentUser: state.currentUser}
 }
 
 
-class App extends React.Component {
-  constructor() {
-    super();
+class ConnectedApp extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
       currentView: <Feed />
     }
+
+    this.logout = this.logout.bind(this);
   }
 
   logout () {
@@ -25,20 +33,22 @@ class App extends React.Component {
       var errorMessage = error.message;
       console.log(errorCode, errorMessage);
     });
+    this.props.logoutUser()
     
   }
 
   render() {
     return (
       <div>
-        <p>hello</p>
           <h1><Bar /></h1>
-          
           {this.state.currentView}
           <button onClick={this.logout}>Logout</button>
         </div>
     )
   }
 }
+
+const App = connect(mapStateToProps, mapDispatchToProps)(ConnectedApp);
+
 
 export default App

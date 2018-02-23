@@ -13,11 +13,14 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+const mapStateToProps = state => {
+  return {currentUser: state.currentUser}
+}
+
 
 class ConnectedMain extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props.updateUser);
     this.state = {
       loading: true,
     };
@@ -28,7 +31,9 @@ class ConnectedMain extends React.Component {
       this.setState({
         loading: false
       })
-      this.props.updateUser({user})
+      if (user) {
+        this.props.updateUser(user)
+      }
     });
   }
 
@@ -41,7 +46,7 @@ class ConnectedMain extends React.Component {
         return null;
       }
       
-      if (this.state.currentUser) { 
+      if (this.props.currentUser) { 
         return <App />
       } else {
         return <Login />
@@ -49,10 +54,10 @@ class ConnectedMain extends React.Component {
   }
 }
 
-const Main = connect(null, mapDispatchToProps)(ConnectedMain);
+const Main = connect(mapStateToProps, mapDispatchToProps)(ConnectedMain);
 
 const app = document.getElementById('app')
 ReactDOM.render(
-<Provider store={store}> 
-<Main />
-</Provider>, app)
+  <Provider store={store}> 
+    <Main />
+  </Provider>, app)

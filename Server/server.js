@@ -10,7 +10,10 @@ let app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(logger('tiny'));
-app.use(router);
+
+app.use('/', express.static(path.join(__dirname, "../Client/dist")));
+
+
 
 app.listen(1337, () => {
   console.log('Connected to Instagram Clone Server!');

@@ -1,5 +1,5 @@
 import React from 'react'
-import firebase from '../Firebase'
+import auth from '../Firebase'
 
 
 class Login extends React.Component {
@@ -13,6 +13,9 @@ class Login extends React.Component {
     this.setInput = this.setInput.bind(this)
   }
 
+  componentDidMount () {
+    auth.ui.start('#firebaseui-auth-container', auth.uiConfig);
+  }
   setInput (e) {
     e.preventDefault();
     this.setState({
@@ -22,7 +25,7 @@ class Login extends React.Component {
 
   sumbitEntry (email, password) {
     console.log('in here!')
-    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+    auth.firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log(errorCode, errorMessage);
@@ -32,10 +35,13 @@ class Login extends React.Component {
   render() {
     return (
     <div>
-      <h1>Login</h1>
+      {/* <h1>Hello from Login!</h1>
       <input name="username" placeholder="Enter Username" onChange={this.setInput} />
       <input name="password" type="password" placeholder="Enter Password" onChange={this.setInput} />
-      <button onClick={() => this.sumbitEntry(this.state.username, this.state.password)}>Login</button>
+      <button onClick={() => this.sumbitEntry(this.state.username, this.state.password)}>Login</button> */}
+      <h1>Welcome to My Awesome App</h1>
+      <div id="firebaseui-auth-container"></div>
+      <div id="loader">Loading...</div>
     </div>
     )
   }

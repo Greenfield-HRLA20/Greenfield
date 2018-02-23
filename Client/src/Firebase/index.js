@@ -1,4 +1,5 @@
 const firebase = require('firebase')
+var firebaseui = require('firebaseui');
 const api = require('../../../firebase.config.js');
 
 var config = {
@@ -11,5 +12,31 @@ var config = {
 };
 
 firebase.initializeApp(config);
+var ui = new firebaseui.auth.AuthUI(firebase.auth());
 
-module.exports = firebase;
+var uiConfig = {
+  callbacks: {
+    signInSuccess: function(currentUser, credential) {
+      return false;
+    },
+    uiShown: function() {
+      
+      document.getElementById('loader').style.display = 'none';
+    }
+  },
+  signInFlow: 'popup',
+  // signInSuccessUrl: '/',
+  signInOptions: [
+    // Leave the lines as is for the providers you want to offer your users.
+    // firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+    // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+    // firebase.auth.GithubAuthProvider.PROVIDER_ID,
+    firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    // firebase.auth.PhoneAuthProvider.PROVIDER_ID
+  ]
+};
+
+module.exports.firebase = firebase;
+module.exports.ui = ui;
+module.exports.uiConfig = uiConfig;

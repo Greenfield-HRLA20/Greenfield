@@ -1,61 +1,63 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react';
+import ReactDOM from 'react-dom';
 import App from './components/app.jsx';
 import Login from './components/login.jsx';
-import firebase from './Firebase'
-import {BrowserRouter, Router, Route, Link, Redirect} from 'react-router-dom';
+import auth from './Firebase';
+import { Provider, connect } from 'react-redux';
+import store from "./redux";
+import actions from './redux/actions/index'
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateUser: user => dispatch(actions.updateUser(user))
+  };
+};
+
+const mapStateToProps = state => {
+  return {currentUser: state.currentUser}
+}
 
 
-
-class Main extends React.Component {
-  constructor() {
-    super();
+class ConnectedMain extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
-      loggedin: false,
+      loading: true,
     };
   }
 
   componentDidMount() {
-    var user = firebase.auth().currentUser;
-    // firebase.auth().onAuthStateChanged((user) => {
-      console.log(user);
+    this.authSubscription = auth.firebase.auth().onAuthStateChanged((user) => {
+      this.setState({
+        loading: false
+      })
       if (user) {
-        this.setState({
-          loggedin: true,
-          user,
-        }, () => <Redirect to={{pathname:'/explore'}} />);
+        this.props.updateUser(user)
       }
-      else {
-        console.log('not logged in');
-        <Redirect to={{pathname:'/login'}} />
-      }
-    // });
+    });
+  }
+
+  componentWillUnmount() {
+    this.authSubscription();
   }
 
   render() {
-    return (
+      if (this.state.loading) { 
+        return null;
+      }
       
-      <div>
-        <BrowserRouter>
-      <div>
-      <Route path="/" component={Login} />
-      <Route path="/explore" component={App}/>
-      </div>
-        </BrowserRouter>
-      </div>
-      
-    )
+      if (this.props.currentUser) { 
+        return <App />
+      } else {
+        return <Login />
+      }
   }
 }
-// if (this.state.loading) { 
-//   return null;
-// }
 
-// if (this.state.user) { 
-//   return <App />
-// }
-
-// return <Login />
+const Main = connect(mapStateToProps, mapDispatchToProps)(ConnectedMain);
 
 const app = document.getElementById('app')
-ReactDOM.render(<Main />, app)
+ReactDOM.render(
+  <Provider store={store}> 
+    <Main />
+  </Provider>, app)

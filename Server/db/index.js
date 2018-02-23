@@ -1,46 +1,29 @@
-const mysql = require('mysql2');
-const Sequelize = require('sequelize');
+// const mysql = require('mysql2');
+// const Sequelize = require('sequelize');
 
 
-const connection = new Sequelize('instaDB', 'root', 'password', {
-  host: 'localhost',
-  dialect: 'mysql',
+// const connection = new Sequelize('instaDB', 'root', 'password', {
+//   host: 'localhost',
+//   dialect: 'mysql',
  
-  // To create a pool of connections
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000
-  },
+//   // To create a pool of connections
+//   pool: {
+//     max: 5,
+//     min: 0,
+//     idle: 10000
+//   },
 
- });
+//  });
 
-// THIS WILL CHECK IF SEQUELIZE SERVER IS RUNNING
-connection
-  .authenticate()
-  .then(() => {
-    console.log('Connected to Sequelize server (database: instaDB)..');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
-
-// SEQUELIZE MODEL
-const User = connection.define('user', {
-  id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-    unique: true
-  },
-  firstName: Sequelize.STRING,
-  lastName: Sequelize.STRING,
-  handle: {
-    type: Sequelize.STRING,
-    unique: true
-  },
-});
-
+// // THIS WILL CHECK IF SEQUELIZE SERVER IS RUNNING
+// connection
+//   .authenticate()
+//   .then(() => {
+//     console.log('Connected to Sequelize server (database: instaDB)..');
+//   })
+//   .catch(err => {
+//     console.error('Unable to connect to the database:', err);
+//   });
 const Post = connection.define('post', {
   id: {
     type: Sequelize.INTEGER,

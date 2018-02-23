@@ -1,11 +1,11 @@
 import React from 'react'
 import Bar from './navbar.jsx'
 
-const Feed = () => (
+const Create = () => (
   <div>
     <h1><Bar /></h1>
-    Render Feed Here!
+    Render Create Here!
   </div>
 )
 
-export default Feed
+export default Create

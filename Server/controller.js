@@ -47,10 +47,17 @@ module.exports.handleHomePage = (req, res) => {
 /* Handle requests to each page */
 
 module.exports.showExplorePage = (req, res) => {
+  // Query for all pictures/videos in the pictures/videos table
+    // Consider applying limit to number of records in query
+    // Send back records to update state on front end
   res.send('Hello from the EXPLORE page!');
 }
 
 module.exports.showFeedPage = (req, res) => {
+  // Query the follows table to determine everyone that user follows
+    // Query pictures/videos table for pictures/videos owned by these users
+    // Consider applying limit to number of records in query
+    // Send back records to update state on front end
   res.send('Hello from the FEED page!');
 }
 module.exports.showCreatePostPage = (req, res) => {
@@ -74,5 +81,8 @@ module.exports.addLike = (req, res) => {
 }
 
 module.exports.addComment = (req, res) => {
+  // Add comment from request to the Comments table
+  // Query for all comments belonging to the specific picture/video
+  // Send back the updated list of comments for specific picture/video
   res.send('addComment controller function');
 }

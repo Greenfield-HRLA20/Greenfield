@@ -1,12 +1,15 @@
-import Like from '../models/Like'
+const Like = require('../models/Like');
+
 module.exports = {
-  checkIfExist: (userId, postId) => {
+  toggleLike: (userId, postId, callback) => {
     Like.findOrCreate({
-      userId: userId, 
-      postId: postId
+      where: {
+        userId: userId, 
+        postId: postId
+      }
     }).spread((user, created) => {
       if(created) {
-        return true
+        callback(true)
       } else {
         Like.destroy({
           where: {postId: user.postId}
@@ -14,7 +17,7 @@ module.exports = {
           console.log(err);
           return;
         })
-        return false;
+        callback(false);
       }
     }).catch((err) => {
       console.log(err);

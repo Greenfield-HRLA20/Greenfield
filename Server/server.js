@@ -11,7 +11,8 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(logger('short'));
 
 app.use('/', express.static(path.join(__dirname, "../Client/dist")));
+app.use(router);
 
 app.listen(1337, () => {
-  console.log('connected');
+  console.log('connected to port 1337!');
 });

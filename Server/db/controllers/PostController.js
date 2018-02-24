@@ -1,4 +1,5 @@
 const Post = require('../models/Post');
+const Sequelize = require('sequelize');
 
 module.exports = {
   getUsersPosts: (userId) => {
@@ -32,11 +33,12 @@ module.exports = {
   },
 
   modifyLikes: (postId, shouldIncrementLikes) => {
+    console.log('in the modify likes function');
     if (shouldIncrementLikes) {
       Post.findById(postId)
       .then(post => {
         post.update({
-          likeCount: sequelize.literal('likecount + 1')
+          likeCount: Sequelize.literal('likecount + 1')
         })
       })
       .catch(err => {
@@ -47,7 +49,7 @@ module.exports = {
       Post.findById(postId)
       .then(post => {
         post.update({
-          likeCount: sequelize.literal('likecount - 1')
+          likeCount: Sequelize.literal('likecount - 1')
         })
       })
       .catch(err => {

@@ -18,11 +18,6 @@ router.route('/showFeedPage')
   controller.showFeedPage(req, res);
 })
 
-router.route('/showCreatePostPage')
-.get((req, res) => {
-  controller.showCreatePostPage(req, res);
-})
-
 router.route('/showProfilePage')
 .get((req, res) => {
   controller.showProfilePage(req, res);
@@ -43,9 +38,9 @@ router.route('/viewPhoto')
   controller.viewPhoto(req, res);
 })
 
-router.route('/addLike')
+router.route('/toggleLike')
 .post((req, res) => {
-  controller.addLike(req, res);
+  controller.toggleLike(req, res);
 })
 
 router.route('/addComment')

@@ -15,7 +15,7 @@ module.exports = {
     });
   },
 
-  addPost: (caption, postUrl, userID) => {
+  addPost: (caption, postUrl, userId, cb) => {
     Post.create({
       caption: caption,
       url: postUrl,
@@ -23,7 +23,7 @@ module.exports = {
     })
     .then(post => {
       console.log('Post successfully added');
-      return post;
+      cb(post);
     })
     .catch(err => {
       console.log(err);

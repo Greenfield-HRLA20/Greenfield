@@ -1,4 +1,4 @@
-import Follow from '../models/Follow'
+const Follow = require('../models/Follow');
 module.exports = {
   getUsersThatUserIsFollowing: (usersOwnId) => {
     Follow.findAll({

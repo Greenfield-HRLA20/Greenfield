@@ -4,14 +4,14 @@ module.exports = {
   
   // given message, userid, postID
   // add a new comment to comments table
-  addComment: (msg, postId, userId) => {
+  addComment: (msg, postId, userId, cb) => {
     Comment.create({
-      message: msg,
+      Comment: msg,
       postId: postId,
       userId: userId
     }).then(message => {
       console.log(message);
-      return message;
+      cb(message);
     }).catch(err => {
       console.log('ERROR - could not add comment: ' , err);
     })
@@ -19,7 +19,7 @@ module.exports = {
   
   // given a post ID
   // give all of the comments for that post
-  getCommentsByPostId: (id) => {
+  getCommentsByPostId: (id, cb) => {
     Comment.findAll({
       where: {
         postId: id

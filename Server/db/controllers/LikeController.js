@@ -1,4 +1,4 @@
-import Like from '../models/Like'
+const Like = require('../models/Like');
 module.exports = {
   checkIfExist: (userId, postId) => {
     Like.findOrCreate({

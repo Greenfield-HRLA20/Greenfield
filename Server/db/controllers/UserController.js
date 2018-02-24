@@ -20,10 +20,10 @@ module.exports = {
     })
   },
 
-  getUserId: (username) => {
-    User.findAll({where: {handle: username}}).then((user) => {
+  getUserId: (username, cb) => {
+    User.findOne({where: {handle: username}}).then((user) => {
       console.log('this should be the entire user object', user);
-      return user.dataValues.id;
+      cb(user.dataValues.id);
     }).catch((err) => {
       console.log('something went wrong', err);
     });

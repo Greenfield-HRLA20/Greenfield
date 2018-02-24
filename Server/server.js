@@ -12,6 +12,8 @@ app.use(logger('short'));
 
 app.use('/', express.static(path.join(__dirname, "../Client/dist")));
 
+app.use(router);
+
 app.listen(1337, () => {
   console.log('connected');
 });

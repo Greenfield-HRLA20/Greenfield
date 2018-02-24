@@ -1,6 +1,5 @@
 const connection = require('../index.js');
 const Sequelize = require('sequelize');
-const Post = require('./Post.js');
 
 const User = connection.define('user', {
   firstName: Sequelize.STRING,
@@ -11,7 +10,5 @@ const User = connection.define('user', {
   },
 });
 
-console.log('POST from user file ', Post);
-console.log('User from user file is', User);
 
 module.exports = User;

@@ -3,13 +3,12 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const path = require('path');
 const router = require('./router');
-const connection = require('./db/index');
 
 let app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
-app.use(logger('tiny'));
+app.use(logger('short'));
 
 app.use('/', express.static(path.join(__dirname, "../Client/dist")));
 

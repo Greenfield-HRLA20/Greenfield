@@ -11,11 +11,8 @@ const User = require('./models/User.js');
 const connection = new Sequelize('instaDB', 'root', 'password', {
   host: 'localhost',
   dialect: 'mysql',
+  port: 3306
 });
 
-//  define relationships/foreign keys here
-
-// Post.belongsTo(User, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
-// User.hasMany(Post);
-
+ 
 module.exports = connection;

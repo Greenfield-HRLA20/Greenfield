@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Feed from './components/feed.jsx';
-import Login from './components/login.jsx';
+import Feed from './components/Feed.jsx';
+import Login from './components/Login.jsx';
 import auth from './Firebase';
 import { Provider, connect } from 'react-redux';
 import store from "./redux";

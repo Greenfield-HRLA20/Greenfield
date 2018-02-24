@@ -53,9 +53,6 @@ router.route('/addComment')
   controller.addComment(req, res);
 })
 
-
-
-/* TODO: determine if these are needed */
 router.route('/requestFollow')
 .post((req, res) => {
   controller.requestFollow(req, res);

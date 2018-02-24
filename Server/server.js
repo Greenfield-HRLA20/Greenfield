@@ -13,14 +13,5 @@ app.use(logger('short'));
 app.use('/', express.static(path.join(__dirname, "../Client/dist")));
 
 app.listen(1337, () => {
-  console.log('Connected to Instagram Clone Server!');
-  // sync the DB?
-
-  connection.sync({force: false})
-    .then(message => {
-      console.log('...and db is synced!');
-    })
-    .catch(function(err) {
-      throw err;
-    });
+  console.log('connected');
 });

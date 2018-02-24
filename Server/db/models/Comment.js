@@ -3,8 +3,8 @@ const Sequelize = require('sequelize');
 const User = require('./User');
 const Post = require('./Post');
 
-const Message = connection.define('message', {
-  message: Sequelize.STRING,
+const Comment = connection.define('comment', {
+  Comment: Sequelize.STRING,
 });
 
 // associations

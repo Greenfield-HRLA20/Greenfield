@@ -1,5 +1,5 @@
 import React from 'react'
-import Bar from './navbar.jsx'
+import Bar from './Navbar.jsx'
 
 const Account = () => (
   <div>

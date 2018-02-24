@@ -11,10 +11,10 @@ import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui
 import auth from '../Firebase'
 import {connect} from 'react-redux'
 import actions from '../redux/actions/index'
-import Feed from './feed.jsx'
-import Explore from './explore.jsx'
-import Create from './create.jsx'
-import Account from './account.jsx'
+import Feed from './Feed.jsx'
+import Explore from './Explore.jsx'
+import Create from './Create.jsx'
+import Account from './Account.jsx'
 
 const mapDispatchToProps = dispatch => {
   return {

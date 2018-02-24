@@ -4,7 +4,7 @@ const User = require('./User');
 const Post = require('./Post');
 
 const Comment = connection.define('comment', {
-  message: Sequelize.STRING,
+  Comment: Sequelize.STRING,
 });
 
 // associations

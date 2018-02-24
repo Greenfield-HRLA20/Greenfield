@@ -6,33 +6,35 @@ const Like = require('./db/models/Like');
 const Follow = require('./db/models/Follow');
 const bluebird = require('bluebird');
 
+// authenticate + sync sequelize tables
 connection.authenticate().then(() => {
   console.log('connected');
-  // User.sync().then(() => {
-  
-  //   Post.sync().then(() => {
-  //     User.create({
-  //       firstName: 'John',
-  //       lastName: 'Hancock',
-  //       handle: 'jhancock'
-  //     });
-    
-  //     User.create({
-  //       firstName: 'Bob',
-  //       lastName: 'Smith',
-  //       handle: 'bsmith'
-  //     }).then((user) => {
-  //       console.log(user);
-  //       Post.create({
-  //         userId: user.dataValues.id,
-  //         caption: 'Check out the view!',
-  //         url: 'www.google.com',
-  //       });
-  //     })
-  //   });
+  User.sync({force: true}).then(() => {
+    console.log('User table synced!');
+    Post.sync({force: true}).then(() => {
+      console.log('Post table synced!');
+      Like.sync({force:true}).then(() => {
+        console.log('Like table synced!');
+      }).catch((err) => {
+        console.log(err);
+      });
+      Comment.sync({force: true}).then(() => {
+        console.log('Comment table synced!');
+      }).catch((err) => {
+        console.log(err);
+      });
+    }).catch((err) => {
+      console.log(err);
+    });
+    Follow.sync({force:true}).then(() => {
+      console.log('Follow table synced!');
+    }).catch(err => {
+      console.log(err);
+    })
   }).catch((err) => {
     console.log(err);
-  });
+  })
+});
 
 module.exports.handleHomePage = (req, res) => {
   // connection.sync().then(() => {

@@ -5,6 +5,7 @@ const connection = new Sequelize('instaDB', 'root', 'password', {
   host: 'localhost',
   dialect: 'mysql',
   port: 3306
- });
+});
+
  
- module.exports = connection;
+module.exports = connection;

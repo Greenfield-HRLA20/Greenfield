@@ -70,14 +70,26 @@ module.exports.showFeedPage = (req, res) => {
   res.send('Hello from the FEED page!');
 }
 
+// PROFILE ===================================================
 module.exports.showProfilePage = (req, res) => {
+  
+  // localhost:1337/showProfilePage?user=USERNAME_HERE
+
   // given user table, get user's user ID
-  // go to the posts table
-  // get all of the posts matching self
-    // for each post, get each comment
-    // add comments to comments array for each post object
-  // send array back to client
-  res.send('Hello from the profile page!');
+  UserController.getUserId(req.query.user, function(id) {
+    // go to the posts table
+    // get all of the posts matching self
+    PostController.getUsersPosts(id, function(posts) {
+      // send array back to client
+      console.log('THESES ARE THE POSTS FROM THE USER: ', posts);
+      res.send(posts);
+
+      // for each post, get each comment
+      // add comments to comments array for each post object
+      // res.send('Hello from the profile page!');
+    })
+      
+  })
 }
 
 /* User functionality/interaction functionality*/

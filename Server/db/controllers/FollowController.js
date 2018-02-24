@@ -1,4 +1,4 @@
-const Follow = require('../models/Follow')
+const Follow = require('../models/Follow');
 
 module.exports = {
   getUsersThatUserIsFollowing: (usersOwnId) => {

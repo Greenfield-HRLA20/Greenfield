@@ -11,17 +11,17 @@ module.exports = {
     }
   },
 
-  getUsersPosts: (userId) => {
+  getUsersPosts: (userId, cb) => {
     Post.findAll({
       where: {
         userId: userId
       }
     })
     .then(posts => {
-      return posts;
+      cb(posts);
     })
     .catch(err => {
-      console.log("Error accessing user's posts");
+      console.log("Error accessing user's posts", err);
     });
   },
 

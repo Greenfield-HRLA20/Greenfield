@@ -82,6 +82,8 @@ module.exports.showProfilePage = (req, res) => {
     PostController.getUsersPosts(id, function(posts) {
       // send array back to client
       console.log('THESES ARE THE POSTS FROM THE USER: ', posts);
+      
+      
       res.send(posts);
 
       // for each post, get each comment

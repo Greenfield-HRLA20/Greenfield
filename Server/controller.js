@@ -11,7 +11,6 @@ const LikeController = require('./db/controllers/LikeController.js');
 const PostController = require('./db/controllers/PostController.js');
 const UserController = require('./db/controllers/UserController.js');
 
-
 // authenticate + sync sequelize tables
 connection.authenticate().then(() => {
   console.log('connected');
@@ -46,11 +45,27 @@ connection.authenticate().then(() => {
 
 module.exports.showExplorePage = (req, res) => {
   // Query for all posts from posts table
+<<<<<<< HEAD
+=======
+  // PostController.getAllPosts()
+>>>>>>> working showexplorepage and showfeedpage routes
     // sort results before exporting
     // for each post, get each comment
     // add comments to comments array for each post object
   // send array back to client
+<<<<<<< HEAD
     res.send('Hello from the EXPLOREfpage!');
+=======
+
+  PostController.getAllPosts(posts => {
+    results = posts.map((post) => {
+      CommentController.getCommentsByPostId(post.id, (msgs) => {
+        post.dataValues.comments = msgs.map(msg => msg.Comment)
+      })
+    })
+    res.json(results)
+  })
+>>>>>>> working showexplorepage and showfeedpage routes
 }
 
 module.exports.showFeedPage = (req, res) => {
@@ -84,12 +99,19 @@ module.exports.submitPost = (req, res) => {
   res.send('submitPost controller function');
 }
 
+<<<<<<< HEAD
 module.exports.toggleLike = (req, res) => {
   // values should be pulled off of req.body
   LikeController.toggleLike(1, 1, (shouldIncrementLikes) => {
     PostController.modifyLikes(1, shouldIncrementLikes);
     res.send('Completed like modification');
   });
+=======
+module.exports.addLike = (req, res) => {
+  // toggleLike (like controller);
+  // get boolean response and pass into modifyLikes()
+  res.send('addLike controller function');
+>>>>>>> working showexplorepage and showfeedpage routes
 }
 
 module.exports.addComment = (req, res) => {

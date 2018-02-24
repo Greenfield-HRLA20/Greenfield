@@ -28,6 +28,10 @@ router.route('/showProfilePage')
   controller.showProfilePage(req, res);
 })
 
+router.route('/showSpecificUserPage')
+.get((req, res) => {
+  controller.showSpecificUserPage(req, res);
+})
 /* User functionality/interaction routes */
 router.route('/submitPost')
 .post((req, res) => {
@@ -48,6 +52,8 @@ router.route('/addComment')
 .post((req, res) => {
   controller.addComment(req, res);
 })
+
+
 
 /* TODO: determine if these are needed */
 router.route('/requestFollow')

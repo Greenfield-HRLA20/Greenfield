@@ -14,6 +14,4 @@ const User = connection.define('user', {
 console.log('POST from user file ', Post);
 console.log('User from user file is', User);
 
-// User.hasMany(Post);
-
 module.exports = User;

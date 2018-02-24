@@ -1,7 +1,7 @@
 const connection = require('../index.js');
 const Sequelize = require('sequelize');
 
-const Comment = connection.define('comment', {
+const Message = connection.define('message', {
   message: Sequelize.STRING,
 });
 

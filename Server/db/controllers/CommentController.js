@@ -19,16 +19,16 @@ module.exports = {
   
   // given a post ID
   // give all of the comments for that post
-  getCommentsByPostId: (id) => {
+  getCommentsByPostId: (id, cb) => {
     Comment.findAll({
       where: {
         postId: id
       }
     }).then(msgs => {
-      console.log(msgs);
-      return msgs;
+      cb(msgs);
     }).catch(err => {
       console.log('ERROR - could not retreive comments: ', err);
     })
   }
 }
+

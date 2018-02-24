@@ -50,7 +50,7 @@ module.exports.showExplorePage = (req, res) => {
     // for each post, get each comment
     // add comments to comments array for each post object
   // send array back to client
-  res.send('Hello from the EXPLORE page!');
+    res.send('Hello from the EXPLOREfpage!');
 }
 
 module.exports.showFeedPage = (req, res) => {
@@ -85,8 +85,8 @@ module.exports.submitPost = (req, res) => {
 }
 
 module.exports.toggleLike = (req, res) => {
+  // values should be pulled off of req.body
   LikeController.toggleLike(1, 1, (shouldIncrementLikes) => {
-    console.log(shouldIncrementLikes);
     PostController.modifyLikes(1, shouldIncrementLikes);
     res.send('Completed like modification');
   });

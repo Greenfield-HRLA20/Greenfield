@@ -19,16 +19,14 @@ module.exports = {
   
   // given a post ID
   // give all of the comments for that post
-  getCommentsByPostId: (id, cb) => {
-    Comment.findAll({
-      where: {
-        postId: id
-      }
-    }).then(msgs => {
-      cb(msgs);
-    }).catch(err => {
-      console.log('ERROR - could not retreive comments: ', err);
-    })
+  getCommentsByPostId: async (id) => {
+    try {
+      let result = await Comment.findAll({where: {postId: id}})
+      let filtered = result.map((msg) => [msg.userId, msg.Comment])
+      return filtered;
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
 

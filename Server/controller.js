@@ -43,23 +43,19 @@ connection.authenticate().then(() => {
 
 /* Handle requests to each page */
 
-module.exports.showExplorePage = (req, res) => {
-  // Query for all posts from posts table
-  // PostController.getAllPosts()
-    // sort results before exporting
-    // for each post, get each comment
-    // add comments to comments array for each post object
-  // send array back to client
-
-  PostController.getAllPosts(posts => {
-    results = posts.map((post) => {
-      CommentController.getCommentsByPostId(post.id, (msgs) => {
-        post.dataValues.comments = msgs.map(msg => msg.Comment)
-      })
-    })
-    res.json(results)
-  })
+module.exports.showExplorePage = async (req, res) => {
+  try {
+    let posts = await PostController.getAllPosts();
+    for (let i = 0; i < posts.length; i++) {
+      let result = await CommentController.getCommentsByPostId(posts[i].id)
+      posts[i].dataValues.comments = result
+    }
+    res.send(posts);
+  } catch(err) {
+    console.log(err)
+  }
 }
+
 
 module.exports.showFeedPage = (req, res) => {
   // Query for people you're following in users table

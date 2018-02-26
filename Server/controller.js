@@ -57,7 +57,7 @@ module.exports.showExplorePage = async (req, res) => {
 }
 
 
-module.exports.showFeedPage = (req, res) => {
+module.exports.showFeedPage = async (req, res) => {
   // Query for people you're following in users table
   // make sure to add yourself to that list
   // limit to ppl you're following and sort by createdAt
@@ -66,37 +66,66 @@ module.exports.showFeedPage = (req, res) => {
     // for each post, get each comment
     // add comments to comments array for each post object
   // send array back to client
-  
-  res.send('Hello from the FEED page!');
+  try {
+    let userId = await UserController.getUserId(req.query.user);
+    let followedUsersIds = await FollowController.getUsersThatUserIsFollowing(userId);
+    followedUsersIds.push(userId);
+    console.log('these are the followeduserids',followedUsersIds);
+    let userPosts = await PostController.getFeedPosts(followedUsersIds)
+    for (let i = 0; i < userPosts.length; i++) {
+      let result = await CommentController.getCommentsByPostId(userPosts[i].id)
+      userPosts[i].dataValues.comments = result
+    }
+    res.send(userPosts);
+  } catch(err) {
+    console.log(err)
+  }
 }
 
-module.exports.showProfilePage = (req, res) => {
-  // given user table, get user's user ID
-  // go to the posts table
-  // get all of the posts matching self
-    // for each post, get each comment
-    // add comments to comments array for each post object
-  // send array back to client
-  res.send('Hello from the profile page!');
+// PROFILE ===================================================
+module.exports.showProfilePage = async (req, res) => {
+  try {
+  // localhost:1337/showProfilePage?user=USERNAME_HERE
+    let userId = [await UserController.getUserId(req.query.user)];
+    let userPosts = await PostController.getFeedPosts(userId);
+    for (let i = 0; i < userPosts.length; i++) {
+      let result = await CommentController.getCommentsByPostId(userPosts[i].id)
+      userPosts[i].dataValues.comments = result
+    }
+    res.send(userPosts);
+  } catch (err) {
+    console.log('there was an error', err);
+  }
 }
 
 /* User functionality/interaction functionality*/
-module.exports.submitPost = (req, res) => {
-  // get userid from users table
-  // given url and caption and user ID
-  // use save post function to save post to db
-  res.send('submitPost controller function');
+module.exports.submitPost = async (req, res) => {
+  try {
+    let userId = await UserController.getUserId(req.body.handle);
+    let post = await PostController.addPost(req.body.caption, req.body.postUrl, userId);
+    res.send(post);
+  } catch (err) {
+    console.log('something went wrong with submitting a post', err);
+  }
 }
 
-module.exports.toggleLike = (req, res) => {
-  // values should be pulled off of req.body
-  LikeController.toggleLike(1, 1, (shouldIncrementLikes) => {
-    PostController.modifyLikes(1, shouldIncrementLikes);
-    res.send('Completed like modification');
-  });
+module.exports.addComment = async (req, res) => {
+  try {
+    let userId = await UserController.getUserId(req.body.handle);
+    let comment = await CommentController.addComment(req.body.comment, req.body.postId, userId);
+    res.send(comment);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-module.exports.addComment = (req, res) => {
-  // invoke addComment() from CommentController
-  res.send('addComment controller function');
+module.exports.toggleLike = async (req, res) => {
+  try {
+    let userId = await UserController.getUserId(req.body.handle);
+    let result = await LikeController.toggleLike(userId, req.body.postId);
+    await PostController.modifyLikes(req.body.postId, result);
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+  }
 }

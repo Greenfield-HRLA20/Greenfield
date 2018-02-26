@@ -45,12 +45,33 @@ connection.authenticate().then(() => {
 /* Handle requests to each page */
 
 module.exports.showExplorePage = (req, res) => {
-  // Query for all posts from posts table
-    // sort results before exporting
+  // Query for all posts from posts table [done]
+    // sort results before exporting [done]
     // for each post, get each comment
     // add comments to comments array for each post object
   // send array back to client
-    res.send('Hello from the EXPLOREfpage!');
+  let result = [];
+
+  PostController.getAllPosts(posts => {
+
+
+    // iterating through each of the posts
+    postsWithComments = posts.map((post) => {
+
+      // getting all of the comments for single post
+      CommentController.getCommentsByPostId(post.id, (comments) => {
+        
+        // associating the post's comments with the post
+        post.comments = comments // msgs.map(msg => msg.Comment)
+        console.log(`Current post has ${post.comments.length} comments`);
+
+      })
+      return post;
+    })
+    console.log('All finished!');
+    res.json(postsWithComments);
+    // res.send('Hello from the EXPLORE page!'); 
+  })
 }
 
 module.exports.showFeedPage = (req, res) => {

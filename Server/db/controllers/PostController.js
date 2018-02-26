@@ -6,7 +6,6 @@ module.exports = {
   getAllPosts: (cb) => {
     Post.findAll({order: [['createdAt', 'DESC']] })
     .then((results) => {
-      console.log('alx', results.length);
         cb(results)
       }).catch(err => {
         console.log("Error accessing all posts");

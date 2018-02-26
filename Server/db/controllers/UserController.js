@@ -20,8 +20,8 @@ module.exports = {
 
   getUserId: async (username) => {
     try {
-      let user = await User.findAll({where: {handle: username}})
-      return user.dataValues.id;
+      let user = await User.findOne({where: {handle: username}})
+      return user.id;
     } catch (err) {
       console.log(err);
     }

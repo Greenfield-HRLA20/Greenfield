@@ -1,5 +1,6 @@
 const Post = require('../models/Post');
 const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 module.exports = {
   getAllPosts: async () => {
@@ -21,6 +22,22 @@ module.exports = {
       return result;
     } catch(err) {
       console.log("Error accessing user's posts", err);
+    }
+  },
+
+  getFeedPosts: async (userIds) => {
+    try {
+      let result = await Post.findAll({
+        where: {
+          userId: {
+            [Op.or]: userIds
+          }
+        },
+        order: [['createdAt', 'DESC']]
+      })
+      return result;
+    } catch (err) {
+      console.log('Error accessing feed posts', err);
     }
   },
 

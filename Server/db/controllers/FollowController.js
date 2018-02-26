@@ -9,7 +9,11 @@ module.exports = {
           requestStatus: true
         }
       });
-      return result;
+      let usersThatUserIsFollowing = [];
+      for (let i = 0; i < result.length; i++) {
+        usersThatUserIsFollowing.push(result[i].userId);
+      }
+      return usersThatUserIsFollowing;
     } catch (err) {
       console.log(err);
       return;

@@ -1,4 +1,5 @@
 const Comment = require('../models/Comment');
+const UserController = require('./UserController')
 
 module.exports = {
   
@@ -19,16 +20,17 @@ module.exports = {
   
   // given a post ID
   // give all of the comments for that post
-  getCommentsByPostId: (id, cb) => {
-    Comment.findAll({
-      where: {
-        postId: id
+  getCommentsByPostId: async (id) => {
+    try {
+      let result = await Comment.findAll({where: {postId: id}})
+      let filtered = []
+      for (let i = 0; i < result.length; i++) {
+        filtered.push([await UserController.getUsername(result[i].userId), result[i].Comment])
       }
-    }).then(msgs => {
-      cb(msgs);
-    }).catch(err => {
-      console.log('ERROR - could not retreive comments: ', err);
-    })
+      return filtered;
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
 

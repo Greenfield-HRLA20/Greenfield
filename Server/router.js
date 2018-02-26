@@ -9,9 +9,7 @@ router.route('/')
 /* GET requests to each page */
 
 router.route('/showExplorePage')
-.get((req, res) => {
-  controller.showExplorePage(req, res);
-})
+.get(controller.showExplorePage)
 
 router.route('/showFeedPage')
 .get((req, res) => {

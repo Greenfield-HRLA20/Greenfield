@@ -20,12 +20,21 @@ module.exports = {
     })
   },
 
-  getUserId: (username) => {
-    User.findAll({where: {handle: username}}).then((user) => {
-      console.log('this should be the entire user object', user);
+  getUserId: async (username) => {
+    try {
+      let user = await User.findAll({where: {handle: username}})
       return user.dataValues.id;
-    }).catch((err) => {
-      console.log('something went wrong', err);
-    });
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  getUsername: async (userId) => {
+    try {
+      let user = await User.findById(userId)
+      return user.dataValues.handle
+    } catch (err) {
+      console.log(err);
+    }
   }
 }

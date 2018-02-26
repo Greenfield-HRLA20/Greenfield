@@ -81,14 +81,17 @@ module.exports.showProfilePage = (req, res) => {
     // get all of the posts matching self
     PostController.getUsersPosts(id, function(posts) {
       // send array back to client
-      console.log('THESES ARE THE POSTS FROM THE USER: ', posts);
-      
-      
+
+      var getComments = posts.forEach((post) => {
+        CommentController.getCommentsByPostId(post.dataValues.id, function(comments) {
+          console.log("hello from comments!", comments);
+        });
+      })
+      console.log("$$$$$$", getComments);
       res.send(posts);
 
       // for each post, get each comment
       // add comments to comments array for each post object
-      // res.send('Hello from the profile page!');
     })
       
   })
@@ -97,9 +100,26 @@ module.exports.showProfilePage = (req, res) => {
 /* User functionality/interaction functionality*/
 module.exports.submitPost = (req, res) => {
   // get userid from users table
+  UserController.getUserId(req.body.user, (user) => {
+    PostController.addPost(req.body.caption, req.body.postUrl, user, function(post) {
+      if (post) {
+        res.send(post);
+      }
+    });
+  });
   // given url and caption and user ID
+  
   // use save post function to save post to db
-  res.send('submitPost controller function');
+  // res.send('submitPost controller function');
+}
+
+module.exports.addComment = (req, res) => {
+  // invoke addComment() from CommentController
+  CommentController.addComment(req.body.msg, req.body.postId, req.body.userId, function(comment) {
+    if (comment) {
+      res.send(comment);
+    }
+  });
 }
 
 module.exports.toggleLike = (req, res) => {
@@ -108,9 +128,4 @@ module.exports.toggleLike = (req, res) => {
     PostController.modifyLikes(1, shouldIncrementLikes);
     res.send('Completed like modification');
   });
-}
-
-module.exports.addComment = (req, res) => {
-  // invoke addComment() from CommentController
-  res.send('addComment controller function');
 }

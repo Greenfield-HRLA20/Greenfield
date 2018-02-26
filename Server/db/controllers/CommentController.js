@@ -1,4 +1,5 @@
 const Comment = require('../models/Comment');
+const UserController = require('./UserController')
 
 module.exports = {
   
@@ -22,7 +23,10 @@ module.exports = {
   getCommentsByPostId: async (id) => {
     try {
       let result = await Comment.findAll({where: {postId: id}})
-      let filtered = result.map((msg) => [msg.userId, msg.Comment])
+      let filtered = []
+      for (let i = 0; i < result.length; i++) {
+        filtered.push([await UserController.getUsername(result[i].userId), result[i].Comment])
+      }
       return filtered;
     } catch (err) {
       console.log(err)

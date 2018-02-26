@@ -1,23 +1,21 @@
 const User = require('../models/User.js');
 
 module.exports = {
-  checkAndOrSaveUser : (user) => {
-    User
-    .findOrCreate({where: {handle: user} })
-    .spread((user, created) => {
-      if (created) {
-        console.log('this user was created, check db', user);
-        return user;
+  checkAndOrSaveUser: async (user) => {
+    try {
+      let result = await User.findOrCreate({where: {handle: user} })
+      console.log(result);
+
+      if (result[1]) {
+        return result[0];
       } else {
-        console.log('that user already exists', user);
+        console.log('that user already exists', result[0]);
         return 'That username already exists'
       }
-    }).catch((err) => {
-      if (err) {
-        console.log('there was an error', err);
-        return;
-      }
-    })
+
+    } catch(err) {
+      console.log('error with checkandorsaveuser', err);
+    }
   },
 
   getUserId: async (username) => {

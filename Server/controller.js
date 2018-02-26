@@ -57,7 +57,7 @@ module.exports.showExplorePage = async (req, res) => {
 }
 
 
-module.exports.showFeedPage = (req, res) => {
+module.exports.showFeedPage = async (req, res) => {
   // Query for people you're following in users table
   // make sure to add yourself to that list
   // limit to ppl you're following and sort by createdAt
@@ -66,8 +66,15 @@ module.exports.showFeedPage = (req, res) => {
     // for each post, get each comment
     // add comments to comments array for each post object
   // send array back to client
-  
-  res.send('Hello from the FEED page!');
+
+  //togglelike - (userId, postId)
+  //modifyLikes - (postId, bool)
+  try {
+    await CommentController.addComment('comment', 4, 2);
+    res.send('Comment added');
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 // PROFILE ===================================================
@@ -101,11 +108,8 @@ module.exports.showProfilePage = (req, res) => {
 module.exports.submitPost = (req, res) => {
   // get userid from users table
   UserController.getUserId(req.body.user, (user) => {
-    PostController.addPost(req.body.caption, req.body.postUrl, user, function(post) {
-      if (post) {
-        res.send(post);
-      }
-    });
+    PostController.addPost(req.body.caption, req.body.postUrl, user);
+    res.send('Hi!');
   });
   // given url and caption and user ID
   
@@ -113,19 +117,39 @@ module.exports.submitPost = (req, res) => {
   // res.send('submitPost controller function');
 }
 
-module.exports.addComment = (req, res) => {
+module.exports.addComment = async (req, res) => {
   // invoke addComment() from CommentController
-  CommentController.addComment(req.body.msg, req.body.postId, req.body.userId, function(comment) {
-    if (comment) {
-      res.send(comment);
-    }
-  });
+
+  // REMOVE THIS!!!!!!
+  // CommentController.addComment(req.body.msg, req.body.postId, req.body.userId, function(comment) {
+  //   if (comment) {
+  //     res.send(comment);
+  //   }
+  // });
+
+  try {
+    await CommentController.addComment('comment', 4, 2);
+    res.send('Comment added');
+  } catch (err) {
+    console.log(err);
+  }
+  
 }
 
-module.exports.toggleLike = (req, res) => {
+module.exports.toggleLike = async (req, res) => {
   // values should be pulled off of req.body
-  LikeController.toggleLike(1, 1, (shouldIncrementLikes) => {
-    PostController.modifyLikes(1, shouldIncrementLikes);
-    res.send('Completed like modification');
-  });
+
+  // GET RID OF THIS!
+  // LikeController.toggleLike(1, 1, (shouldIncrementLikes) => {
+  //   PostController.modifyLikes(1, shouldIncrementLikes);
+  //   res.send('Completed like modification');
+  // });
+
+  try {
+    let result = await LikeController.toggleLike(2, 1);
+    PostController.modifyLikes(1, result);
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+  }
 }

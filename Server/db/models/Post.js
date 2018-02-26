@@ -6,7 +6,10 @@ const Post = connection.define('post', {
   caption: Sequelize.STRING,
   url: Sequelize.STRING,
   createdAt: Sequelize.DATE,
-  likeCount: Sequelize.INTEGER,
+  likeCount: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  }
 });
 
 // associations

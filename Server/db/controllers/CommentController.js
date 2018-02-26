@@ -5,17 +5,18 @@ module.exports = {
   
   // given message, userid, postID
   // add a new comment to comments table
-  addComment: (msg, postId, userId) => {
-    Comment.create({
-      message: msg,
-      postId: postId,
-      userId: userId
-    }).then(message => {
-      console.log(message);
-      return message;
-    }).catch(err => {
+  addComment: async (msg, postId, userId) => {
+    try {
+      let result = await Comment.create({
+        Comment: msg,
+        postId: postId,
+        userId: userId
+      })
+      console.log(result);
+      return result;
+    } catch (err) {
       console.log('ERROR - could not add comment: ' , err);
-    })
+    }
   },
   
   // given a post ID

@@ -1,27 +1,24 @@
 const Like = require('../models/Like');
 
 module.exports = {
-  toggleLike: (userId, postId, callback) => {
-    Like.findOrCreate({
-      where: {
-        userId: userId, 
-        postId: postId
-      }
-    }).spread((user, created) => {
-      if(created) {
-        callback(true)
+  toggleLike: async (userId, postId) => {
+    try {
+      let result = await Like.findOrCreate({
+        where: {
+          userId: userId, 
+          postId: postId
+        }
+      })
+      if (result[1]) {
+        return result[1];
       } else {
-        Like.destroy({
-          where: {postId: user.postId}
-        }).catch((err) => {
-          console.log(err);
-          return;
-        })
-        callback(false);
+        await Like.destroy({
+          where: {postId: result[0].dataValues.postId}
+        });
+        return result[1];
       }
-    }).catch((err) => {
+    } catch (err) {
       console.log(err);
-      return;
-    })
+    }  
   }
 }

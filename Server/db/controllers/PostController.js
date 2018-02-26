@@ -1,5 +1,6 @@
 const Post = require('../models/Post');
 const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 module.exports = {
   getAllPosts: async () => {
@@ -11,60 +12,64 @@ module.exports = {
     }
   },
 
-  getUsersPosts: (userId) => {
-    Post.findAll({
-      where: {
+  getUsersPosts: async (userId) => {
+    try {
+      let result = await Post.findAll({
+        where: {
+          userId: userId
+        }
+      });
+      return result;
+    } catch(err) {
+      console.log("Error accessing user's posts", err);
+    }
+  },
+
+  getFeedPosts: async (userIds) => {
+    try {
+      let result = await Post.findAll({
+        where: {
+          userId: {
+            [Op.or]: userIds
+          }
+        },
+        order: [['createdAt', 'DESC']]
+      })
+      return result;
+    } catch (err) {
+      console.log('Error accessing feed posts', err);
+    }
+  },
+
+  addPost: async (caption, postUrl, userId) => {
+    try {
+      let result = await Post.create({
+        caption: caption,
+        url: postUrl,
         userId: userId
-      }
-    })
-    .then(posts => {
-      return posts;
-    })
-    .catch(err => {
-      console.log("Error accessing user's posts");
-    });
-  },
-
-  addPost: (caption, postUrl, userId) => {
-    Post.create({
-      caption: caption,
-      url: postUrl,
-      userId: userId
-    })
-    .then(post => {
-      console.log('Post successfully added');
-      return post;
-    })
-    .catch(err => {
+      });
+      return result;
+    } catch (err) {
       console.log(err);
-      return;
-    })
+    }
   },
 
-  modifyLikes: (postId, shouldIncrementLikes) => {
-    console.log('in the modify likes function');
-    if (shouldIncrementLikes) {
-      Post.findById(postId)
-      .then(post => {
-        post.update({
+  modifyLikes: async (postId, shouldIncrementLikes) => {
+    try {
+      if (shouldIncrementLikes) {
+        let result = await Post.findById(postId)
+        result.update({
           likeCount: Sequelize.literal('likecount + 1')
         })
-      })
-      .catch(err => {
-        console.log(err);
-        return;
-      })
-    } else {
-      Post.findById(postId)
-      .then(post => {
-        post.update({
+      } else {
+        let result = await Post.findById(postId)
+        result.update({
           likeCount: Sequelize.literal('likecount - 1')
         })
-      })
-      .catch(err => {
-        console.log(err);
-        return;
-      })
+      }
+    } catch (err) {
+      console.log("err with modifying results", err);
     }
   }
+
 }

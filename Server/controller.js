@@ -90,8 +90,8 @@ module.exports.submitPost = (req, res) => {
 
 module.exports.toggleLike = (req, res) => {
   // values should be pulled off of req.body
-  LikeController.toggleLike(1, 1, (shouldIncrementLikes) => {
-    PostController.modifyLikes(1, shouldIncrementLikes);
+  LikeController.toggleLike(1, 3, (shouldIncrementLikes) => {
+    PostController.modifyLikes(3, shouldIncrementLikes);
     res.send('Completed like modification');
   });
 }

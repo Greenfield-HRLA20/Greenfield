@@ -1,11 +1,6 @@
 const router = require('express').Router();
 const controller = require('./controller.js');
 
-router.route('/')
-.get((req, res) => {
-  controller.handleHomePage(req, res);
-})
-
 /* GET requests to each page */
 
 router.route('/showExplorePage')

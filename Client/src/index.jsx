@@ -40,7 +40,7 @@ class ConnectedMain extends React.Component {
           handle: user.displayName
         })
         this.props.updateCurrentView(<Feed />)
-      }
+      } 
     });
   }
 

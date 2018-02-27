@@ -47,8 +47,10 @@ module.exports.showExplorePage = async (req, res) => {
   try {
     let posts = await PostController.getAllPosts();
     for (let i = 0; i < posts.length; i++) {
-      let result = await CommentController.getCommentsByPostId(posts[i].id)
-      posts[i].dataValues.comments = result
+      let result = await CommentController.getCommentsByPostId(posts[i].id);
+      let handle = await UserController.getUsername(posts[i].userId);
+      posts[i].dataValues.comments = result;
+      posts[i].dataValues.handle = handle;
     }
     res.send(posts);
   } catch(err) {
@@ -63,10 +65,12 @@ module.exports.showFeedPage = async (req, res) => {
     let followedUsersIds = await FollowController.getUsersThatUserIsFollowing(userId);
     followedUsersIds.push(userId);
     console.log('these are the followeduserids',followedUsersIds);
-    let userPosts = await PostController.getFeedPosts(followedUsersIds)
+    let userPosts = await PostController.getFeedPosts(followedUsersIds);
     for (let i = 0; i < userPosts.length; i++) {
-      let result = await CommentController.getCommentsByPostId(userPosts[i].id)
-      userPosts[i].dataValues.comments = result
+      let result = await CommentController.getCommentsByPostId(userPosts[i].id);
+      let handle = await UserController.getUsername(posts[i].userId);
+      userPosts[i].dataValues.comments = result;
+      userPosts[i].dataValues.handle = handle;
     }
     res.send(userPosts);
   } catch(err) {
@@ -125,6 +129,16 @@ module.exports.toggleLike = async (req, res) => {
     let userId = await UserController.getUserId(req.body.handle);
     let result = await LikeController.toggleLike(userId, req.body.postId);
     await PostController.modifyLikes(req.body.postId, result);
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+module.exports.getUsernameForPost = async (req, res) => {
+  try {
+    let userId = await UserController.getUserId(req.query.handle);
+    let result = await UserController.getUsername(userId);
     res.send(result);
   } catch (err) {
     console.log(err);

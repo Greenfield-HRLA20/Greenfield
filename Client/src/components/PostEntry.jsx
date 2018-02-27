@@ -42,6 +42,7 @@ class ConnectedPostEntry extends React.Component {
   render() {
     return (
     <div>
+      <div><a href="#"> {this.props.post.handle} </a> </div>
       {this.props.post.mediaType === 'image/jpeg' &&
         <img src= {this.props.post.url}/>
       }

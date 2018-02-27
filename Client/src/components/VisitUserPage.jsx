@@ -8,6 +8,7 @@ class ConnectedVisitUserPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      
       userPosts : [],
       disableButton: false
     }
@@ -26,6 +27,12 @@ class ConnectedVisitUserPage extends React.Component {
     }).catch((err) => {
       console.log('Error getting all post', err);
     })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.visitUsername !== nextProps.visitUsername) {
+      console.log('runs this')
+    }
   }
   
   render() {

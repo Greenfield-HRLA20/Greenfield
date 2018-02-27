@@ -16,17 +16,12 @@ const mapStateToProps = state => {
 class ConnectedCommentEntry extends React.Component {
   constructor(props) {
     super(props);
-    this.visitUser = this.visitUser.bind(this);
-  }
-
-  visitUser (username) {
-    this.props.updateCurrentView(<VisitUserPage visitUsername={username} />)
   }
 
   render() {
     return (
     <div>
-      <a onClick={() => this.visitUser(this.props.comment[0])}>{this.props.comment[0]}: </a>{this.props.comment[1]}
+      <a onClick={() => this.props.visitUser(this.props.comment[0])}>{this.props.comment[0]}: </a>{this.props.comment[1]}
     </div>
     )
   }

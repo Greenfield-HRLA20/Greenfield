@@ -94,7 +94,7 @@ module.exports.showProfilePage = async (req, res) => {
 module.exports.submitPost = async (req, res) => {
   try {
     let userId = await UserController.getUserId(req.body.handle);
-    let post = await PostController.addPost(req.body.caption, req.body.postUrl, userId);
+    let post = await PostController.submitPost(req.body.caption, req.body.postUrl, userId, req.body.mediaType);
     res.send(post);
   } catch (err) {
     console.log('something went wrong with submitting a post', err);

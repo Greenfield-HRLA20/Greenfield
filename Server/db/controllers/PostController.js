@@ -41,12 +41,13 @@ module.exports = {
     }
   },
 
-  addPost: async (caption, postUrl, userId) => {
+  submitPost: async (caption, postUrl, userId, mediaType) => {
     try {
       let result = await Post.create({
         caption: caption,
         url: postUrl,
-        userId: userId
+        userId: userId,
+        mediaType: mediaType
       });
       return result;
     } catch (err) {

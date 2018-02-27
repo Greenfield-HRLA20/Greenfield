@@ -80,10 +80,6 @@ class ConnectedPostEntry extends React.Component {
           <source src={this.props.post.url} type="video/mp4"/>
         </video>
       }
-      
-      <div>{this.props.post.caption}</div>
-      <div>{this.props.post.likeCount}</div>
-      <img src={this.props.post.url}/>
       <div><button onClick={this.clickLikeButton}>{this.props.post.likeCount} likes</button></div>
       <div><strong>{this.props.post.caption}</strong></div>
       <ul>

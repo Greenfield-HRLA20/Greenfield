@@ -60,7 +60,7 @@ class ConnectedSubmit extends React.Component {
       <div>
         <h1><Bar /></h1>
         <h1>Submit page!!!!</h1>
-
+      {console.log(this.props.mediaType)}
         {this.props.mediaType === 'image/jpeg' &&
           <img src={this.props.urlState} alt="" />
         }

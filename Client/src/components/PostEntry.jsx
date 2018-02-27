@@ -24,15 +24,12 @@ class ConnectedPostEntry extends React.Component {
     }
     this.setInput = this.setInput.bind(this);
     this.submitComment = this.submitComment.bind(this);
-<<<<<<< HEAD
     this.clickLikeButton = this.clickLikeButton.bind(this);
-=======
     this.visitUser = this.visitUser.bind(this);
   }
 
   visitUser (username) {
     this.props.updateCurrentView(<VisitUserPage visitUsername={username} />)
->>>>>>> [Client] Working on changing user page
   }
 
   setInput (e) {

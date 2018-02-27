@@ -4,7 +4,6 @@ const Post = require('./db/models/Post');
 const Comment = require('./db/models/Comment');
 const Like = require('./db/models/Like');
 const Follow = require('./db/models/Follow');
-const bluebird = require('bluebird');
 const CommentController = require('./db/controllers/CommentController.js');
 const FollowController = require('./db/controllers/FollowController.js');
 const LikeController = require('./db/controllers/LikeController.js');

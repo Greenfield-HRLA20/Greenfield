@@ -8,11 +8,13 @@ class ConnectedVisitUserPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userPosts : []
+      userPosts : [],
+      disableButton: false
     }
   }
 
   componentDidMount() {
+
     axios.get('/showProfilePage', {
       params: {
         user: this.props.visitUsername
@@ -32,7 +34,7 @@ class ConnectedVisitUserPage extends React.Component {
         <h1><Bar /></h1>
         <h1>{`THIS IS ${this.props.visitUsername}'S PAGE`}</h1>
         <div>
-          <button disabled={true}>Follow</button>
+          <button disabled={this.state.disableButton}>Follow</button>
         </div>
         <ul>
           {this.state.userPosts.map((post) => <PostEntry post={post} key={post.id}/>)}

@@ -29,6 +29,16 @@ class ConnectAccount extends React.Component {
     return (
       <div>
         <h1><Bar /></h1>
+        <div>
+          <h1>
+          <ul>
+            <li>Area</li>  
+            <li>For</li>
+            <li>Account</li>
+            <li>Changes</li>
+          </ul>
+          </h1>
+        </div>
         <ul>
           {this.state.myPosts.map((post) => <PostEntry post={post} key={post.id}/>)}
         </ul>

@@ -1,7 +1,15 @@
 import React from 'react'
 import CommentEntry from './CommentEntry.jsx'
+import VisitUserPage from './VisitUserPage.jsx'
 import axios from 'axios'
+import actions from '../redux/actions/index'
 import {connect} from 'react-redux';
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateCurrentView: view => dispatch(actions.updateCurrentView(view))
+  };
+};
 
 const mapStateToProps = state => {
   return {currentUser: state.currentUser}
@@ -17,6 +25,11 @@ class ConnectedPostEntry extends React.Component {
     this.setInput = this.setInput.bind(this);
     this.submitComment = this.submitComment.bind(this);
     this.clickLikeButton = this.clickLikeButton.bind(this);
+    this.visitUser = this.visitUser.bind(this);
+  }
+
+  visitUser (username) {
+    this.props.updateCurrentView(<VisitUserPage visitUsername={username} />)
   }
 
   setInput (e) {
@@ -70,7 +83,7 @@ class ConnectedPostEntry extends React.Component {
   render() {
     return (
     <div>
-      <div><a href="#"> {this.props.post.handle} </a> </div>
+      <div><a onClick={() => this.visitUser(this.props.post.handle)}> {this.props.post.handle} </a> </div>
       {this.props.post.mediaType === 'image/jpeg' &&
         <img src= {this.props.post.url}/>
       }
@@ -83,7 +96,7 @@ class ConnectedPostEntry extends React.Component {
       <div><button onClick={this.clickLikeButton}>{this.props.post.likeCount} likes</button></div>
       <div><strong>{this.props.post.caption}</strong></div>
       <ul>
-        {this.props.post.comments.map((comment, i) => <CommentEntry comment={comment} key={i} />)}
+        {this.props.post.comments.map((comment, i) => <CommentEntry comment={comment} key={i} visitUser={this.visitUser} />)}
       </ul>
       <input type="text" name="comment" value={this.state.comment} onChange={this.setInput} placeholder="Add Comment" />
       <button onClick={this.submitComment} >Submit</button>
@@ -92,6 +105,6 @@ class ConnectedPostEntry extends React.Component {
   }
 }
 
-const PostEntry = connect(mapStateToProps)(ConnectedPostEntry)
+const PostEntry = connect(mapStateToProps, mapDispatchToProps)(ConnectedPostEntry)
 
 export default PostEntry

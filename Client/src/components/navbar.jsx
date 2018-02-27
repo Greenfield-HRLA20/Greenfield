@@ -50,7 +50,6 @@ class ConnectedBar extends React.Component {
   }
 
   onClickUpdateView (view, value) {
-    console.log(value)
     this.props.updateCurrentView(view)
     this.props.updateNav(value) 
   }

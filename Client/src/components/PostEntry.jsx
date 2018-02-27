@@ -1,8 +1,10 @@
 import React from 'react'
 
-const ConnectedPostEntry = () => (
+const PostEntry = ({post}) => (
   <div>
-    Render Post Entry Here!
+    <img src={post.url}/>
+    <div>{post.caption}</div>
+    <div>{post.likeCount}</div>
   </div>
 )
 

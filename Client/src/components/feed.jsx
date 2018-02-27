@@ -22,6 +22,7 @@ class ConnectedFeed extends React.Component {
         user: this.props.currentUser.displayName
       }
     }).then((results) => {
+      console.log('results??', results);
       this.setState({
         feedPosts: results.data
       })

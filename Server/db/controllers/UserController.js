@@ -9,7 +9,6 @@ module.exports = {
       if (result[1]) {
         return result[0];
       } else {
-        console.log('that user already exists', result[0]);
         return 'That username already exists'
       }
 

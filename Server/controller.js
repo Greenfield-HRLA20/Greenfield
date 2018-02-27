@@ -58,14 +58,6 @@ module.exports.showExplorePage = async (req, res) => {
 
 
 module.exports.showFeedPage = async (req, res) => {
-  // Query for people you're following in users table
-  // make sure to add yourself to that list
-  // limit to ppl you're following and sort by createdAt
-  // go to the post table
-  // get all of the posts matching the ids of ppl you're following
-    // for each post, get each comment
-    // add comments to comments array for each post object
-  // send array back to client
   try {
     let userId = await UserController.getUserId(req.query.user);
     let followedUsersIds = await FollowController.getUsersThatUserIsFollowing(userId);
@@ -116,6 +108,15 @@ module.exports.addComment = async (req, res) => {
     res.send(comment);
   } catch (err) {
     console.log(err);
+  }
+}
+
+module.exports.addUser = async (req, res) => {
+  try {
+    let result = await UserController.checkAndOrSaveUser(req.body.handle);
+    res.send(result)
+  } catch (err) {
+    console.log('something went wrong with creating a user', err)
   }
 }
 

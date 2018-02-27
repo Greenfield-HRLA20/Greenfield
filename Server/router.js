@@ -41,6 +41,11 @@ router.route('/addComment')
   controller.addComment(req, res);
 })
 
+router.route('/addUser')
+.post((req, res) => {
+  controller.addUser(req, res);
+})
+
 router.route('/requestFollow')
 .post((req, res) => {
   controller.requestFollow(req, res);

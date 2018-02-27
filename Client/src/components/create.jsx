@@ -4,7 +4,7 @@ import Submit from './Submit.jsx';
 import actions from '../redux/actions/index';
 import {connect} from 'react-redux';
 import ReactFilestack from 'filestack-react';
-import api from '../../../filestack.config.js'
+// import api from '../../../filestack.config.js'
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -22,7 +22,7 @@ const ConnectedCreate = (props) => (
   <div>
     <h1><Bar /></h1>
     <ReactFilestack
-  apikey={api.key}
+  apikey='A00Yv3QHpR4GK06ER6lH9z'
   buttonText="Upload"
   buttonClass="buttonClass"
   options={{

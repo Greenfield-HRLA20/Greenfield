@@ -4,21 +4,22 @@ import PostEntry from './PostEntry.jsx'
 import axios from 'axios'
 import {connect} from 'react-redux'
 
-class ConnectAccount extends React.Component {
+class ConnectedVisitUserPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      myPosts : []
+      userPosts : []
     }
   }
+
   componentDidMount() {
     axios.get('/showProfilePage', {
       params: {
-        user: this.props.currentUser.displayName
+        user: this.props.visitUsername
       }
     }).then((results) => {
       this.setState({
-        myPosts: results.data
+        userPosts: results.data
       })
     }).catch((err) => {
       console.log('Error getting all post', err);
@@ -29,27 +30,22 @@ class ConnectAccount extends React.Component {
     return (
       <div>
         <h1><Bar /></h1>
+        <h1>{`THIS IS ${this.props.visitUsername}'S PAGE`}</h1>
         <div>
-          <h1>
-          <ul>
-            <li>Area</li>  
-            <li>For</li>
-            <li>Account</li>
-            <li>Changes</li>
-          </ul>
-          </h1>
+          <button disabled={true}>Follow</button>
         </div>
         <ul>
-          {this.state.myPosts.map((post) => <PostEntry post={post} key={post.id}/>)}
+          {this.state.userPosts.map((post) => <PostEntry post={post} key={post.id}/>)}
         </ul>
       </div>
     )
   }  
 }
+
 const mapStateToProps = state => {
   return {currentUser: state.currentUser}
 }
 
-const Account = connect(mapStateToProps)(ConnectAccount)
+const VisitUserPage = connect(mapStateToProps)(ConnectedVisitUserPage)
 
-export default Account
+export default VisitUserPage

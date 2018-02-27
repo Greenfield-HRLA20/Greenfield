@@ -71,5 +71,4 @@ module.exports = {
       console.log("err with modifying results", err);
     }
   }
-
 }

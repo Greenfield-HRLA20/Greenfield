@@ -49,7 +49,6 @@ class ConnectedBar extends React.Component {
     this.props.updateNav('feed')
   }
 
-
   onClickUpdateView (view, value) {
     console.log(value)
     this.props.updateCurrentView(view)

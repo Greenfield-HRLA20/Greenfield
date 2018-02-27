@@ -16,6 +16,7 @@ class Login extends React.Component {
   componentDidMount () {
     auth.ui.start('#firebaseui-auth-container', auth.uiConfig);
   }
+  
   setInput (e) {
     e.preventDefault();
     this.setState({

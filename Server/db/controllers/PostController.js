@@ -69,7 +69,7 @@ module.exports = {
         })
       }
     } catch (err) {
-      console.log("err with modifying results", err);
+      console.log("Error modifying results", err);
     }
   }
 }

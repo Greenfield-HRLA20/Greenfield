@@ -56,10 +56,4 @@ router.route('/respondFollow')
   controller.respondFollow(req, res);
 })
 
-// GET login page
-// GET signup page
-// Login to account
-// Signup (create account)
-// Logout
-
 module.exports = router;

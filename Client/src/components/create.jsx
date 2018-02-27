@@ -1,25 +1,51 @@
-import React from 'react'
-import Bar from './Navbar.jsx'
+import React from 'react';
+import Bar from './Navbar.jsx';
+import Submit from './Submit.jsx';
+import actions from '../redux/actions/index';
+import {connect} from 'react-redux';
 import ReactFilestack from 'filestack-react';
 
+const mapDispatchToProps = dispatch => {
+  return {
+    updateCurrentView: view => dispatch(actions.updateCurrentView(view)),
+    storeUrl: url => dispatch(actions.storeUrl(url))
+  };
+};
 
-const Create = () => (
+const mapStateToProps = state => {
+  return {currentView: state.currentView,
+  }
+} 
+
+const ConnectedCreate = (props) => (
   <div>
     <h1><Bar /></h1>
     <ReactFilestack
-  apikey='AkoskuWdQg68HzPb8fzwUz'
+  apikey='AyszOXn22QZmk9G5AKHygz'
   buttonText="Upload"
   buttonClass="buttonClass"
   options={{
     accept: ['image/*', 'video/mp4'],
     fromSources: ['local_file_system','imagesearch', 'url', 'facebook', 'googledrive'],
-    imageDim: [400, 400],
     maxFiles: 1,
-    //  onSuccess={this.successFunction}
-    //  onError={this.failureFunction}
   }}
+  onSuccess = {(response) => {
+    // console.log('Success!', response);
+    console.log(response.filesUploaded[0].url);
+    let rawUrl = response.filesUploaded[0].url;
+    console.log(rawUrl.split('/'));
+    rawUrl = rawUrl.split('/');
+    rawUrl[2] += '/resize=width:200,height:200,fit:crop';
+    rawUrl = rawUrl.join('/');
+    console.log('THIS IS IT', rawUrl);
+    props.storeUrl(rawUrl);
+    props.updateCurrentView(<Submit />);
+  }}
+  onError={(err) => console.log(err)}
     />
   </div>
 )
+
+const Create = connect(mapStateToProps, mapDispatchToProps)(ConnectedCreate);
 
 export default Create

@@ -8,17 +8,25 @@ class ConnectedVisitUserPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      
       userPosts : [],
       disableButton: false
     }
   }
 
   componentDidMount() {
+    this.getPost(this.props.visitUsername)
+  }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.visitUsername !== nextProps.visitUsername) {
+      this.getPost(nextProps.visitUsername)
+    }
+  }
+  
+  getPost(username) {
     axios.get('/showProfilePage', {
       params: {
-        user: this.props.visitUsername
+        user: username
       }
     }).then((results) => {
       this.setState({
@@ -29,11 +37,6 @@ class ConnectedVisitUserPage extends React.Component {
     })
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.visitUsername !== nextProps.visitUsername) {
-      console.log('runs this')
-    }
-  }
   
   render() {
     return (

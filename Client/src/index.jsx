@@ -6,6 +6,7 @@ import auth from './Firebase';
 import { Provider, connect } from 'react-redux';
 import store from "./redux";
 import actions from './redux/actions/index'
+import axios from 'axios'
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -35,6 +36,9 @@ class ConnectedMain extends React.Component {
       })
       if (user) {
         this.props.updateUser(user)
+        axios.post('/addUser', {
+          handle: user.displayName
+        })
         this.props.updateCurrentView(<Feed />)
       }
     });

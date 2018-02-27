@@ -1,11 +1,6 @@
 const router = require('express').Router();
 const controller = require('./controller.js');
 
-router.route('/')
-.get((req, res) => {
-  controller.handleHomePage(req, res);
-})
-
 /* GET requests to each page */
 
 router.route('/showExplorePage')
@@ -44,6 +39,11 @@ router.route('/toggleLike')
 router.route('/addComment')
 .post((req, res) => {
   controller.addComment(req, res);
+})
+
+router.route('/addUser')
+.post((req, res) => {
+  controller.addUser(req, res);
 })
 
 router.route('/requestFollow')

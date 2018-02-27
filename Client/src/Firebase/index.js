@@ -34,7 +34,8 @@ var uiConfig = {
     // firebase.auth.GithubAuthProvider.PROVIDER_ID,
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
     // firebase.auth.PhoneAuthProvider.PROVIDER_ID
-  ]
+  ],
+  credentialHelper: firebaseui.auth.CredentialHelper.NONE
 };
 
 module.exports.firebase = firebase;

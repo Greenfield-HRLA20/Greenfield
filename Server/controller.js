@@ -156,7 +156,10 @@ module.exports.toggleLike = async (req, res) => {
 };
 
 module.exports.requestFollow = async (req, res) => {
+<<<<<<< HEAD
   console.log('in the controller!');
+=======
+>>>>>>> Commit for rebase
   try {
     const userId = await UserController.getUserId(req.body.userUid);
     const targetId = await UserController.getUserId(req.body.targetUserUid);

@@ -63,11 +63,10 @@ module.exports.showFeedPage = async (req, res) => {
     let userId = await UserController.getUserId(req.query.user);
     let followedUsersIds = await FollowController.getUsersThatUserIsFollowing(userId);
     followedUsersIds.push(userId);
-    console.log('these are the followeduserids',followedUsersIds);
     let userPosts = await PostController.getFeedPosts(followedUsersIds);
     for (let i = 0; i < userPosts.length; i++) {
       let result = await CommentController.getCommentsByPostId(userPosts[i].id);
-      let handle = await UserController.getUsername(posts[i].userId);
+      let handle = await UserController.getUsername(userPosts[i].userId);
       userPosts[i].dataValues.comments = result;
       userPosts[i].dataValues.handle = handle;
     }

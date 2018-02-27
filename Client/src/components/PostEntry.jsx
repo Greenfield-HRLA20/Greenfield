@@ -11,10 +11,12 @@ class ConnectedPostEntry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      comment: ''
+      comment: '',
+      likeCount: this.props.post.likeCount
     }
     this.setInput = this.setInput.bind(this);
     this.submitComment = this.submitComment.bind(this);
+    this.clickLikeButton = this.clickLikeButton.bind(this);
   }
 
   setInput (e) {
@@ -25,17 +27,43 @@ class ConnectedPostEntry extends React.Component {
   }
 
   submitComment () {
-    let handle = this.props.currentUser.displayName;
+    let handle = this.props.currentUser.displayName
+    let comment = this.state.comment
     axios.post('/addComment', {
       handle: handle,
       postId: this.props.post.id,
       comment: this.state.comment
     }).then((result) => {
       console.log('this is from the server', result)
-      this.props.post.comments.push([handle, this.state.comment])
+      this.props.post.comments.push([handle, comment])
       this.setState({
         comment: ''
       })
+    }).catch((err) => {
+      console.log('Error submitting post ', err);
+    })
+  }
+
+  clickLikeButton () {
+    let handle = this.props.currentUser.displayName;
+    let postId = this.props.post.id;
+    axios.post('/toggleLike', {
+      handle: handle,
+      postId: postId
+    }).then((result) => {
+      console.log('Successfully toggled like! ', result);
+      console.log(this.props.post)
+      if (result.data === true) {
+        this.setState({
+          likeCount: this.props.post.likeCount++
+        })
+      } else {
+        this.setState({
+          likeCount: this.props.post.likeCount--
+        })
+      }
+    }).catch((err) => {
+      console.log('Error toggling like button ', err);
     })
   }
 
@@ -55,6 +83,9 @@ class ConnectedPostEntry extends React.Component {
       
       <div>{this.props.post.caption}</div>
       <div>{this.props.post.likeCount}</div>
+      <img src={this.props.post.url}/>
+      <div><button onClick={this.clickLikeButton}>{this.props.post.likeCount} likes</button></div>
+      <div><strong>{this.props.post.caption}</strong></div>
       <ul>
         {this.props.post.comments.map((comment, i) => <CommentEntry comment={comment} key={i} />)}
       </ul>

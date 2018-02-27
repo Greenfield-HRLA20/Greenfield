@@ -22,7 +22,6 @@ const ConnectedCreate = (props) => (
   <div>
     <h1><Bar /></h1>
     <ReactFilestack
-<<<<<<< HEAD
   apikey={api.key}
   buttonText="Upload"
   buttonClass="buttonClass"
@@ -54,25 +53,6 @@ const ConnectedCreate = (props) => (
     props.updateCurrentView(<Submit mediaType={response.filesUploaded[0].mimetype}/>);
   }}
   onError={(err) => console.log(err)}
-=======
-      apikey={api.key}
-      buttonText="Upload"
-      buttonClass="buttonClass"
-      options={{
-        accept: ['image/*', 'video/mp4'],
-        fromSources: ['local_file_system','imagesearch', 'url', 'facebook', 'googledrive'],
-        maxFiles: 1,
-      }}
-      onSuccess = {(response) => {
-        let rawUrl = response.filesUploaded[0].url;
-        rawUrl = rawUrl.split('/');
-        rawUrl[2] += '/resize=width:200,height:200,fit:crop';
-        rawUrl = rawUrl.join('/');
-        props.storeUrl(rawUrl);
-        props.updateCurrentView(<Submit />);
-      }}
-      onError={(err) => console.log(err)}
->>>>>>> minor changes/updating package.json
     />
   </div>
 )

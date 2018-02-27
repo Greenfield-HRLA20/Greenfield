@@ -9,7 +9,8 @@ const Post = connection.define('post', {
   likeCount: {
     type: Sequelize.INTEGER,
     defaultValue: 0
-  }
+  },
+  mediaType: Sequelize.STRING,
 });
 
 // associations

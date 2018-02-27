@@ -3,7 +3,6 @@ import CommentEntry from './CommentEntry.jsx'
 import axios from 'axios'
 import {connect} from 'react-redux';
 
-
 const mapStateToProps = state => {
   return {currentUser: state.currentUser}
 } 
@@ -26,7 +25,7 @@ class ConnectedPostEntry extends React.Component {
   }
 
   submitComment () {
-    let handle = this.props.currentUser.displayName
+    let handle = this.props.currentUser.displayName;
     axios.post('/addComment', {
       handle: handle,
       postId: this.props.post.id,
@@ -43,7 +42,16 @@ class ConnectedPostEntry extends React.Component {
   render() {
     return (
     <div>
-      <img src={this.props.post.url}/>
+      {this.props.post.mediaType === 'image/jpeg' &&
+        <img src= {this.props.post.url}/>
+      }
+
+      {this.props.post.mediaType === 'video/mp4' &&
+        <video width="200" height="200" controls controlsList="nodownload">
+          <source src={this.props.post.url} type="video/mp4"/>
+        </video>
+      }
+      
       <div>{this.props.post.caption}</div>
       <div>{this.props.post.likeCount}</div>
       <ul>

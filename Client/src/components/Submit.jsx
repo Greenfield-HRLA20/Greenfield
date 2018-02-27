@@ -38,18 +38,16 @@ class ConnectedSubmit extends React.Component {
   }
 
   submitPost() {
-    console.log('axios time!');
-
     axios.post('/submitPost', {
       handle: this.props.currentUser.displayName, 
       caption: this.state.caption, 
-      postUrl: this.props.urlState
+      postUrl: this.props.urlState,
+      mediaType: this.props.mediaType,
     })
     .then((result) => {
       console.log(result);
       this.props.updateCurrentView(<Feed />);
       this.props.updateNav('feed');
-      // redirect to feed page
     })
     .catch((err) => {
       console.log('Error submitting post', err)
@@ -62,7 +60,17 @@ class ConnectedSubmit extends React.Component {
       <div>
         <h1><Bar /></h1>
         <h1>Submit page!!!!</h1>
-        <img src={this.props.urlState} alt="" />
+
+        {this.props.mediaType === 'image/jpeg' &&
+          <img src={this.props.urlState} alt="" />
+        }
+
+        {this.props.mediaType === 'video/mp4' &&
+          <video width="200" height="200" controls>
+            <source src={this.props.urlState} type="video/mp4"/>
+          </video>
+        }
+
         <div>
           Enter your caption here! <input type="text" name="caption" onChange={(e) => this.setInput(e)}/>
           <input type="submit" value="Submit" onClick={this.submitPost} />

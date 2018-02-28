@@ -5,11 +5,9 @@ import axios from 'axios';
 import actions from '../redux/actions/index';
 import { connect } from 'react-redux';
 
-const mapDispatchToProps = dispatch => {
-  return {
-    updateCurrentView: view => dispatch(actions.updateCurrentView(view))
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  updateCurrentView: view => dispatch(actions.updateCurrentView(view)),
+});
 
 const mapStateToProps = state => {
   return { currentUser: state.currentUser };
@@ -99,7 +97,7 @@ class ConnectedPostEntry extends React.Component {
             {this.props.post.handle}{' '}
           </a>{' '}
         </div>
-        {this.props.post.mediaType === 'image/jpeg' && (
+        {this.props.post.mediaType.includes('image') && (
           <img src={this.props.post.url} />
         )}
 

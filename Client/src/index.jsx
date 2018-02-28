@@ -8,38 +8,34 @@ import store from './redux';
 import actions from './redux/actions/index';
 import axios from 'axios';
 
-const mapDispatchToProps = dispatch => {
-  return {
-    updateUser: user => dispatch(actions.updateUser(user)),
-    updateCurrentView: view => dispatch(actions.updateCurrentView(view))
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  updateUser: user => dispatch(actions.updateUser(user)),
+  updateCurrentView: view => dispatch(actions.updateCurrentView(view)),
+});
 
-const mapStateToProps = state => {
-  return {
-    currentUser: state.currentUser,
-    currentView: state.currentView
-  };
-};
+const mapStateToProps = state => ({
+  currentUser: state.currentUser,
+  currentView: state.currentView,
+});
 
 class ConnectedMain extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true
+      loading: true,
     };
   }
 
   componentDidMount() {
-    this.authSubscription = auth.firebase.auth().onAuthStateChanged(user => {
+    this.authSubscription = auth.firebase.auth().onAuthStateChanged((user) => {
       this.setState({
-        loading: false
+        loading: false,
       });
       if (user) {
         this.props.updateUser(user);
         axios.post('/addUser', {
           uid: user.uid,
-          handle: user.displayName
+          handle: user.displayName,
         });
         this.props.updateCurrentView(<Feed />);
       }
@@ -57,9 +53,8 @@ class ConnectedMain extends React.Component {
 
     if (this.props.currentUser) {
       return this.props.currentView;
-    } else {
-      return <Login />;
     }
+    return <Login />;
   }
 }
 
@@ -70,5 +65,5 @@ ReactDOM.render(
   <Provider store={store}>
     <Main />
   </Provider>,
-  app
+  app,
 );

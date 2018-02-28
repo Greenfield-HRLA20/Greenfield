@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 const User = connection.define('user', {
   uid: {
     type: Sequelize.STRING,
-    unique: true
+    unique: true,
   },
   handle: Sequelize.STRING
 });

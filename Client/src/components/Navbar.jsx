@@ -7,12 +7,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import RaisedButton from 'material-ui/RaisedButton';
-import {
-  Toolbar,
-  ToolbarGroup,
-  ToolbarSeparator,
-  ToolbarTitle
-} from 'material-ui/Toolbar';
+import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
 import auth from '../Firebase';
 import { connect } from 'react-redux';
 import actions from '../redux/actions/index';
@@ -21,21 +16,17 @@ import Explore from './Explore.jsx';
 import Create from './Create.jsx';
 import Account from './Account.jsx';
 
-const mapDispatchToProps = dispatch => {
-  return {
-    updateCurrentView: view => dispatch(actions.updateCurrentView(view)),
-    logoutUser: () => dispatch(actions.logoutUser()),
-    updateNav: string => dispatch(actions.updateNav(string))
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  updateCurrentView: view => dispatch(actions.updateCurrentView(view)),
+  logoutUser: () => dispatch(actions.logoutUser()),
+  updateNav: string => dispatch(actions.updateNav(string)),
+});
 
-const mapStateToProps = state => {
-  return {
-    currentView: state.currentView,
-    currentUser: state.currentUser,
-    currentNav: state.currentNav
-  };
-};
+const mapStateToProps = state => ({
+  currentView: state.currentView,
+  currentUser: state.currentUser,
+  currentNav: state.currentNav,
+});
 
 class ConnectedBar extends React.Component {
   constructor(props) {
@@ -48,9 +39,9 @@ class ConnectedBar extends React.Component {
     auth.firebase
       .auth()
       .signOut()
-      .catch(function(error) {
-        var errorCode = error.code;
-        var errorMessage = error.message;
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
         console.log(errorCode, errorMessage);
       });
     this.props.logoutUser();
@@ -68,33 +59,29 @@ class ConnectedBar extends React.Component {
     return (
       <MuiThemeProvider>
         <Toolbar>
-          <ToolbarGroup firstChild={true}>
+          <ToolbarGroup firstChild>
             <DropDownMenu value={this.props.currentNav}>
               <MenuItem
-                value={'feed'}
+                value="feed"
                 primaryText="Home / Feed"
                 onClick={() => this.onClickUpdateView(<Feed />, 'feed')}
               />
               <MenuItem
-                value={'explore'}
+                value="explore"
                 primaryText="Explore"
                 onClick={() => this.onClickUpdateView(<Explore />, 'explore')}
               />
               <MenuItem
-                value={'create'}
+                value="create"
                 primaryText="Create"
                 onClick={() => this.onClickUpdateView(<Create />, 'create')}
               />
               <MenuItem
-                value={'account'}
+                value="account"
                 primaryText="Account"
                 onClick={() => this.onClickUpdateView(<Account />, 'account')}
               />
-              <MenuItem
-                value={'logout'}
-                primaryText="Logout"
-                onClick={this.logout}
-              />
+              <MenuItem value="logout" primaryText="Logout" onClick={this.logout} />
             </DropDownMenu>
           </ToolbarGroup>
         </Toolbar>

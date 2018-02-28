@@ -1,27 +1,27 @@
 const firebase = require('firebase');
-var firebaseui = require('firebaseui');
+const firebaseui = require('firebaseui');
 const api = require('../../../firebase.config.js');
 
-var config = {
+const config = {
   apiKey: api.key,
   authDomain: 'instagram-clone-f1b85.firebaseapp.com',
   databaseURL: 'https://instagram-clone-f1b85.firebaseio.com',
   projectId: 'instagram-clone-f1b85',
   storageBucket: '',
-  messagingSenderId: '90516925758'
+  messagingSenderId: '90516925758',
 };
 
 firebase.initializeApp(config);
-var ui = new firebaseui.auth.AuthUI(firebase.auth());
+const ui = new firebaseui.auth.AuthUI(firebase.auth());
 
-var uiConfig = {
+const uiConfig = {
   callbacks: {
-    signInSuccess: function(currentUser, credential) {
+    signInSuccess(currentUser, credential) {
       return false;
     },
-    uiShown: function() {
+    uiShown() {
       document.getElementById('loader').style.display = 'none';
-    }
+    },
   },
   signInFlow: 'popup',
   // signInSuccessUrl: '/',
@@ -31,10 +31,10 @@ var uiConfig = {
     // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
     // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
     // firebase.auth.GithubAuthProvider.PROVIDER_ID,
-    firebase.auth.EmailAuthProvider.PROVIDER_ID
+    firebase.auth.EmailAuthProvider.PROVIDER_ID,
     // firebase.auth.PhoneAuthProvider.PROVIDER_ID
   ],
-  credentialHelper: firebaseui.auth.CredentialHelper.NONE
+  credentialHelper: firebaseui.auth.CredentialHelper.NONE,
 };
 
 module.exports.firebase = firebase;

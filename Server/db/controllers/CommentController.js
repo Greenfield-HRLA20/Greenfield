@@ -6,10 +6,10 @@ module.exports = {
   // add a new comment to comments table
   addComment: async (msg, postId, userId) => {
     try {
-      let result = await Comment.create({
+      const result = await Comment.create({
         Comment: msg,
-        postId: postId,
-        userId: userId
+        postId,
+        userId,
       });
       return result;
     } catch (err) {
@@ -19,23 +19,23 @@ module.exports = {
 
   // given a post ID
   // give all of the comments for that post
-  getCommentsByPostId: async id => {
+  getCommentsByPostId: async (id) => {
     try {
-      let result = await Comment.findAll({
+      const result = await Comment.findAll({
         where: { postId: id },
-        order: [['createdAt', 'ASC']]
+        order: [['createdAt', 'ASC']],
       });
-      let filtered = [];
+      const filtered = [];
       for (let i = 0; i < result.length; i++) {
         filtered.push([
           await UserController.getUsername(result[i].userId),
           await UserController.getUid(result[i].userId),
-          result[i].Comment
+          result[i].Comment,
         ]);
       }
       return filtered;
     } catch (err) {
       console.log(err);
     }
-  }
+  },
 };

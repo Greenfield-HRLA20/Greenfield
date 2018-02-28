@@ -8,7 +8,7 @@ const Post = connection.define('post', {
   createdAt: Sequelize.DATE,
   likeCount: {
     type: Sequelize.INTEGER,
-    defaultValue: 0
+    defaultValue: 0,
   },
   mediaType: Sequelize.STRING
 });

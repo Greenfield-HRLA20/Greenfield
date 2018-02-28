@@ -8,18 +8,18 @@ class ConnectedExplore extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      allPosts: []
+      allPosts: [],
     };
   }
   componentDidMount() {
     axios
       .get('/showExplorePage')
-      .then(results => {
+      .then((results) => {
         this.setState({
-          allPosts: results.data
+          allPosts: results.data,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log('Error getting all post', err);
       });
   }
@@ -30,18 +30,12 @@ class ConnectedExplore extends React.Component {
         <h1>
           <Bar />
         </h1>
-        <ul>
-          {this.state.allPosts.map(post => (
-            <PostEntry post={post} key={post.id} />
-          ))}
-        </ul>
+        <ul>{this.state.allPosts.map(post => <PostEntry post={post} key={post.id} />)}</ul>
       </div>
     );
   }
 }
-const mapStateToProps = state => {
-  return { currentUser: state.currentUser };
-};
+const mapStateToProps = state => ({ currentUser: state.currentUser });
 
 const Explore = connect(mapStateToProps)(ConnectedExplore);
 

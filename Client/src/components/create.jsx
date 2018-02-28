@@ -31,23 +31,14 @@ const ConnectedCreate = (props) => (
     maxFiles: 1,
   }}
   onSuccess = {(response) => {
-    console.log('Uplaod success!', response);
-// if it's a pic, do what we've done before
-// else, do something different for videos!
     if(response.filesUploaded[0].mimetype === 'image/jpeg') {
-      // resizing/cropping for consistent image sizing
-
-      // console.log(response.filesUploaded[0].url);
       let rawUrl = response.filesUploaded[0].url;
-      // console.log(rawUrl.split('/'));
       rawUrl = rawUrl.split('/');
       rawUrl[2] += '/resize=width:200,height:200,fit:crop';
       rawUrl = rawUrl.join('/');
-      // console.log('THIS IS IT', rawUrl);
       props.storeUrl(rawUrl);
 
     } else if (response.filesUploaded[0].mimetype === 'video/mp4'){
-      console.log('storing this url: ', response.filesUploaded[0].url);
       props.storeUrl(response.filesUploaded[0].url);
     }
     props.updateCurrentView(<Submit mediaType={response.filesUploaded[0].mimetype}/>);

@@ -47,7 +47,6 @@ class ConnectedPostEntry extends React.Component {
       postId: this.props.post.id,
       comment: this.state.comment
     }).then((result) => {
-      console.log('this is from the server', result)
       this.props.post.comments.push([handle, comment])
       this.setState({
         comment: ''
@@ -64,8 +63,6 @@ class ConnectedPostEntry extends React.Component {
       handle: handle,
       postId: postId
     }).then((result) => {
-      console.log('Successfully toggled like! ', result);
-      console.log(this.props.post)
       if (result.data === true) {
         this.setState({
           likeCount: this.props.post.likeCount++

@@ -4,8 +4,6 @@ module.exports = {
   checkAndOrSaveUser: async (user) => {
     try {
       let result = await User.findOrCreate({where: {handle: user} })
-      console.log(result);
-
       if (result[1]) {
         return result[0];
       } else {

@@ -3,14 +3,26 @@ import Bar from './Navbar.jsx'
 import PostEntry from './PostEntry.jsx'
 import axios from 'axios'
 import {connect} from 'react-redux'
+import Request from './Request.jsx'
 
 class ConnectAccount extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      myPosts : []
+      myPosts : [],
+      myRequests: []
     }
+    this.updateRequestList = this.updateRequestList.bind(this);
   }
+
+  updateRequestList (index) {
+    this.state.myRequests.splice(index, 1);
+    this.setState({
+      myRequests: this.state.myRequests
+    })
+  }
+
+
   componentDidMount() {
     axios.get('/showProfilePage', {
       params: {
@@ -22,6 +34,17 @@ class ConnectAccount extends React.Component {
       })
     }).catch((err) => {
       console.log('Error getting all post', err);
+    })
+    axios.get('/getPendingFollowRequests', {
+      params: {
+        userName: this.props.currentUser.displayName
+      }
+    }).then((results) => {
+      this.setState({
+        myRequests: results.data
+      })
+    }).catch((err) => {
+      console.log('Error getting follow requests,', err);
     })
   }
   
@@ -38,6 +61,10 @@ class ConnectAccount extends React.Component {
             <li>Changes</li>
           </ul>
           </h1>
+          <ul>
+            {this.state.myRequests.map((request, i) => 
+            <Request updateRequestList={this.updateRequestList} request={request} key={i} index={i}/>)}
+          </ul>
         </div>
         <ul>
           {this.state.myPosts.map((post) => <PostEntry post={post} key={post.id}/>)}

@@ -56,10 +56,14 @@ router.route('/respondFollow')
   controller.respondFollow(req, res);
 })
 
-// GET login page
-// GET signup page
-// Login to account
-// Signup (create account)
-// Logout
+router.route('/checkFollowRelationship')
+.get((req, res) => {
+  controller.checkFollowRelationship(req, res);
+})
+
+router.route('/getPendingFollowRequests')
+.get((req, res) => {
+  controller.getPendingFollowRequests(req, res);
+})
 
 module.exports = router;

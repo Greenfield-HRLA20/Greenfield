@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 const User = require('./User');
 
 const Follow = connection.define('follow', {
-  followerId: Sequelize.INTEGER,
+  targetId: Sequelize.INTEGER,
   requestStatus: {type: Sequelize.BOOLEAN, defaultValue: false} 
 });
 

@@ -55,13 +55,6 @@ class ConnectedBar extends React.Component {
   }
 
   componentDidMount() {
-    // axios.get(`http://localhost:1337/${this.state.value}`).then(res => {
-    //   console.log(res);
-    // }).catch(function(error) {
-    //   if (error) {
-    //     console.log(error);
-    //   }
-    // })
   }
 
   render() {

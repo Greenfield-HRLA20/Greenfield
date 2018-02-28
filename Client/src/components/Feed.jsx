@@ -4,15 +4,13 @@ import PostEntry from './PostEntry.jsx';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-const mapStateToProps = state => {
-  return { currentUser: state.currentUser };
-};
+const mapStateToProps = state => ({ currentUser: state.currentUser });
 
 class ConnectedFeed extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      feedPosts: []
+      feedPosts: [],
     };
   }
 
@@ -20,15 +18,15 @@ class ConnectedFeed extends React.Component {
     axios
       .get('/showFeedPage', {
         params: {
-          user: this.props.currentUser.uid
-        }
+          user: this.props.currentUser.uid,
+        },
       })
-      .then(results => {
+      .then((results) => {
         this.setState({
-          feedPosts: results.data
+          feedPosts: results.data,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log('Error getting all post', err);
       });
   }
@@ -39,11 +37,7 @@ class ConnectedFeed extends React.Component {
         <h1>
           <Bar />
         </h1>
-        <ul>
-          {this.state.feedPosts.map(post => (
-            <PostEntry post={post} key={post.id} />
-          ))}
-        </ul>
+        <ul>{this.state.feedPosts.map(post => <PostEntry post={post} key={post.id} />)}</ul>
       </div>
     );
   }

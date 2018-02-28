@@ -8,7 +8,7 @@ const rootReducer = combineReducers({
   currentUser,
   currentView,
   currentNav,
-  urlState
+  urlState,
 });
 
 export default rootReducer;

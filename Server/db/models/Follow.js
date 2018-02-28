@@ -4,13 +4,13 @@ const User = require('./User');
 
 const Follow = connection.define('follow', {
   targetId: Sequelize.INTEGER,
-  requestStatus: { type: Sequelize.BOOLEAN, defaultValue: false }
+  requestStatus: { type: Sequelize.BOOLEAN, defaultValue: false },
 });
 
 // associations
 Follow.belongsTo(User, {
   foreignKey: { allowNull: false, name: 'userId' },
-  onDelete: 'CASCADE'
+  onDelete: 'CASCADE',
 });
 
 module.exports = Follow;

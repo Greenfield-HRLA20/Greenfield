@@ -23,29 +23,29 @@ connection.authenticate().then(() => {
             .then(() => {
               console.log('Like table synced!');
             })
-            .catch(err => {
+            .catch((err) => {
               console.log(err);
             });
           Comment.sync({ force: false })
             .then(() => {
               console.log('Comment table synced!');
             })
-            .catch(err => {
+            .catch((err) => {
               console.log(err);
             });
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
       Follow.sync({ force: false })
         .then(() => {
           console.log('Follow table synced!');
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 });
@@ -54,11 +54,11 @@ connection.authenticate().then(() => {
 
 module.exports.showExplorePage = async (req, res) => {
   try {
-    let posts = await PostController.getAllPosts();
+    const posts = await PostController.getAllPosts();
     for (let i = 0; i < posts.length; i++) {
-      let result = await CommentController.getCommentsByPostId(posts[i].id);
-      let handle = await UserController.getUsername(posts[i].userId);
-      let uid = await UserController.getUid(posts[i].userId);
+      const result = await CommentController.getCommentsByPostId(posts[i].id);
+      const handle = await UserController.getUsername(posts[i].userId);
+      const uid = await UserController.getUid(posts[i].userId);
       posts[i].dataValues.comments = result;
       posts[i].dataValues.handle = handle;
       posts[i].dataValues.uid = uid;
@@ -71,16 +71,14 @@ module.exports.showExplorePage = async (req, res) => {
 
 module.exports.showFeedPage = async (req, res) => {
   try {
-    let userId = await UserController.getUserId(req.query.user);
-    let followedUsersIds = await FollowController.getUsersThatUserIsFollowing(
-      userId
-    );
+    const userId = await UserController.getUserId(req.query.user);
+    const followedUsersIds = await FollowController.getUsersThatUserIsFollowing(userId);
     followedUsersIds.push(userId);
-    let userPosts = await PostController.getFeedPosts(followedUsersIds);
+    const userPosts = await PostController.getFeedPosts(followedUsersIds);
     for (let i = 0; i < userPosts.length; i++) {
-      let result = await CommentController.getCommentsByPostId(userPosts[i].id);
-      let handle = await UserController.getUsername(userPosts[i].userId);
-      let uid = await UserController.getUid(userPosts[i].userId);
+      const result = await CommentController.getCommentsByPostId(userPosts[i].id);
+      const handle = await UserController.getUsername(userPosts[i].userId);
+      const uid = await UserController.getUid(userPosts[i].userId);
       userPosts[i].dataValues.comments = result;
       userPosts[i].dataValues.handle = handle;
       userPosts[i].dataValues.uid = uid;
@@ -95,12 +93,12 @@ module.exports.showFeedPage = async (req, res) => {
 module.exports.showProfilePage = async (req, res) => {
   try {
     // localhost:1337/showProfilePage?user=USERNAME_HERE
-    let userId = [await UserController.getUserId(req.query.user)];
-    let userPosts = await PostController.getFeedPosts(userId);
+    const userId = [await UserController.getUserId(req.query.user)];
+    const userPosts = await PostController.getFeedPosts(userId);
     for (let i = 0; i < userPosts.length; i++) {
-      let result = await CommentController.getCommentsByPostId(userPosts[i].id);
-      let handle = await UserController.getUsername(userPosts[i].userId);
-      let uid = await UserController.getUid(userPosts[i].userId);
+      const result = await CommentController.getCommentsByPostId(userPosts[i].id);
+      const handle = await UserController.getUsername(userPosts[i].userId);
+      const uid = await UserController.getUid(userPosts[i].userId);
       userPosts[i].dataValues.comments = result;
       userPosts[i].dataValues.handle = handle;
       userPosts[i].dataValues.uid = uid;
@@ -111,15 +109,15 @@ module.exports.showProfilePage = async (req, res) => {
   }
 };
 
-/* User functionality/interaction functionality*/
+/* User functionality/interaction functionality */
 module.exports.submitPost = async (req, res) => {
   try {
-    let userId = await UserController.getUserId(req.body.uid);
-    let post = await PostController.submitPost(
+    const userId = await UserController.getUserId(req.body.uid);
+    const post = await PostController.submitPost(
       req.body.caption,
       req.body.postUrl,
       userId,
-      req.body.mediaType
+      req.body.mediaType,
     );
     res.send(post);
   } catch (err) {
@@ -129,12 +127,8 @@ module.exports.submitPost = async (req, res) => {
 
 module.exports.addComment = async (req, res) => {
   try {
-    let userId = await UserController.getUserId(req.body.uid);
-    let comment = await CommentController.addComment(
-      req.body.comment,
-      req.body.postId,
-      userId
-    );
+    const userId = await UserController.getUserId(req.body.uid);
+    const comment = await CommentController.addComment(req.body.comment, req.body.postId, userId);
     res.send(comment);
   } catch (err) {
     console.log(err);
@@ -143,10 +137,7 @@ module.exports.addComment = async (req, res) => {
 
 module.exports.addUser = async (req, res) => {
   try {
-    let result = await UserController.checkAndOrSaveUser(
-      req.body.handle,
-      req.body.uid
-    );
+    const result = await UserController.checkAndOrSaveUser(req.body.handle, req.body.uid);
     res.send(result);
   } catch (err) {
     console.log('something went wrong with creating a user', err);
@@ -155,8 +146,8 @@ module.exports.addUser = async (req, res) => {
 
 module.exports.toggleLike = async (req, res) => {
   try {
-    let userId = await UserController.getUserId(req.body.uid);
-    let result = await LikeController.toggleLike(userId, req.body.postId);
+    const userId = await UserController.getUserId(req.body.uid);
+    const result = await LikeController.toggleLike(userId, req.body.postId);
     await PostController.modifyLikes(req.body.postId, result);
     res.send(result);
   } catch (err) {
@@ -167,8 +158,8 @@ module.exports.toggleLike = async (req, res) => {
 module.exports.requestFollow = async (req, res) => {
   console.log('in the controller!');
   try {
-    let userId = await UserController.getUserId(req.body.userUid);
-    let targetId = await UserController.getUserId(req.body.targetUserUid);
+    const userId = await UserController.getUserId(req.body.userUid);
+    const targetId = await UserController.getUserId(req.body.targetUserUid);
     await FollowController.createFollowRequest(userId, targetId);
     res.send('Follow request sent');
   } catch (err) {
@@ -179,15 +170,9 @@ module.exports.requestFollow = async (req, res) => {
 module.exports.respondFollow = async (req, res) => {
   try {
     if (req.body.responseType === 'accept') {
-      await FollowController.acceptFollowRequest(
-        req.body.userId,
-        req.body.targetId
-      );
+      await FollowController.acceptFollowRequest(req.body.userId, req.body.targetId);
     } else if (req.body.responseType === 'deny') {
-      await FollowController.denyFollowRequest(
-        req.body.userId,
-        req.body.targetId
-      );
+      await FollowController.denyFollowRequest(req.body.userId, req.body.targetId);
     } else {
       return 'something went wrong with responding to request';
     }
@@ -199,12 +184,9 @@ module.exports.respondFollow = async (req, res) => {
 
 module.exports.checkFollowRelationship = async (req, res) => {
   try {
-    let userId = await UserController.getUserId(req.query.userUid);
-    let targetId = await UserController.getUserId(req.query.targetUid);
-    let relationshipExists = await FollowController.checkFollowRelationship(
-      userId,
-      targetId
-    );
+    const userId = await UserController.getUserId(req.query.userUid);
+    const targetId = await UserController.getUserId(req.query.targetUid);
+    const relationshipExists = await FollowController.checkFollowRelationship(userId, targetId);
     res.send(relationshipExists);
   } catch (err) {
     console.log(err);
@@ -213,12 +195,10 @@ module.exports.checkFollowRelationship = async (req, res) => {
 
 module.exports.getPendingFollowRequests = async (req, res) => {
   try {
-    let userId = await UserController.getUserId(req.query.userName);
-    let result = await FollowController.getPendingFollowRequests(userId);
+    const userId = await UserController.getUserId(req.query.userName);
+    const result = await FollowController.getPendingFollowRequests(userId);
     for (let i = 0; i < result.length; i++) {
-      result[i].dataValues.handle = await UserController.getUsername(
-        result[i].userId
-      );
+      result[i].dataValues.handle = await UserController.getUsername(result[i].userId);
     }
     res.send(result);
   } catch (err) {

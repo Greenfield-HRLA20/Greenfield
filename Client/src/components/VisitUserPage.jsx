@@ -9,7 +9,7 @@ class ConnectedVisitUserPage extends React.Component {
     super(props);
     this.state = {
       userPosts: [],
-      disableButton: false
+      disableButton: false,
     };
     this.sendFollowRequest = this.sendFollowRequest.bind(this);
     this.checkFollowRelationship = this.checkFollowRelationship.bind(this);
@@ -31,15 +31,15 @@ class ConnectedVisitUserPage extends React.Component {
     axios
       .get('/showProfilePage', {
         params: {
-          user: uid
-        }
+          user: uid,
+        },
       })
-      .then(results => {
+      .then((results) => {
         this.setState({
-          userPosts: results.data
+          userPosts: results.data,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log('Error getting all post', err);
       });
   }
@@ -48,14 +48,14 @@ class ConnectedVisitUserPage extends React.Component {
     axios
       .post('/requestFollow', {
         userUid: this.props.currentUser.uid,
-        targetUserUid: this.props.visitUser
+        targetUserUid: this.props.visitUser,
       })
-      .then(results => {
+      .then((results) => {
         this.setState({
-          disableButton: true
+          disableButton: true,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
@@ -65,17 +65,17 @@ class ConnectedVisitUserPage extends React.Component {
       .get('/checkFollowRelationship', {
         params: {
           userUid: this.props.currentUser.uid,
-          targetUid: this.props.visitUser
-        }
+          targetUid: this.props.visitUser,
+        },
       })
-      .then(results => {
+      .then((results) => {
         if (results.data) {
           this.setState({
-            disableButton: true
+            disableButton: true,
           });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
@@ -88,26 +88,17 @@ class ConnectedVisitUserPage extends React.Component {
         </h1>
         <h1>{`THIS IS ${this.props.username}'S PAGE`}</h1>
         <div>
-          <button
-            disabled={this.state.disableButton}
-            onClick={this.sendFollowRequest}
-          >
+          <button disabled={this.state.disableButton} onClick={this.sendFollowRequest}>
             Follow
           </button>
         </div>
-        <ul>
-          {this.state.userPosts.map(post => (
-            <PostEntry post={post} key={post.id} />
-          ))}
-        </ul>
+        <ul>{this.state.userPosts.map(post => <PostEntry post={post} key={post.id} />)}</ul>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return { currentUser: state.currentUser };
-};
+const mapStateToProps = state => ({ currentUser: state.currentUser });
 
 const VisitUserPage = connect(mapStateToProps)(ConnectedVisitUserPage);
 

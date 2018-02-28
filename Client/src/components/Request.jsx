@@ -15,12 +15,12 @@ class Request extends React.Component {
       .post('/respondFollow', {
         userId: this.props.request.userId,
         targetId: this.props.request.targetId,
-        responseType: e.target.value
+        responseType: e.target.value,
       })
-      .then(result => {
+      .then((result) => {
         this.props.updateRequestList(this.props.index);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }

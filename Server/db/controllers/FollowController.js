@@ -5,13 +5,13 @@ module.exports = {
     try {
       let result = await Follow.findAll({
         where: {
-          followerId: usersOwnId,
+          userId: usersOwnId,
           requestStatus: true
         }
       });
       let usersThatUserIsFollowing = [];
       for (let i = 0; i < result.length; i++) {
-        usersThatUserIsFollowing.push(result[i].userId);
+        usersThatUserIsFollowing.push(result[i].targetId);
       }
       return usersThatUserIsFollowing;
     } catch (err) {
@@ -24,7 +24,7 @@ module.exports = {
     try {
       let result = await Follow.findAll({
         where: {
-          userId: usersOwnId,
+          targetId: usersOwnId,
           requestStatus: true          
         }
       });
@@ -35,11 +35,11 @@ module.exports = {
     }
   },
 
-  createFollowRequest: async (userId, followerId) => {
+  createFollowRequest: async (userId, targetId) => {
     try {
       let result = await Follow.create({
         userId: userId,
-        followerId: followerId
+        targetId: targetId
       });
       return result;
     } catch (err) {
@@ -48,14 +48,14 @@ module.exports = {
     }
   },
 
-  acceptFollowRequest: async (userId, followerId) => {
+  acceptFollowRequest: async (userId, targetId) => {
     try {
       let result = await Follow.update({
-        requestStatus: 1
+        requestStatus: true
       }, {
         where: {
           userId: userId,
-          followerId: followerId
+          targetId: targetId
         }
       });
       return result;
@@ -65,12 +65,12 @@ module.exports = {
     }
   },
   
-  denyFollowRequest: async (userId, followerId) => {
+  denyFollowRequest: async (userId, targetId) => {
     try {
       let result = await Follow.destroy({
         where: {
           userId: userId,
-          followerId: followerId
+          targetId: targetId
         }
       })
       return;
@@ -79,4 +79,34 @@ module.exports = {
       return;
     }
   },
+
+  checkFollowRelationship: async (userId, targetId) => {
+    try {
+      let result = await Follow.findAll({
+        where: {
+          userId: userId,
+          targetId: targetId
+        }
+      })
+      return result.length > 0 ? true : false;
+    } catch (err) {
+      console.log(err);
+      return;
+    }
+  },
+
+  getPendingFollowRequests: async (userId) => {
+    try {
+      let result = await Follow.findAll({
+        where: {
+          targetId: userId,
+          requestStatus: false          
+        }
+      });
+      return result;
+    } catch (err) {
+      console.log(err);
+      return;
+    }
+  }
 }

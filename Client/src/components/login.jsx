@@ -25,7 +25,6 @@ class Login extends React.Component {
   }
 
   sumbitEntry (email, password) {
-    console.log('in here!')
     auth.firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;

@@ -133,10 +133,52 @@ module.exports.toggleLike = async (req, res) => {
   }
 }
 
-module.exports.getUsernameForPost = async (req, res) => {
+module.exports.requestFollow = async (req, res) => {
+
+  console.log('in the controller!');
   try {
-    let userId = await UserController.getUserId(req.query.handle);
-    let result = await UserController.getUsername(userId);
+    let userId = await UserController.getUserId(req.body.userName);
+    let targetId = await UserController.getUserId(req.body.targetUserName);
+    await FollowController.createFollowRequest(userId, targetId);
+    res.send('Follow request sent');
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+module.exports.respondFollow = async (req, res) => {
+  try {
+    if (req.body.responseType === 'accept') {
+      await FollowController.acceptFollowRequest(req.body.userId, req.body.targetId);
+    } else if (req.body.responseType === 'deny') {
+      await FollowController.denyFollowRequest(req.body.userId, req.body.targetId);
+    } else {
+      return 'something went wrong with responding to request';
+    }
+    res.send('you responded to the follow request');
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+module.exports.checkFollowRelationship = async (req, res) => {
+  try {
+    let userId = await UserController.getUserId(req.query.userName);
+    let targetId = await UserController.getUserId(req.query.targetUserName);
+    let relationshipExists = await FollowController.checkFollowRelationship(userId, targetId);
+    res.send(relationshipExists);
+  } catch (err) {
+    console.log(err);    
+  }
+}
+
+module.exports.getPendingFollowRequests = async (req, res) => {
+  try {
+    let userId = await UserController.getUserId(req.query.userName);
+    let result = await FollowController.getPendingFollowRequests(userId);
+    for (let i = 0; i < result.length; i++) {
+      result[i].dataValues.handle = await UserController.getUsername(result[i].userId);
+    }
     res.send(result);
   } catch (err) {
     console.log(err);

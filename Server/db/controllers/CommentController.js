@@ -12,7 +12,6 @@ module.exports = {
         postId: postId,
         userId: userId
       })
-      console.log(result);
       return result;
     } catch (err) {
       console.log('ERROR - could not add comment: ' , err);

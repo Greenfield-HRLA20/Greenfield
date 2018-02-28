@@ -45,7 +45,6 @@ class ConnectedSubmit extends React.Component {
       mediaType: this.props.mediaType,
     })
     .then((result) => {
-      console.log(result);
       this.props.updateCurrentView(<Feed />);
       this.props.updateNav('feed');
     })
@@ -60,7 +59,6 @@ class ConnectedSubmit extends React.Component {
       <div>
         <h1><Bar /></h1>
         <h1>Submit page!!!!</h1>
-      {console.log(this.props.mediaType)}
         {this.props.mediaType === 'image/jpeg' &&
           <img src={this.props.urlState} alt="" />
         }

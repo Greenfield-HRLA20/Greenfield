@@ -78,7 +78,11 @@ class ConnectAccount extends React.Component {
           .catch((err) => {
             console.log('Error getting follow requests,', err);
           });
+<<<<<<< HEAD
       })
+>>>>>>> commit for rebase
+=======
+      });
 >>>>>>> commit for rebase
   }
 

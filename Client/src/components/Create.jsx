@@ -11,9 +11,7 @@ const mapDispatchToProps = dispatch => ({
   storeUrl: url => dispatch(actions.storeUrl(url)),
 });
 
-
 const mapStateToProps = state => ({ currentView: state.currentView });
-
 
 const ConnectedCreate = props => (
   <div>

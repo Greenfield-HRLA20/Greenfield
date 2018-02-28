@@ -11,7 +11,13 @@ const mapDispatchToProps = dispatch => ({
   storeUrl: url => dispatch(actions.storeUrl(url)),
 });
 
+<<<<<<< HEAD
 const mapStateToProps = state => ({ currentView: state.currentView });
+=======
+const mapStateToProps = state => {
+  return { currentView: state.currentView };
+};
+>>>>>>> commit for rebase
 
 const ConnectedCreate = props => (
   <div>

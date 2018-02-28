@@ -43,7 +43,14 @@ class ConnectedExplore extends React.Component {
     );
   }
 }
+<<<<<<< HEAD
 const mapStateToProps = state => ({ currentUser: state.currentUser });
+=======
+
+const mapStateToProps = state => {
+  return { currentUser: state.currentUser };
+};
+>>>>>>> commit for rebase
 
 const Explore = connect(mapStateToProps)(ConnectedExplore);
 

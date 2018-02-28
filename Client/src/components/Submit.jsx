@@ -39,7 +39,7 @@ class ConnectedSubmit extends React.Component {
 
   submitPost() {
     axios.post('/submitPost', {
-      handle: this.props.currentUser.displayName, 
+      uid: this.props.currentUser.uid, 
       caption: this.state.caption, 
       postUrl: this.props.urlState,
       mediaType: this.props.mediaType,

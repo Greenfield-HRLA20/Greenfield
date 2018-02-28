@@ -14,8 +14,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = state => {
-  return {currentView: state.currentView,
-  }
+  return {currentView: state.currentView}
 } 
 
 const ConnectedCreate = (props) => (

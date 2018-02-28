@@ -1,7 +1,7 @@
 const Follow = require('../models/Follow');
 
 module.exports = {
-  getUsersThatUserIsFollowing: async (usersOwnId) => {
+  getUsersThatUserIsFollowing: async usersOwnId => {
     try {
       let result = await Follow.findAll({
         where: {
@@ -20,12 +20,12 @@ module.exports = {
     }
   },
 
-  getUsersFollowingGivenUser: async (usersOwnId) => {
+  getUsersFollowingGivenUser: async usersOwnId => {
     try {
       let result = await Follow.findAll({
         where: {
           targetId: usersOwnId,
-          requestStatus: true          
+          requestStatus: true
         }
       });
       return result;
@@ -50,21 +50,24 @@ module.exports = {
 
   acceptFollowRequest: async (userId, targetId) => {
     try {
-      let result = await Follow.update({
-        requestStatus: true
-      }, {
-        where: {
-          userId: userId,
-          targetId: targetId
+      let result = await Follow.update(
+        {
+          requestStatus: true
+        },
+        {
+          where: {
+            userId: userId,
+            targetId: targetId
+          }
         }
-      });
+      );
       return result;
     } catch (err) {
       console.log(err);
       return;
     }
   },
-  
+
   denyFollowRequest: async (userId, targetId) => {
     try {
       let result = await Follow.destroy({
@@ -72,7 +75,7 @@ module.exports = {
           userId: userId,
           targetId: targetId
         }
-      })
+      });
       return;
     } catch (err) {
       console.log(err);
@@ -87,7 +90,7 @@ module.exports = {
           userId: userId,
           targetId: targetId
         }
-      })
+      });
       return result.length > 0 ? true : false;
     } catch (err) {
       console.log(err);
@@ -95,12 +98,12 @@ module.exports = {
     }
   },
 
-  getPendingFollowRequests: async (userId) => {
+  getPendingFollowRequests: async userId => {
     try {
       let result = await Follow.findAll({
         where: {
           targetId: userId,
-          requestStatus: false          
+          requestStatus: false
         }
       });
       return result;
@@ -109,4 +112,4 @@ module.exports = {
       return;
     }
   }
-}
+};

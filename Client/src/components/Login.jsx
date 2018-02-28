@@ -1,6 +1,5 @@
-import React from 'react'
-import auth from '../Firebase'
-
+import React from 'react';
+import auth from '../Firebase';
 
 class Login extends React.Component {
   constructor() {
@@ -8,43 +7,49 @@ class Login extends React.Component {
     this.state = {
       username: '',
       password: ''
-    }
+    };
 
-    this.setInput = this.setInput.bind(this)
+    this.setInput = this.setInput.bind(this);
   }
 
-  componentDidMount () {
+  componentDidMount() {
     auth.ui.start('#firebaseui-auth-container', auth.uiConfig);
   }
-  
-  setInput (e) {
+
+  setInput(e) {
     e.preventDefault();
-    this.setState({
-      [e.target.name]: e.target.value
-    }, () => console.log(this.state))
+    this.setState(
+      {
+        [e.target.name]: e.target.value
+      },
+      () => console.log(this.state)
+    );
   }
 
-  sumbitEntry (email, password) {
-    auth.firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode, errorMessage);
-    });
+  sumbitEntry(email, password) {
+    auth.firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .catch(function(error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
   }
 
   render() {
     return (
-    <div>
-      {/* <h1>Hello from Login!</h1>
+      <div>
+        {/* <h1>Hello from Login!</h1>
       <input name="username" placeholder="Enter Username" onChange={this.setInput} />
       <input name="password" type="password" placeholder="Enter Password" onChange={this.setInput} />
       <button onClick={() => this.sumbitEntry(this.state.username, this.state.password)}>Login</button> */}
-      <h1>Welcome to My Awesome App</h1>
-      <div id="firebaseui-auth-container"></div>
-      <div id="loader">Loading...</div>
-    </div>
-    )
+        <h1>Welcome to My Awesome App</h1>
+        <div id="firebaseui-auth-container" />
+        <div id="loader">Loading...</div>
+      </div>
+    );
   }
 }
 
-export default Login
+export default Login;

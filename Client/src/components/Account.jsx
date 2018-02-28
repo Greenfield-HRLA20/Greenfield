@@ -63,10 +63,14 @@ class ConnectAccount extends React.Component {
         this.setState({
           myRequests: results.data,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> post rebase commit
         });
       })
       .catch((err) => {
         console.log('Error getting follow requests,', err);
+<<<<<<< HEAD
       });
 =======
         })
@@ -82,6 +86,8 @@ class ConnectAccount extends React.Component {
       })
 >>>>>>> commit for rebase
 =======
+=======
+>>>>>>> post rebase commit
       });
 >>>>>>> commit for rebase
   }

@@ -62,11 +62,24 @@ class ConnectAccount extends React.Component {
       .then((results) => {
         this.setState({
           myRequests: results.data,
+<<<<<<< HEAD
         });
       })
       .catch((err) => {
         console.log('Error getting follow requests,', err);
       });
+=======
+        })
+          .then((results) => {
+            this.setState({
+              myRequests: results.data,
+            });
+          })
+          .catch((err) => {
+            console.log('Error getting follow requests,', err);
+          });
+      })
+>>>>>>> commit for rebase
   }
 
   updateProfile() {

@@ -26,7 +26,7 @@ class ConnectAccount extends React.Component {
   componentDidMount() {
     axios.get('/showProfilePage', {
       params: {
-        user: this.props.currentUser.displayName
+        user: this.props.currentUser.uid
       }
     }).then((results) => {
       this.setState({
@@ -37,7 +37,7 @@ class ConnectAccount extends React.Component {
     })
     axios.get('/getPendingFollowRequests', {
       params: {
-        userName: this.props.currentUser.displayName
+        userName: this.props.currentUser.uid
       }
     }).then((results) => {
       this.setState({

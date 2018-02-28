@@ -4,9 +4,9 @@ import Feed from './components/Feed.jsx';
 import Login from './components/Login.jsx';
 import auth from './Firebase';
 import { Provider, connect } from 'react-redux';
-import store from "./redux";
-import actions from './redux/actions/index'
-import axios from 'axios'
+import store from './redux';
+import actions from './redux/actions/index';
+import axios from 'axios';
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -16,31 +16,33 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = state => {
-  return {currentUser: state.currentUser,
-          currentView: state.currentView}
-}
-
+  return {
+    currentUser: state.currentUser,
+    currentView: state.currentView
+  };
+};
 
 class ConnectedMain extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true,
+      loading: true
     };
   }
 
   componentDidMount() {
-    this.authSubscription = auth.firebase.auth().onAuthStateChanged((user) => {
+    this.authSubscription = auth.firebase.auth().onAuthStateChanged(user => {
       this.setState({
         loading: false
-      })
+      });
       if (user) {
-        this.props.updateUser(user)
+        this.props.updateUser(user);
         axios.post('/addUser', {
+          uid: user.uid,
           handle: user.displayName
-        })
-        this.props.updateCurrentView(<Feed />)
-      } 
+        });
+        this.props.updateCurrentView(<Feed />);
+      }
     });
   }
 
@@ -49,22 +51,24 @@ class ConnectedMain extends React.Component {
   }
 
   render() {
-      if (this.state.loading) { 
-        return null;
-      }
-      
-      if (this.props.currentUser) { 
-        return this.props.currentView
-      } else {
-        return <Login />
-      }
+    if (this.state.loading) {
+      return null;
+    }
+
+    if (this.props.currentUser) {
+      return this.props.currentView;
+    } else {
+      return <Login />;
+    }
   }
 }
 
 const Main = connect(mapStateToProps, mapDispatchToProps)(ConnectedMain);
 
-const app = document.getElementById('app')
+const app = document.getElementById('app');
 ReactDOM.render(
-  <Provider store={store}> 
+  <Provider store={store}>
     <Main />
-  </Provider>, app)
+  </Provider>,
+  app
+);

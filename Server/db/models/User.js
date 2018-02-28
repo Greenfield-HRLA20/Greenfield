@@ -2,13 +2,11 @@ const connection = require('../index.js');
 const Sequelize = require('sequelize');
 
 const User = connection.define('user', {
-  firstName: Sequelize.STRING,
-  lastName: Sequelize.STRING,
-  handle: {
+  uid: {
     type: Sequelize.STRING,
     unique: true
   },
+  handle: Sequelize.STRING
 });
-
 
 module.exports = User;

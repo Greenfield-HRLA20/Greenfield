@@ -7,11 +7,11 @@ const router = require('./router');
 let app = express();
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(logger('short'));
 app.use(router);
 
-app.use('/', express.static(path.join(__dirname, "../Client/dist")));
+app.use('/', express.static(path.join(__dirname, '../Client/dist')));
 app.use(router);
 
 app.listen(1337, () => {

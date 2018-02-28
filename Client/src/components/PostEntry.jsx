@@ -1,9 +1,9 @@
-import React from 'react'
-import CommentEntry from './CommentEntry.jsx'
-import VisitUserPage from './VisitUserPage.jsx'
-import axios from 'axios'
-import actions from '../redux/actions/index'
-import {connect} from 'react-redux';
+import React from 'react';
+import CommentEntry from './CommentEntry.jsx';
+import VisitUserPage from './VisitUserPage.jsx';
+import axios from 'axios';
+import actions from '../redux/actions/index';
+import { connect } from 'react-redux';
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -12,8 +12,8 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = state => {
-  return {currentUser: state.currentUser}
-} 
+  return { currentUser: state.currentUser };
+};
 
 class ConnectedPostEntry extends React.Component {
   constructor(props) {
@@ -21,87 +21,125 @@ class ConnectedPostEntry extends React.Component {
     this.state = {
       comment: '',
       likeCount: this.props.post.likeCount
-    }
+    };
     this.setInput = this.setInput.bind(this);
     this.submitComment = this.submitComment.bind(this);
     this.clickLikeButton = this.clickLikeButton.bind(this);
     this.visitUser = this.visitUser.bind(this);
   }
 
-  visitUser (username) {
-    this.props.updateCurrentView(<VisitUserPage visitUsername={username} />)
+  visitUser(uid, username) {
+    this.props.updateCurrentView(
+      <VisitUserPage visitUser={uid} username={username} />
+    );
   }
 
-  setInput (e) {
+  setInput(e) {
     e.preventDefault();
     this.setState({
       [e.target.name]: e.target.value
-    })
+    });
   }
 
-  submitComment () {
-    let handle = this.props.currentUser.displayName
-    let comment = this.state.comment
-    axios.post('/addComment', {
-      handle: handle,
-      postId: this.props.post.id,
-      comment: this.state.comment
-    }).then((result) => {
-      this.props.post.comments.push([handle, comment])
-      this.setState({
-        comment: ''
-      })
-    }).catch((err) => {
-      console.log('Error submitting post ', err);
-    })
-  }
-
-  clickLikeButton () {
+  submitComment() {
+    let uid = this.props.currentUser.uid;
+    let comment = this.state.comment;
     let handle = this.props.currentUser.displayName;
+    axios
+      .post('/addComment', {
+        uid: uid,
+        postId: this.props.post.id,
+        comment: this.state.comment
+      })
+      .then(result => {
+        this.props.post.comments.push([handle, uid, comment]);
+        this.setState({
+          comment: ''
+        });
+      })
+      .catch(err => {
+        console.log('Error submitting post ', err);
+      });
+  }
+
+  clickLikeButton() {
+    let uid = this.props.currentUser.uid;
     let postId = this.props.post.id;
-    axios.post('/toggleLike', {
-      handle: handle,
-      postId: postId
-    }).then((result) => {
-      if (result.data === true) {
-        this.setState({
-          likeCount: this.props.post.likeCount++
-        })
-      } else {
-        this.setState({
-          likeCount: this.props.post.likeCount--
-        })
-      }
-    }).catch((err) => {
-      console.log('Error toggling like button ', err);
-    })
+    axios
+      .post('/toggleLike', {
+        uid: uid,
+        postId: postId
+      })
+      .then(result => {
+        if (result.data === true) {
+          this.setState({
+            likeCount: this.props.post.likeCount++
+          });
+        } else {
+          this.setState({
+            likeCount: this.props.post.likeCount--
+          });
+        }
+      })
+      .catch(err => {
+        console.log('Error toggling like button ', err);
+      });
   }
 
   render() {
     return (
-    <div>
-      <div><a onClick={() => this.visitUser(this.props.post.handle)}> {this.props.post.handle} </a> </div>
-      {this.props.post.mediaType === 'image/jpeg' &&
-        <img src= {this.props.post.url}/>
-      }
+      <div>
+        <div>
+          <a
+            onClick={() =>
+              this.visitUser(this.props.post.uid, this.props.post.handle)
+            }
+          >
+            {' '}
+            {this.props.post.handle}{' '}
+          </a>{' '}
+        </div>
+        {this.props.post.mediaType === 'image/jpeg' && (
+          <img src={this.props.post.url} />
+        )}
 
-      {this.props.post.mediaType === 'video/mp4' &&
-        <video width="200" height="200" controls controlsList="nodownload">
-          <source src={this.props.post.url} type="video/mp4"/>
-        </video>
-      }
-      <div><button onClick={this.clickLikeButton}>{this.props.post.likeCount} likes</button></div>
-      <div><strong>{this.props.post.caption}</strong></div>
-      <ul>
-        {this.props.post.comments.map((comment, i) => <CommentEntry comment={comment} key={i} visitUser={this.visitUser} />)}
-      </ul>
-      <input type="text" name="comment" value={this.state.comment} onChange={this.setInput} placeholder="Add Comment" />
-      <button onClick={this.submitComment} >Submit</button>
-    </div>
-    )
+        {this.props.post.mediaType === 'video/mp4' && (
+          <video width="200" height="200" controls controlsList="nodownload">
+            <source src={this.props.post.url} type="video/mp4" />
+          </video>
+        )}
+        <div>
+          <button onClick={this.clickLikeButton}>
+            {this.props.post.likeCount} likes
+          </button>
+        </div>
+        <div>
+          <strong>{this.props.post.caption}</strong>
+        </div>
+        <ul>
+          {this.props.post.comments.map((comment, i) => (
+            <CommentEntry
+              comment={comment}
+              key={i}
+              visitUser={this.visitUser}
+            />
+          ))}
+        </ul>
+        <input
+          type="text"
+          name="comment"
+          value={this.state.comment}
+          onChange={this.setInput}
+          placeholder="Add Comment"
+        />
+        <button onClick={this.submitComment}>Submit</button>
+      </div>
+    );
   }
 }
 
-const PostEntry = connect(mapStateToProps, mapDispatchToProps)(ConnectedPostEntry)
+const PostEntry = connect(mapStateToProps, mapDispatchToProps)(
+  ConnectedPostEntry
+);
 
-export default PostEntry
+export default PostEntry;

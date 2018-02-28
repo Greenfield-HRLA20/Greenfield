@@ -7,14 +7,19 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import RaisedButton from 'material-ui/RaisedButton';
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
-import auth from '../Firebase'
-import {connect} from 'react-redux'
-import actions from '../redux/actions/index'
-import Feed from './Feed.jsx'
-import Explore from './Explore.jsx'
-import Create from './Create.jsx'
-import Account from './Account.jsx'
+import {
+  Toolbar,
+  ToolbarGroup,
+  ToolbarSeparator,
+  ToolbarTitle
+} from 'material-ui/Toolbar';
+import auth from '../Firebase';
+import { connect } from 'react-redux';
+import actions from '../redux/actions/index';
+import Feed from './Feed.jsx';
+import Explore from './Explore.jsx';
+import Create from './Create.jsx';
+import Account from './Account.jsx';
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -25,37 +30,39 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = state => {
-  return {currentView: state.currentView,
-          currentUser: state.currentUser,
-          currentNav: state.currentNav}
-}
-
+  return {
+    currentView: state.currentView,
+    currentUser: state.currentUser,
+    currentNav: state.currentNav
+  };
+};
 
 class ConnectedBar extends React.Component {
-
   constructor(props) {
     super(props);
     this.onClickUpdateView = this.onClickUpdateView.bind(this);
     this.logout = this.logout.bind(this);
   }
 
-  logout () {
-    auth.firebase.auth().signOut().catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode, errorMessage);
-    });
-    this.props.logoutUser()
-    this.props.updateNav('feed')
+  logout() {
+    auth.firebase
+      .auth()
+      .signOut()
+      .catch(function(error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
+    this.props.logoutUser();
+    this.props.updateNav('feed');
   }
 
-  onClickUpdateView (view, value) {
-    this.props.updateCurrentView(view)
-    this.props.updateNav(value) 
+  onClickUpdateView(view, value) {
+    this.props.updateCurrentView(view);
+    this.props.updateNav(value);
   }
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   render() {
     return (
@@ -63,11 +70,31 @@ class ConnectedBar extends React.Component {
         <Toolbar>
           <ToolbarGroup firstChild={true}>
             <DropDownMenu value={this.props.currentNav}>
-              <MenuItem value={'feed'} primaryText="Home / Feed" onClick={(() => this.onClickUpdateView(<Feed />, 'feed'))}/>
-              <MenuItem value={'explore'} primaryText="Explore" onClick={(() => this.onClickUpdateView(<Explore />, 'explore'))}/>
-              <MenuItem value={'create'} primaryText="Create" onClick={(() => this.onClickUpdateView(<Create />, 'create'))}/>
-              <MenuItem value={'account'} primaryText="Account" onClick={(() => this.onClickUpdateView(<Account />, 'account'))}/>
-              <MenuItem value={'logout'} primaryText="Logout" onClick={this.logout}/>
+              <MenuItem
+                value={'feed'}
+                primaryText="Home / Feed"
+                onClick={() => this.onClickUpdateView(<Feed />, 'feed')}
+              />
+              <MenuItem
+                value={'explore'}
+                primaryText="Explore"
+                onClick={() => this.onClickUpdateView(<Explore />, 'explore')}
+              />
+              <MenuItem
+                value={'create'}
+                primaryText="Create"
+                onClick={() => this.onClickUpdateView(<Create />, 'create')}
+              />
+              <MenuItem
+                value={'account'}
+                primaryText="Account"
+                onClick={() => this.onClickUpdateView(<Account />, 'account')}
+              />
+              <MenuItem
+                value={'logout'}
+                primaryText="Logout"
+                onClick={this.logout}
+              />
             </DropDownMenu>
           </ToolbarGroup>
         </Toolbar>
@@ -78,4 +105,4 @@ class ConnectedBar extends React.Component {
 
 const Bar = connect(mapStateToProps, mapDispatchToProps)(ConnectedBar);
 
-export default Bar
+export default Bar;

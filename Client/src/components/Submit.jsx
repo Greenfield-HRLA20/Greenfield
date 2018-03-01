@@ -8,21 +8,21 @@ import TabBar from './TabBar.jsx';
 
 const mapDispatchToProps = dispatch => ({
   updateCurrentView: view => dispatch(actions.updateCurrentView(view)),
-  updateNav: string => dispatch(actions.updateNav(string)),
+  updateNav: string => dispatch(actions.updateNav(string))
 });
 
 const mapStateToProps = state => ({
   currentView: state.currentView,
   currentUser: state.currentUser,
   currentNav: state.currentNav,
-  urlState: state.urlState,
+  urlState: state.urlState
 });
 
 class ConnectedSubmit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      caption: '',
+      caption: ''
     };
     this.setInput = this.setInput.bind(this);
     this.submitPost = this.submitPost.bind(this);
@@ -32,9 +32,9 @@ class ConnectedSubmit extends React.Component {
     e.preventDefault();
     this.setState(
       {
-        [e.target.name]: e.target.value,
+        [e.target.name]: e.target.value
       },
-      () => console.log(this.state),
+      () => console.log(this.state)
     );
   }
 
@@ -44,13 +44,13 @@ class ConnectedSubmit extends React.Component {
         uid: this.props.currentUser.uid,
         caption: this.state.caption,
         postUrl: this.props.urlState,
-        mediaType: this.props.mediaType,
+        mediaType: this.props.mediaType
       })
-      .then((result) => {
+      .then(result => {
         this.props.updateCurrentView(<Feed />);
         this.props.updateNav('feed');
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('Error submitting post', err);
       });
     //
@@ -63,7 +63,9 @@ class ConnectedSubmit extends React.Component {
           <TabBar />
         </h1>
         <h1>Submit page!!!!</h1>
-        {this.props.mediaType.includes('image') && <img src={this.props.urlState} alt="" />}
+        {this.props.mediaType.includes('image') && (
+          <img src={this.props.urlState} alt="" />
+        )}
 
         {this.props.mediaType === 'video/mp4' && (
           <video width="200" height="200" controls>

@@ -53,4 +53,8 @@ router.route('/getPendingFollowRequests').get((req, res) => {
   controller.getPendingFollowRequests(req, res);
 });
 
+router.route('/updateUsername').put((req, res) => {
+  controller.updateUsername(req, res);
+});
+
 module.exports = router;

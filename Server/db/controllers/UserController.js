@@ -41,4 +41,15 @@ module.exports = {
       console.log(err);
     }
   },
+
+  updateUsername: async (username, uid) => {
+    try {
+      const user = await User.findOne({ where: { uid } });
+      user.update({
+        handle: username,
+      });
+    } catch (err) {
+      console.log('Error updating username ', err);
+    }
+  },
 };

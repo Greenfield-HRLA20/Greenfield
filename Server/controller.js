@@ -205,3 +205,12 @@ module.exports.getPendingFollowRequests = async (req, res) => {
     console.log(err);
   }
 };
+
+module.exports.updateUsername = async (req, res) => {
+  try {
+    await UserController.updateUsername(req.body.displayName, req.body.uid);
+    res.send('Updated username!');
+  } catch (err) {
+    console.log('Error updating username ', err);
+  }
+};

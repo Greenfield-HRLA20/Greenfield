@@ -2,7 +2,9 @@ import React from 'react';
 import Bar from './Navbar.jsx';
 import PostEntry from './PostEntry.jsx';
 import axios from 'axios';
+import auth from '../Firebase';
 import { connect } from 'react-redux';
+import actions from '../redux/actions/index';
 import Request from './Request.jsx';
 
 class ConnectAccount extends React.Component {
@@ -11,14 +13,28 @@ class ConnectAccount extends React.Component {
     this.state = {
       myPosts: [],
       myRequests: [],
+      wantUpdate: false,
+      photoURL: '',
+      displayName: '',
+      newPassword: ''
     };
     this.updateRequestList = this.updateRequestList.bind(this);
+    this.setInput = this.setInput.bind(this);
+    this.updateField = this.updateField.bind(this);
+    this.updateProfile = this.updateProfile.bind(this);
   }
 
   updateRequestList(index) {
     this.state.myRequests.splice(index, 1);
     this.setState({
       myRequests: this.state.myRequests,
+    });
+  }
+
+  setInput(e) {
+    e.preventDefault();
+    this.setState({
+      [e.target.name]: e.target.value
     });
   }
 
@@ -58,21 +74,106 @@ class ConnectAccount extends React.Component {
       });
   }
 
+  updateProfile() {
+    const user = auth.firebase.auth().currentUser
+    if (this.state.photoURL !== '') {
+      user.updateProfile({
+        photoURL: this.state.photoURL
+      }).then(() => {
+        this.setState({
+          photoURL: ''
+        })
+        this.props.updateUser(user)
+      }).catch((err) => {
+        console.log(err);
+      })
+    }
+    if (this.state.displayName !== '') {
+      user.updateProfile({
+        displayName: this.state.displayName
+      }).then(() => {
+        axios.put('/updateUsername', {
+          uid: this.props.currentUser.uid,
+          displayName: this.state.displayName
+        }).then(() => {
+          this.setState({
+            displayName: ''
+          })
+        })
+        this.props.updateUser(user)
+
+      }).catch((err) => {
+        console.log(err);
+      })
+    }
+    if (this.state.newPassword !== '') {
+      user.updatePassword(
+        this.state.newPassword
+      ).then(() => {
+        this.setState({
+          newPassword: ''
+        })
+        this.props.updateUser(user)
+      }).catch((err) => {
+        console.log(err);
+      })
+    }
+    this.setState({
+      wantUpdate: false
+    })
+  }
+
+  updateField() {
+    if(this.state.wantUpdate) {
+      return (
+        <div>
+          <div>
+            <input
+              name="photoURL"
+              onChange={this.setInput}
+              placeholder="Update Profile Picture"
+            />
+          </div>
+          <div>
+            <input
+              name="displayName"
+              onChange={this.setInput}
+              placeholder="Update Display Name"
+            />
+          </div>
+          <div>
+            <input
+              name="newPassword"
+              type="password"
+              onChange={this.setInput}
+              placeholder="Update Password"
+            />
+          </div>
+          <div>
+            <button onClick={this.updateProfile}>
+              Submit
+            </button>
+          </div>
+        </div>
+
+      )
+    } else {
+      return (
+        <div>
+          <button onClick={() => this.setState({ wantUpdate: true })}>Update Profile</button>
+        </div>
+      )
+    }
+  }
+
   render() {
     return (
       <div>
         <h1>
           <Bar />
         </h1>
+        {this.updateField()}
         <div>
-          <h1>
-            <ul>
-              <li>Area</li>
-              <li>For</li>
-              <li>Account</li>
-              <li>Changes</li>
-            </ul>
-          </h1>
           <ul>
             {this.state.myRequests.map((request, i) => (
               <Request
@@ -91,6 +192,8 @@ class ConnectAccount extends React.Component {
 }
 const mapStateToProps = state => ({ currentUser: state.currentUser });
 
-const Account = connect(mapStateToProps)(ConnectAccount);
+const mapDispatchToProps = dispatch => ({updateUser: user => dispatch(actions.updateUser(user))})
+
+const Account = connect(mapStateToProps, mapDispatchToProps)(ConnectAccount);
 
 export default Account;

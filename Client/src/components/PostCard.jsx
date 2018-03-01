@@ -19,6 +19,13 @@ import LikeCheckbox from './LikeCheckbox.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
+//
+import { List, ListItem } from 'material-ui/List';
+import Divider from 'material-ui/Divider';
+import Subheader from 'material-ui/Subheader';
+import Avatar from 'material-ui/Avatar';
+import SingleComment from './SingleComment.jsx';
+
 const mapDispatchToProps = dispatch => ({
   updateCurrentView: view => dispatch(actions.updateCurrentView(view))
 });
@@ -102,9 +109,7 @@ class ConnectedPostCard extends React.Component {
   }
 
   toggleComments() {
-    console.log('comment toggle button clicked!');
     const currentState = this.state.expanded;
-    console.log('current state is:', currentState);
     this.setState({ expanded: !currentState });
   }
   handleExpandChange(expanded) {
@@ -136,19 +141,21 @@ class ConnectedPostCard extends React.Component {
           title={this.props.post.caption}
           subtitle={`${this.props.post.likeCount} likes`}
           subtitleStyle={{ fontSize: '20px' }}
+          style={{ padding: '5px' }}
           children={
-            <div onClick={this.clickLikeButton}>
+            <div>
               <LikeCheckbox
                 postId={this.props.post.id}
                 uid={this.props.currentUser.uid}
                 likeStatus={this.state.likeStatus}
+                onClick={this.clickLikeButton}
               />
             </div>
           }
         />
 
-        <CardText expandable style={{ textAlign: 'left' }}>
-          <ul>
+        <CardText expandable style={{ textAlign: 'left', padding: '5px' }}>
+          {/* <ul>
             {this.props.post.comments.map((comment, i) => (
               <CommentEntry
                 comment={comment}
@@ -156,7 +163,31 @@ class ConnectedPostCard extends React.Component {
                 visitUser={this.visitUser}
               />
             ))}
-          </ul>
+          </ul> */}
+
+          {/* <div> */}
+          <List>
+            <Subheader>Comments</Subheader>
+
+            {this.props.post.comments.map((comment, i) => (
+              <SingleComment comment={comment} key={i} visitUser={this.visitUser} />
+            ))}
+            {/* <ListItem
+                rightIconButton={rightIconMenu}
+                primaryText="Brendan Lim"
+                secondaryText={
+                  <p>
+                    <span style={{ color: darkBlack }}>Brunch this weekend?</span>
+                    <br />
+                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to
+                    grab brunch?
+                  </p>
+                }
+                secondaryTextLines={2}
+              />
+              <Divider inset /> */}
+          </List>
+          {/* </div> */}
         </CardText>
 
         <TextField

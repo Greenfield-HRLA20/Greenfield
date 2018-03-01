@@ -1,11 +1,13 @@
 import React from 'react';
 import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
 import CommentEntry from './CommentEntry.jsx';
 import VisitUserPage from './VisitUserPage.jsx';
 import axios from 'axios';
 import actions from '../redux/actions/index';
 import { connect } from 'react-redux';
+import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import TextField from 'material-ui/TextField';
 
 const mapDispatchToProps = dispatch => ({
   updateCurrentView: view => dispatch(actions.updateCurrentView(view)),
@@ -41,6 +43,7 @@ class ConnectedCardExampleWithAvatar extends React.Component {
   }
 
   submitComment() {
+    console.log('this should only appear once');
     const uid = this.props.currentUser.uid;
     const comment = this.state.comment;
     const handle = this.props.currentUser.displayName;
@@ -100,7 +103,24 @@ class ConnectedCardExampleWithAvatar extends React.Component {
           title={this.props.post.caption}
           subtitle={`${this.props.post.likeCount} likes`}
         />
-        <CardText>"Here is some text for the post"</CardText>
+        <TextField
+          name="comment"
+          value={this.state.comment}
+          onChange={this.setInput}
+          hintText="Enter your comment here..."
+          fullWidth
+        />
+        <RaisedButton
+          label="Submit"
+          primary
+          style={{ margin: '12' }}
+          onClick={this.submitComment}
+        />
+        <ul>
+          {this.props.post.comments.map((comment, i) => (
+            <CommentEntry comment={comment} key={i} visitUser={this.visitUser} />
+          ))}
+        </ul>
         <CardActions>
           <FlatButton label="Show Comments" />
         </CardActions>

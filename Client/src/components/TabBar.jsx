@@ -2,7 +2,11 @@ import React from 'react';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import FontIcon from 'material-ui/FontIcon';
+import ActionHome from 'material-ui/svg-icons/action/home';
+import ExploreIcon from 'material-ui/svg-icons/action/search';
+import FaceIcon from 'material-ui/svg-icons/action/face';
+import LogoutIcon from 'material-ui/svg-icons/action/eject';
+import CreateIcon from 'material-ui/svg-icons/image/add-a-photo';
 import auth from '../Firebase';
 import { connect } from 'react-redux';
 import actions from '../redux/actions/index';
@@ -53,15 +57,11 @@ class ConnectedTabBar extends React.Component {
     return (
       <MuiThemeProvider>
         <Tabs onChange={this.onClickUpdateView} initialSelectedIndex={-1}>
-          <Tab
-            icon={<FontIcon className="muidocs-icon-action-home" />}
-            value={<Feed />}
-            label="Home"
-          />
-          <Tab label="Explore" value={<Explore />} />
-          <Tab label="Create" value={<Create />} />
-          <Tab label="Account" value={<Account />} />
-          <Tab label="Logout" value="Logout" onActive={this.logout} />
+          <Tab icon={<ActionHome />} value={<Feed />} label="Home" />
+          <Tab icon={<ExploreIcon />} label="Explore" value={<Explore />} />
+          <Tab icon={<CreateIcon />} label="Create" value={<Create />} />
+          <Tab icon={<FaceIcon />} label="Account" value={<Account />} />
+          <Tab icon={<LogoutIcon />} label="Logout" value="Logout" onActive={this.logout} />
         </Tabs>
       </MuiThemeProvider>
     );

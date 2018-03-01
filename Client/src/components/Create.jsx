@@ -9,7 +9,7 @@ import TabBar from './TabBar.jsx';
 
 const mapDispatchToProps = dispatch => ({
   updateCurrentView: view => dispatch(actions.updateCurrentView(view)),
-  storeUrl: url => dispatch(actions.storeUrl(url)),
+  storeUrl: url => dispatch(actions.storeUrl(url))
 });
 
 const mapStateToProps = state => ({ currentView: state.currentView });
@@ -25,10 +25,16 @@ const ConnectedCreate = props => (
       buttonClass="buttonClass"
       options={{
         accept: ['image/*', 'video/*'],
-        fromSources: ['local_file_system', 'imagesearch', 'url', 'facebook', 'googledrive'],
-        maxFiles: 1,
+        fromSources: [
+          'local_file_system',
+          'imagesearch',
+          'url',
+          'facebook',
+          'googledrive'
+        ],
+        maxFiles: 1
       }}
-      onSuccess={(response) => {
+      onSuccess={response => {
         console.log('I just uploaded:', response.filesUploaded[0]);
         if (response.filesUploaded[0].mimetype.includes('image')) {
           let rawUrl = response.filesUploaded[0].url;
@@ -39,7 +45,9 @@ const ConnectedCreate = props => (
         } else if (response.filesUploaded[0].mimetype === 'video/mp4') {
           props.storeUrl(response.filesUploaded[0].url);
         }
-        props.updateCurrentView(<Submit mediaType={response.filesUploaded[0].mimetype} />);
+        props.updateCurrentView(
+          <Submit mediaType={response.filesUploaded[0].mimetype} />
+        );
       }}
       onError={err => console.log(err)}
     />

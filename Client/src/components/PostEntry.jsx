@@ -4,6 +4,9 @@ import VisitUserPage from './VisitUserPage.jsx';
 import axios from 'axios';
 import actions from '../redux/actions/index';
 import { connect } from 'react-redux';
+import LikeCheckbox from './LikeCheckbox.jsx';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 const mapDispatchToProps = dispatch => ({
   updateCurrentView: view => dispatch(actions.updateCurrentView(view)),
@@ -65,15 +68,11 @@ class ConnectedPostEntry extends React.Component {
         postId,
       })
       .then((result) => {
-        if (result.data === true) {
-          this.setState({
-            likeCount: this.props.post.likeCount++,
           });
         } else {
           this.setState({
             likeCount: this.props.post.likeCount--,
           });
-        }
       })
       .catch((err) => {
         console.log('Error toggling like button ', err);
@@ -97,7 +96,12 @@ class ConnectedPostEntry extends React.Component {
           </video>
         )}
         <div>
-          <button onClick={this.clickLikeButton}>{this.props.post.likeCount} likes</button>
+          <MuiThemeProvider>
+            <div onClick={this.clickLikeButton}>
+              <LikeCheckbox likeStatus={this.state.likeStatus} />
+            </div>
+            {this.props.post.likeCount} likes
+          </MuiThemeProvider>
         </div>
         <div>
           <strong>{this.props.post.caption}</strong>

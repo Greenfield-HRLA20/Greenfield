@@ -156,7 +156,6 @@ module.exports.toggleLike = async (req, res) => {
 };
 
 module.exports.requestFollow = async (req, res) => {
-  console.log('in the controller!');
   try {
     const userId = await UserController.getUserId(req.body.userUid);
     const targetId = await UserController.getUserId(req.body.targetUserUid);

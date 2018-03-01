@@ -3,6 +3,7 @@ import Bar from './Navbar.jsx';
 import PostEntry from './PostEntry.jsx';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import TabBar from './TabBar.jsx';
 
 const mapStateToProps = state => ({ currentUser: state.currentUser });
 
@@ -35,7 +36,7 @@ class ConnectedFeed extends React.Component {
     return (
       <div>
         <h1>
-          <Bar />
+          <TabBar />
         </h1>
         <ul>{this.state.feedPosts.map(post => <PostEntry post={post} key={post.id} />)}</ul>
       </div>

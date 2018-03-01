@@ -4,23 +4,24 @@ import PostEntry from './PostEntry.jsx';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import CardExampleWithAvatar from './CardExampleWithAvatar.jsx';
+import TabBar from './TabBar.jsx';
 
 class ConnectedExplore extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      allPosts: [],
+      allPosts: []
     };
   }
   componentDidMount() {
     axios
       .get('/showExplorePage')
-      .then((results) => {
+      .then(results => {
         this.setState({
-          allPosts: results.data,
+          allPosts: results.data
         });
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('Error getting all post', err);
       });
   }
@@ -29,7 +30,7 @@ class ConnectedExplore extends React.Component {
     return (
       <div>
         <h1>
-          <Bar />
+          <TabBar />
         </h1>
         <ul>
           {this.state.allPosts.map(post => (

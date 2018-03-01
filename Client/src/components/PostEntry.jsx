@@ -9,16 +9,14 @@ const mapDispatchToProps = dispatch => ({
   updateCurrentView: view => dispatch(actions.updateCurrentView(view)),
 });
 
-const mapStateToProps = state => {
-  return { currentUser: state.currentUser };
-};
+const mapStateToProps = state => ({ currentUser: state.currentUser });
 
 class ConnectedPostEntry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       comment: '',
-      likeCount: this.props.post.likeCount
+      likeCount: this.props.post.likeCount,
     };
     this.setInput = this.setInput.bind(this);
     this.submitComment = this.submitComment.bind(this);
@@ -27,59 +25,57 @@ class ConnectedPostEntry extends React.Component {
   }
 
   visitUser(uid, username) {
-    this.props.updateCurrentView(
-      <VisitUserPage visitUser={uid} username={username} />
-    );
+    this.props.updateCurrentView(<VisitUserPage visitUser={uid} username={username} />);
   }
 
   setInput(e) {
     e.preventDefault();
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   }
 
   submitComment() {
-    let uid = this.props.currentUser.uid;
-    let comment = this.state.comment;
-    let handle = this.props.currentUser.displayName;
+    const uid = this.props.currentUser.uid;
+    const comment = this.state.comment;
+    const handle = this.props.currentUser.displayName;
     axios
       .post('/addComment', {
-        uid: uid,
+        uid,
         postId: this.props.post.id,
-        comment: this.state.comment
+        comment: this.state.comment,
       })
-      .then(result => {
+      .then((result) => {
         this.props.post.comments.push([handle, uid, comment]);
         this.setState({
-          comment: ''
+          comment: '',
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log('Error submitting post ', err);
       });
   }
 
   clickLikeButton() {
-    let uid = this.props.currentUser.uid;
-    let postId = this.props.post.id;
+    const uid = this.props.currentUser.uid;
+    const postId = this.props.post.id;
     axios
       .post('/toggleLike', {
-        uid: uid,
-        postId: postId
+        uid,
+        postId,
       })
-      .then(result => {
+      .then((result) => {
         if (result.data === true) {
           this.setState({
-            likeCount: this.props.post.likeCount++
+            likeCount: this.props.post.likeCount++,
           });
         } else {
           this.setState({
-            likeCount: this.props.post.likeCount--
+            likeCount: this.props.post.likeCount--,
           });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log('Error toggling like button ', err);
       });
   }
@@ -88,18 +84,12 @@ class ConnectedPostEntry extends React.Component {
     return (
       <div>
         <div>
-          <a
-            onClick={() =>
-              this.visitUser(this.props.post.uid, this.props.post.handle)
-            }
-          >
+          <a onClick={() => this.visitUser(this.props.post.uid, this.props.post.handle)}>
             {' '}
             {this.props.post.handle}{' '}
           </a>{' '}
         </div>
-        {this.props.post.mediaType.includes('image') && (
-          <img src={this.props.post.url} />
-        )}
+        {this.props.post.mediaType.includes('image') && <img src={this.props.post.url} />}
 
         {this.props.post.mediaType === 'video/mp4' && (
           <video width="200" height="200" controls controlsList="nodownload">
@@ -107,20 +97,14 @@ class ConnectedPostEntry extends React.Component {
           </video>
         )}
         <div>
-          <button onClick={this.clickLikeButton}>
-            {this.props.post.likeCount} likes
-          </button>
+          <button onClick={this.clickLikeButton}>{this.props.post.likeCount} likes</button>
         </div>
         <div>
           <strong>{this.props.post.caption}</strong>
         </div>
         <ul>
           {this.props.post.comments.map((comment, i) => (
-            <CommentEntry
-              comment={comment}
-              key={i}
-              visitUser={this.visitUser}
-            />
+            <CommentEntry comment={comment} key={i} visitUser={this.visitUser} />
           ))}
         </ul>
         <input
@@ -136,8 +120,6 @@ class ConnectedPostEntry extends React.Component {
   }
 }
 
-const PostEntry = connect(mapStateToProps, mapDispatchToProps)(
-  ConnectedPostEntry
-);
+const PostEntry = connect(mapStateToProps, mapDispatchToProps)(ConnectedPostEntry);
 
 export default PostEntry;

@@ -4,6 +4,7 @@ import Submit from './Submit.jsx';
 import actions from '../redux/actions/index';
 import { connect } from 'react-redux';
 import ReactFilestack from 'filestack-react';
+import TabBar from './TabBar.jsx';
 // import api from '../../../filestack.config.js'
 
 const mapDispatchToProps = dispatch => ({
@@ -16,7 +17,7 @@ const mapStateToProps = state => ({ currentView: state.currentView });
 const ConnectedCreate = props => (
   <div>
     <h1>
-      <Bar />
+      <TabBar />
     </h1>
     <ReactFilestack
       apikey="A00Yv3QHpR4GK06ER6lH9z"

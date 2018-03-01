@@ -4,6 +4,7 @@ import Feed from './Feed.jsx';
 import { connect } from 'react-redux';
 import actions from '../redux/actions/index';
 import axios from 'axios';
+import TabBar from './TabBar.jsx';
 
 const mapDispatchToProps = dispatch => ({
   updateCurrentView: view => dispatch(actions.updateCurrentView(view)),
@@ -59,7 +60,7 @@ class ConnectedSubmit extends React.Component {
     return (
       <div>
         <h1>
-          <Bar />
+          <TabBar />
         </h1>
         <h1>Submit page!!!!</h1>
         {this.props.mediaType.includes('image') && <img src={this.props.urlState} alt="" />}

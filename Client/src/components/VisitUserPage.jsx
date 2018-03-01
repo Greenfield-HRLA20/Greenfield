@@ -3,6 +3,7 @@ import Bar from './Navbar.jsx';
 import PostEntry from './PostEntry.jsx';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import TabBar from './TabBar.jsx';
 
 class ConnectedVisitUserPage extends React.Component {
   constructor(props) {
@@ -88,7 +89,7 @@ class ConnectedVisitUserPage extends React.Component {
     return (
       <div>
         <h1>
-          <Bar />
+          <TabBar />
         </h1>
         <h1>{`THIS IS ${this.props.username}'S PAGE`}</h1>
         <div>

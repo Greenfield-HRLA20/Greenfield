@@ -3,7 +3,11 @@ import Bar from './Navbar.jsx';
 import PostEntry from './PostEntry.jsx';
 import axios from 'axios';
 import { connect } from 'react-redux';
+<<<<<<< HEAD
 import CardExampleWithAvatar from './CardExampleWithAvatar.jsx';
+=======
+import TabBar from './TabBar.jsx';
+>>>>>>> Change navbar to a long nav bar component
 
 class ConnectedExplore extends React.Component {
   constructor(props) {
@@ -29,7 +33,7 @@ class ConnectedExplore extends React.Component {
     return (
       <div>
         <h1>
-          <Bar />
+          <TabBar />
         </h1>
         <ul>
           {this.state.allPosts.map(post => (

@@ -6,6 +6,7 @@ import auth from '../Firebase';
 import { connect } from 'react-redux';
 import actions from '../redux/actions/index';
 import Request from './Request.jsx';
+import TabBar from './TabBar.jsx';
 
 class ConnectAccount extends React.Component {
   constructor(props) {
@@ -188,7 +189,7 @@ class ConnectAccount extends React.Component {
     return (
       <div>
         <h1>
-          <Bar />
+          <TabBar />
         </h1>
         {this.updateField()}
         <div>

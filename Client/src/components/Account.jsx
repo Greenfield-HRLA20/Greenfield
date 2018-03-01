@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import actions from '../redux/actions/index';
 import Request from './Request.jsx';
 import TabBar from './TabBar.jsx';
+import CardExampleWithAvatar from './CardExampleWithAvatar.jsx';
 
 class ConnectAccount extends React.Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class ConnectAccount extends React.Component {
       wantUpdate: false,
       photoURL: '',
       displayName: '',
-      newPassword: ''
+      newPassword: '',
     };
     this.updateRequestList = this.updateRequestList.bind(this);
     this.setInput = this.setInput.bind(this);
@@ -28,14 +29,14 @@ class ConnectAccount extends React.Component {
   updateRequestList(index) {
     this.state.myRequests.splice(index, 1);
     this.setState({
-      myRequests: this.state.myRequests
+      myRequests: this.state.myRequests,
     });
   }
 
   setInput(e) {
     e.preventDefault();
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   }
 
@@ -43,29 +44,29 @@ class ConnectAccount extends React.Component {
     axios
       .get('/showProfilePage', {
         params: {
-          user: this.props.currentUser.uid
-        }
+          user: this.props.currentUser.uid,
+        },
       })
-      .then(results => {
+      .then((results) => {
         this.setState({
-          myPosts: results.data
+          myPosts: results.data,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log('Error getting all post', err);
       });
     axios
       .get('/getPendingFollowRequests', {
         params: {
-          userName: this.props.currentUser.uid
-        }
+          userName: this.props.currentUser.uid,
+        },
       })
-      .then(results => {
+      .then((results) => {
         this.setState({
-          myRequests: results.data
+          myRequests: results.data,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log('Error getting follow requests,', err);
       });
   }
@@ -75,37 +76,37 @@ class ConnectAccount extends React.Component {
     if (this.state.photoURL !== '') {
       user
         .updateProfile({
-          photoURL: this.state.photoURL
+          photoURL: this.state.photoURL,
         })
         .then(() => {
           this.setState({
-            photoURL: ''
+            photoURL: '',
           });
           this.props.updateUser(user);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     }
     if (this.state.displayName !== '') {
       user
         .updateProfile({
-          displayName: this.state.displayName
+          displayName: this.state.displayName,
         })
         .then(() => {
           axios
             .put('/updateUsername', {
               uid: this.props.currentUser.uid,
-              displayName: this.state.displayName
+              displayName: this.state.displayName,
             })
             .then(() => {
               this.setState({
-                displayName: ''
+                displayName: '',
               });
             });
           this.props.updateUser(user);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     }
@@ -114,16 +115,16 @@ class ConnectAccount extends React.Component {
         .updatePassword(this.state.newPassword)
         .then(() => {
           this.setState({
-            newPassword: ''
+            newPassword: '',
           });
           this.props.updateUser(user);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     }
     this.setState({
-      wantUpdate: false
+      wantUpdate: false,
     });
   }
 
@@ -132,18 +133,10 @@ class ConnectAccount extends React.Component {
       return (
         <div>
           <div>
-            <input
-              name="photoURL"
-              onChange={this.setInput}
-              placeholder="Update Profile Picture"
-            />
+            <input name="photoURL" onChange={this.setInput} placeholder="Update Profile Picture" />
           </div>
           <div>
-            <input
-              name="displayName"
-              onChange={this.setInput}
-              placeholder="Update Display Name"
-            />
+            <input name="displayName" onChange={this.setInput} placeholder="Update Display Name" />
           </div>
           <div>
             <input
@@ -158,15 +151,12 @@ class ConnectAccount extends React.Component {
           </div>
         </div>
       );
-    } else {
-      return (
-        <div>
-          <button onClick={() => this.setState({ wantUpdate: true })}>
-            Update Profile
-          </button>
-        </div>
-      );
     }
+    return (
+      <div>
+        <button onClick={() => this.setState({ wantUpdate: true })}>Update Profile</button>
+      </div>
+    );
   }
 
   render() {
@@ -190,7 +180,8 @@ class ConnectAccount extends React.Component {
         </div>
         <ul>
           {this.state.myPosts.map(post => (
-            <PostEntry post={post} key={post.id} />
+            <CardExampleWithAvatar post={post} key={post.id} />
+            // <PostEntry post={post} key={post.id} />
           ))}
         </ul>
       </div>
@@ -200,7 +191,7 @@ class ConnectAccount extends React.Component {
 const mapStateToProps = state => ({ currentUser: state.currentUser });
 
 const mapDispatchToProps = dispatch => ({
-  updateUser: user => dispatch(actions.updateUser(user))
+  updateUser: user => dispatch(actions.updateUser(user)),
 });
 
 const Account = connect(mapStateToProps, mapDispatchToProps)(ConnectAccount);

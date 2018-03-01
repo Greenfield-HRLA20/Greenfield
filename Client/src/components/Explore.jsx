@@ -3,6 +3,7 @@ import Bar from './Navbar.jsx';
 import PostEntry from './PostEntry.jsx';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import CardExampleWithAvatar from './CardExampleWithAvatar.jsx';
 
 class ConnectedExplore extends React.Component {
   constructor(props) {
@@ -30,7 +31,14 @@ class ConnectedExplore extends React.Component {
         <h1>
           <Bar />
         </h1>
-        <ul>{this.state.allPosts.map(post => <PostEntry post={post} key={post.id} />)}</ul>
+        <ul>
+          {this.state.allPosts.map(post => (
+            <div>
+              <CardExampleWithAvatar post={post} key={post.id} />
+              {/* <PostEntry post={post} key={post.id} /> */}
+            </div>
+          ))}
+        </ul>
       </div>
     );
   }

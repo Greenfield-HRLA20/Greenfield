@@ -7,6 +7,7 @@ import { Provider, connect } from 'react-redux';
 import store from './redux';
 import actions from './redux/actions/index';
 import axios from 'axios';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const mapDispatchToProps = dispatch => ({
   updateUser: user => dispatch(actions.updateUser(user)),
@@ -63,7 +64,9 @@ const Main = connect(mapStateToProps, mapDispatchToProps)(ConnectedMain);
 const app = document.getElementById('app');
 ReactDOM.render(
   <Provider store={store}>
-    <Main />
+    <MuiThemeProvider>
+      <Main />
+    </MuiThemeProvider>
   </Provider>,
   app,
 );

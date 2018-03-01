@@ -16,11 +16,6 @@ module.exports = {
         where: { postId: result[0].dataValues.postId },
       });
       return result[1];
-
-      await Like.destroy({
-        where: { postId: result[0].dataValues.postId },
-      });
-      return result[1];
     } catch (err) {
       console.log(err);
     }

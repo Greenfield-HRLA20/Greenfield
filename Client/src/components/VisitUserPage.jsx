@@ -4,6 +4,7 @@ import PostEntry from './PostEntry.jsx';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import TabBar from './TabBar.jsx';
+import PostCard from './PostCard.jsx';
 
 class ConnectedVisitUserPage extends React.Component {
   constructor(props) {
@@ -97,7 +98,12 @@ class ConnectedVisitUserPage extends React.Component {
             Follow
           </button>
         </div>
-        <ul>{this.state.userPosts.map(post => <PostEntry post={post} key={post.id} />)}</ul>
+        <ul>
+          {this.state.userPosts.map(post => (
+            // <PostEntry post={post} key={post.id} />
+            <PostCard post={post} key={post.id} />
+          ))}
+        </ul>
       </div>
     );
   }

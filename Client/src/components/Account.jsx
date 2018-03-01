@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import actions from '../redux/actions/index';
 import Request from './Request.jsx';
 import TabBar from './TabBar.jsx';
-import CardExampleWithAvatar from './CardExampleWithAvatar.jsx';
+import PostCard from './PostCard.jsx';
 
 class ConnectAccount extends React.Component {
   constructor(props) {
@@ -180,7 +180,7 @@ class ConnectAccount extends React.Component {
         </div>
         <ul>
           {this.state.myPosts.map(post => (
-            <CardExampleWithAvatar post={post} key={post.id} />
+            <PostCard post={post} key={post.id} />
             // <PostEntry post={post} key={post.id} />
           ))}
         </ul>

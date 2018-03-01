@@ -18,7 +18,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({ currentUser: state.currentUser });
 
-class ConnectedCardExampleWithAvatar extends React.Component {
+class ConnectedPostCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -186,6 +186,6 @@ class ConnectedCardExampleWithAvatar extends React.Component {
   }
 }
 
-const CardExampleWithAvatar = connect(mapStateToProps, mapDispatchToProps)(ConnectedCardExampleWithAvatar);
+const PostCard = connect(mapStateToProps, mapDispatchToProps)(ConnectedPostCard);
 
-export default CardExampleWithAvatar;
+export default PostCard;

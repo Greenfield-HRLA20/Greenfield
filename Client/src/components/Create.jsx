@@ -33,7 +33,7 @@ const ConnectedCreate = props => (
         if (response.filesUploaded[0].mimetype.includes('image')) {
           let rawUrl = response.filesUploaded[0].url;
           rawUrl = rawUrl.split('/');
-          rawUrl[2] += '/resize=width:200,height:200,fit:crop';
+          rawUrl[2] += '/resize=width:600,height:600,fit:crop';
           rawUrl = rawUrl.join('/');
           props.storeUrl(rawUrl);
         } else if (response.filesUploaded[0].mimetype === 'video/mp4') {

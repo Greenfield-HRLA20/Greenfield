@@ -21,12 +21,14 @@ class ConnectedCardExampleWithAvatar extends React.Component {
     this.state = {
       comment: '',
       likeCount: this.props.post.likeCount,
+      expanded: false,
     };
     this.setInput = this.setInput.bind(this);
     this.submitComment = this.submitComment.bind(this);
     this.clickLikeButton = this.clickLikeButton.bind(this);
     this.visitUser = this.visitUser.bind(this);
     this.renderCardWithWidth = this.renderCardWithWidth.bind(this);
+    this.toggleComments = this.toggleComments.bind(this);
   }
 
   visitUser(uid, username) {
@@ -87,14 +89,27 @@ class ConnectedCardExampleWithAvatar extends React.Component {
       });
   }
 
+  toggleComments() {
+    console.log('comment toggle button clicked!');
+    const currentState = this.state.expanded;
+    console.log('current state is:', currentState);
+    this.setState({ expanded: !currentState });
+  }
+  handleExpandChange(expanded) {
+    this.setState({ expanded });
+  }
+
   renderCardWithWidth(widthAsPercent) {
     return (
-      <Card style={{ width: widthAsPercent, marginLeft: 'auto', marginRight: 'auto' }}>
+      <Card
+        style={{ width: widthAsPercent, marginLeft: 'auto', marginRight: 'auto' }}
+        expanded={this.state.expanded}
+        onExpandChange={this.handleExpandChange}
+      >
         <CardHeader
           title={this.props.post.handle}
           onClick={() => this.visitUser(this.props.post.uid, this.props.post.handle)}
         />
-        {/* <CardMedia overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}> */}
         <CardMedia>
           <img src={this.props.post.url} alt="" />
         </CardMedia>
@@ -102,6 +117,15 @@ class ConnectedCardExampleWithAvatar extends React.Component {
           title={this.props.post.caption}
           subtitle={`${this.props.post.likeCount} likes`}
         />
+
+        <CardText expandable style={{ textAlign: 'left' }}>
+          <ul>
+            {this.props.post.comments.map((comment, i) => (
+              <CommentEntry comment={comment} key={i} visitUser={this.visitUser} />
+            ))}
+          </ul>
+        </CardText>
+
         <TextField
           name="comment"
           value={this.state.comment}
@@ -115,13 +139,8 @@ class ConnectedCardExampleWithAvatar extends React.Component {
           style={{ margin: '12' }}
           onClick={this.submitComment}
         />
-        <ul>
-          {this.props.post.comments.map((comment, i) => (
-            <CommentEntry comment={comment} key={i} visitUser={this.visitUser} />
-          ))}
-        </ul>
         <CardActions>
-          <FlatButton label="Show Comments" />
+          <FlatButton label="Show/Hide Comments" onClick={this.toggleComments} />
         </CardActions>
       </Card>
     );

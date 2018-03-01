@@ -96,12 +96,10 @@ class ConnectedPostEntry extends React.Component {
           </video>
         )}
         <div>
-          <MuiThemeProvider>
-            <div onClick={this.clickLikeButton}>
-              <LikeCheckbox likeStatus={this.state.likeStatus} />
-            </div>
-            {this.props.post.likeCount} likes
-          </MuiThemeProvider>
+          <div onClick={this.clickLikeButton}>
+            <LikeCheckbox likeStatus={this.state.likeStatus} />
+          </div>
+          {this.props.post.likeCount} likes
         </div>
         <div>
           <strong>{this.props.post.caption}</strong>

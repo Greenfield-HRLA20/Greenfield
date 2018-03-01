@@ -18,7 +18,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({ currentUser: state.currentUser });
 
-class ConnectedCardExampleWithAvatar extends React.Component {
+class ConnectedPostCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -110,22 +110,26 @@ class ConnectedCardExampleWithAvatar extends React.Component {
         onExpandChange={this.handleExpandChange}
       >
         <CardHeader
+          titleStyle={{ fontSize: '38px' }}
           title={this.props.post.handle}
           onClick={() => this.visitUser(this.props.post.uid, this.props.post.handle)}
         />
         <CardMedia>
           <img src={this.props.post.url} alt="" />
         </CardMedia>
-        <div onClick={this.clickLikeButton}>
-          <LikeCheckbox
-            postId={this.props.post.id}
-            uid={this.props.currentUser.uid}
-            likeStatus={this.state.likeStatus}
-          />
-        </div>
         <CardTitle
           title={this.props.post.caption}
           subtitle={`${this.props.post.likeCount} likes`}
+          subtitleStyle={{ fontSize: '20px' }}
+          children={
+            <div onClick={this.clickLikeButton}>
+              <LikeCheckbox
+                postId={this.props.post.id}
+                uid={this.props.currentUser.uid}
+                likeStatus={this.state.likeStatus}
+              />
+            </div>
+          }
         />
 
         <CardText expandable style={{ textAlign: 'left' }}>
@@ -159,7 +163,7 @@ class ConnectedCardExampleWithAvatar extends React.Component {
   render() {
     const width = window.screen.availWidth;
     if (width > 720) {
-      return this.renderCardWithWidth('60%');
+      return this.renderCardWithWidth('50%');
     }
     return this.renderCardWithWidth('90%');
     // return (
@@ -182,6 +186,6 @@ class ConnectedCardExampleWithAvatar extends React.Component {
   }
 }
 
-const CardExampleWithAvatar = connect(mapStateToProps, mapDispatchToProps)(ConnectedCardExampleWithAvatar);
+const PostCard = connect(mapStateToProps, mapDispatchToProps)(ConnectedPostCard);
 
-export default CardExampleWithAvatar;
+export default PostCard;

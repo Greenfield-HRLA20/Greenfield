@@ -20,4 +20,18 @@ module.exports = {
       console.log(err);
     }
   },
+
+  getLikeStatus: async (userId, postId) => {
+    try {
+      const results = await Like.findAll({
+        where: {
+          userId,
+          postId,
+        },
+      });
+      return results.length > 0;
+    } catch (err) {
+      console.log(err);
+    }
+  },
 };

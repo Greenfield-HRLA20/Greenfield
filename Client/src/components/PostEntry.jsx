@@ -4,6 +4,9 @@ import VisitUserPage from './VisitUserPage.jsx';
 import axios from 'axios';
 import actions from '../redux/actions/index';
 import { connect } from 'react-redux';
+import LikeCheckbox from './LikeCheckbox.jsx';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 const mapDispatchToProps = dispatch => ({
   updateCurrentView: view => dispatch(actions.updateCurrentView(view)),
@@ -97,7 +100,14 @@ class ConnectedPostEntry extends React.Component {
           </video>
         )}
         <div>
-          <button onClick={this.clickLikeButton}>{this.props.post.likeCount} likes</button>
+          <div onClick={this.clickLikeButton}>
+            <LikeCheckbox
+              postId={this.props.post.id}
+              uid={this.props.currentUser.uid}
+              likeStatus={this.state.likeStatus}
+            />
+          </div>
+          {this.props.post.likeCount} likes
         </div>
         <div>
           <strong>{this.props.post.caption}</strong>

@@ -8,6 +8,9 @@ import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
+import LikeCheckbox from './LikeCheckbox.jsx';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 const mapDispatchToProps = dispatch => ({
   updateCurrentView: view => dispatch(actions.updateCurrentView(view)),
@@ -113,6 +116,13 @@ class ConnectedCardExampleWithAvatar extends React.Component {
         <CardMedia>
           <img src={this.props.post.url} alt="" />
         </CardMedia>
+        <div onClick={this.clickLikeButton}>
+          <LikeCheckbox
+            postId={this.props.post.id}
+            uid={this.props.currentUser.uid}
+            likeStatus={this.state.likeStatus}
+          />
+        </div>
         <CardTitle
           title={this.props.post.caption}
           subtitle={`${this.props.post.likeCount} likes`}

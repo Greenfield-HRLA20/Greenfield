@@ -155,6 +155,16 @@ module.exports.toggleLike = async (req, res) => {
   }
 };
 
+module.exports.getLikeStatus = async (req, res) => {
+  try {
+    const userId = await UserController.getUserId(req.query.userUid);
+    const result = await LikeController.getLikeStatus(userId, req.query.postId);
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports.requestFollow = async (req, res) => {
   try {
     const userId = await UserController.getUserId(req.body.userUid);

@@ -68,11 +68,15 @@ class ConnectedPostEntry extends React.Component {
         postId,
       })
       .then((result) => {
+        if (result.data === true) {
+          this.setState({
+            likeCount: this.props.post.likeCount++,
           });
         } else {
           this.setState({
             likeCount: this.props.post.likeCount--,
           });
+        }
       })
       .catch((err) => {
         console.log('Error toggling like button ', err);
@@ -97,7 +101,11 @@ class ConnectedPostEntry extends React.Component {
         )}
         <div>
           <div onClick={this.clickLikeButton}>
-            <LikeCheckbox likeStatus={this.state.likeStatus} />
+            <LikeCheckbox
+              postId={this.props.post.id}
+              uid={this.props.currentUser.uid}
+              likeStatus={this.state.likeStatus}
+            />
           </div>
           {this.props.post.likeCount} likes
         </div>

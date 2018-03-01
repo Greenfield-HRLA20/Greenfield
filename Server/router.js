@@ -57,4 +57,8 @@ router.route('/updateUsername').put((req, res) => {
   controller.updateUsername(req, res);
 });
 
+router.route('/getLikeStatus').get((req, res) => {
+  controller.getLikeStatus(req, res);
+});
+
 module.exports = router;

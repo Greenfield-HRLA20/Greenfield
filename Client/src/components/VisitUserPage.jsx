@@ -17,13 +17,13 @@ class ConnectedVisitUserPage extends React.Component {
 
   componentDidMount() {
     this.getPost(this.props.visitUser);
-    this.checkFollowRelationship();
+    this.checkFollowRelationship(this.props.visitUser);
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.visitUser !== nextProps.visitUser) {
       this.getPost(nextProps.visitUser);
-      this.checkFollowRelationship();
+      this.checkFollowRelationship(nextProps.visitUser);
     }
   }
 
@@ -60,18 +60,22 @@ class ConnectedVisitUserPage extends React.Component {
       });
   }
 
-  checkFollowRelationship() {
+  checkFollowRelationship(visitUser) {
     axios
       .get('/checkFollowRelationship', {
         params: {
           userUid: this.props.currentUser.uid,
-          targetUid: this.props.visitUser,
+          targetUid: visitUser,
         },
       })
       .then((results) => {
         if (results.data) {
           this.setState({
             disableButton: true,
+          });
+        } else {
+          this.setState({
+            disableButton: false,
           });
         }
       })

@@ -28,7 +28,7 @@ class ConnectAccount extends React.Component {
   updateRequestList(index) {
     this.state.myRequests.splice(index, 1);
     this.setState({
-      myRequests: this.state.myRequests,
+      myRequests: this.state.myRequests
     });
   }
 
@@ -43,107 +43,92 @@ class ConnectAccount extends React.Component {
     axios
       .get('/showProfilePage', {
         params: {
-          user: this.props.currentUser.uid,
-        },
+          user: this.props.currentUser.uid
+        }
       })
-      .then((results) => {
+      .then(results => {
         this.setState({
-          myPosts: results.data,
+          myPosts: results.data
         });
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('Error getting all post', err);
       });
     axios
       .get('/getPendingFollowRequests', {
         params: {
-          userName: this.props.currentUser.uid,
-        },
+          userName: this.props.currentUser.uid
+        }
       })
-      .then((results) => {
+      .then(results => {
         this.setState({
-          myRequests: results.data,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> post rebase commit
+          myRequests: results.data
         });
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('Error getting follow requests,', err);
-<<<<<<< HEAD
       });
-=======
-        })
-          .then((results) => {
-            this.setState({
-              myRequests: results.data,
-            });
-          })
-          .catch((err) => {
-            console.log('Error getting follow requests,', err);
-          });
-<<<<<<< HEAD
-      })
->>>>>>> commit for rebase
-=======
-=======
->>>>>>> post rebase commit
-      });
->>>>>>> commit for rebase
   }
 
   updateProfile() {
-    const user = auth.firebase.auth().currentUser
+    const user = auth.firebase.auth().currentUser;
     if (this.state.photoURL !== '') {
-      user.updateProfile({
-        photoURL: this.state.photoURL
-      }).then(() => {
-        this.setState({
-          photoURL: ''
+      user
+        .updateProfile({
+          photoURL: this.state.photoURL
         })
-        this.props.updateUser(user)
-      }).catch((err) => {
-        console.log(err);
-      })
+        .then(() => {
+          this.setState({
+            photoURL: ''
+          });
+          this.props.updateUser(user);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
     if (this.state.displayName !== '') {
-      user.updateProfile({
-        displayName: this.state.displayName
-      }).then(() => {
-        axios.put('/updateUsername', {
-          uid: this.props.currentUser.uid,
+      user
+        .updateProfile({
           displayName: this.state.displayName
-        }).then(() => {
-          this.setState({
-            displayName: ''
-          })
         })
-        this.props.updateUser(user)
-
-      }).catch((err) => {
-        console.log(err);
-      })
+        .then(() => {
+          axios
+            .put('/updateUsername', {
+              uid: this.props.currentUser.uid,
+              displayName: this.state.displayName
+            })
+            .then(() => {
+              this.setState({
+                displayName: ''
+              });
+            });
+          this.props.updateUser(user);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
     if (this.state.newPassword !== '') {
-      user.updatePassword(
-        this.state.newPassword
-      ).then(() => {
-        this.setState({
-          newPassword: ''
+      user
+        .updatePassword(this.state.newPassword)
+        .then(() => {
+          this.setState({
+            newPassword: ''
+          });
+          this.props.updateUser(user);
         })
-        this.props.updateUser(user)
-      }).catch((err) => {
-        console.log(err);
-      })
+        .catch(err => {
+          console.log(err);
+        });
     }
     this.setState({
       wantUpdate: false
-    })
+    });
   }
 
   updateField() {
-    if(this.state.wantUpdate) {
+    if (this.state.wantUpdate) {
       return (
         <div>
           <div>
@@ -169,19 +154,18 @@ class ConnectAccount extends React.Component {
             />
           </div>
           <div>
-            <button onClick={this.updateProfile}>
-              Submit
-            </button>
+            <button onClick={this.updateProfile}>Submit</button>
           </div>
         </div>
-
-      )
+      );
     } else {
       return (
         <div>
-          <button onClick={() => this.setState({ wantUpdate: true })}>Update Profile</button>
+          <button onClick={() => this.setState({ wantUpdate: true })}>
+            Update Profile
+          </button>
         </div>
-      )
+      );
     }
   }
 
@@ -204,14 +188,20 @@ class ConnectAccount extends React.Component {
             ))}
           </ul>
         </div>
-        <ul>{this.state.myPosts.map(post => <PostEntry post={post} key={post.id} />)}</ul>
+        <ul>
+          {this.state.myPosts.map(post => (
+            <PostEntry post={post} key={post.id} />
+          ))}
+        </ul>
       </div>
     );
   }
 }
 const mapStateToProps = state => ({ currentUser: state.currentUser });
 
-const mapDispatchToProps = dispatch => ({updateUser: user => dispatch(actions.updateUser(user))})
+const mapDispatchToProps = dispatch => ({
+  updateUser: user => dispatch(actions.updateUser(user))
+});
 
 const Account = connect(mapStateToProps, mapDispatchToProps)(ConnectAccount);
 

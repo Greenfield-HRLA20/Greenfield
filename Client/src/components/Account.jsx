@@ -8,6 +8,8 @@ import actions from '../redux/actions/index';
 import Request from './Request.jsx';
 import TabBar from './TabBar.jsx';
 import PostCard from './PostCard.jsx';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class ConnectAccount extends React.Component {
   constructor(props) {
@@ -131,30 +133,49 @@ class ConnectAccount extends React.Component {
   updateField() {
     if (this.state.wantUpdate) {
       return (
-        <div>
+        <div align="center" style={{ backgroundColor: 'white', padding: '10px' }}>
           <div>
-            <input name="photoURL" onChange={this.setInput} placeholder="Update Profile Picture" />
-          </div>
-          <div>
-            <input name="displayName" onChange={this.setInput} placeholder="Update Display Name" />
-          </div>
-          <div>
-            <input
-              name="newPassword"
-              type="password"
+            <TextField
+              name="photoURL"
               onChange={this.setInput}
-              placeholder="Update Password"
+              floatingLabelText="Enter New Photo Url"
             />
           </div>
           <div>
-            <button onClick={this.updateProfile}>Submit</button>
+            <TextField
+              name="displayName"
+              onChange={this.setInput}
+              floatingLabelText="Enter New Display Name"
+            />
+          </div>
+          <div>
+            <TextField
+              name="newPassword"
+              onChange={this.setInput}
+              floatingLabelText="Enter New Password"
+              type="password"
+            />
+            <br />
+          </div>
+          <div>
+            <RaisedButton
+              label="Submit"
+              primary
+              onClick={this.updateProfile}
+              style={{ margin: '12' }}
+            />
           </div>
         </div>
       );
     }
     return (
-      <div>
-        <button onClick={() => this.setState({ wantUpdate: true })}>Update Profile</button>
+      <div align="center">
+        <RaisedButton
+          label="Update Profile"
+          primary
+          onClick={() => this.setState({ wantUpdate: true })}
+          style={{ margin: '7' }}
+        />
       </div>
     );
   }

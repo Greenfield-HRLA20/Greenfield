@@ -57,6 +57,7 @@ class LikeCheckbox extends React.Component {
         <Checkbox
           onCheck={this.updateCheck}
           checked={this.state.checked}
+          iconStyle={{ fill: 'rgb(240,71,88)' }}
           checkedIcon={<ActionFavorite />}
           uncheckedIcon={<ActionFavoriteBorder />}
           style={styles.checkbox}

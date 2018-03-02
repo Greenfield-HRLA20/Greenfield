@@ -3,6 +3,7 @@ import Bar from './Navbar.jsx';
 // import PostEntry from './PostEntry.jsx'
 import axios from 'axios';
 import { connect } from 'react-redux';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class Request extends React.Component {
   constructor(props) {
@@ -10,12 +11,12 @@ class Request extends React.Component {
     this.respondToRequest = this.respondToRequest.bind(this);
   }
 
-  respondToRequest(e) {
+  respondToRequest(value) {
     axios
       .post('/respondFollow', {
         userId: this.props.request.userId,
         targetId: this.props.request.targetId,
-        responseType: e.target.value,
+        responseType: value,
       })
       .then((result) => {
         this.props.updateRequestList(this.props.index);
@@ -27,15 +28,23 @@ class Request extends React.Component {
 
   render() {
     return (
-      <li>
-        New follow request from: <strong>{this.props.request.handle}</strong>
-        <button onClick={this.respondToRequest} value="accept">
-          Accept
-        </button>
-        <button onClick={this.respondToRequest} value="deny">
-          Deny
-        </button>
-      </li>
+      <ul>
+        <div style={{ fontFamily: 'Roboto, sans-serif' }}>
+          New follow request from: <strong>{this.props.request.handle}</strong>
+          <RaisedButton
+            label="Accept"
+            primary
+            onClick={() => this.respondToRequest('accept')}
+            style={{ margin: '8', paddingRight: '5px' }}
+          />
+          <RaisedButton
+            label="Deny"
+            secondary
+            onClick={() => this.respondToRequest('deny')}
+            style={{ margin: '8' }}
+          />
+        </div>
+      </ul>
     );
   }
 }

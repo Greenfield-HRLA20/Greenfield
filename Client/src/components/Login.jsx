@@ -39,12 +39,12 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div>
+      <div align="center">
         {/* <h1>Hello from Login!</h1>
       <input name="username" placeholder="Enter Username" onChange={this.setInput} />
       <input name="password" type="password" placeholder="Enter Password" onChange={this.setInput} />
       <button onClick={() => this.sumbitEntry(this.state.username, this.state.password)}>Login</button> */}
-        <h1>Welcome to My Awesome App</h1>
+        <img src="http://www.cufonfonts.com/site/makeimage?type=custom&text=Hackergram&size=100&id=20488" />
         <div id="firebaseui-auth-container" />
         <div id="loader">Loading...</div>
       </div>

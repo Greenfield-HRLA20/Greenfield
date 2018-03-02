@@ -14,20 +14,6 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({ currentView: state.currentView });
 
-const iconButtonElement = (
-  <IconButton touch tooltip="more" tooltipPosition="bottom-left">
-    <MoreVertIcon color={grey400} />
-  </IconButton>
-);
-
-const rightIconMenu = (
-  <IconMenu iconButtonElement={iconButtonElement}>
-    <MenuItem>Reply</MenuItem>
-    <MenuItem>Forward</MenuItem>
-    <MenuItem>Delete</MenuItem>
-  </IconMenu>
-);
-
 class ConnectedSingleComment extends React.Component {
   constructor(props) {
     super(props);
@@ -36,7 +22,6 @@ class ConnectedSingleComment extends React.Component {
   render() {
     return (
       <ListItem
-        rightIconButton={rightIconMenu}
         primaryText={this.props.comment[0]}
         secondaryText={<p>{this.props.comment[2]}</p>}
         secondaryTextLines={1}

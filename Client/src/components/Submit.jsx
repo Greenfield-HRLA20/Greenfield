@@ -53,20 +53,20 @@ class ConnectedSubmit extends React.Component {
       .catch((err) => {
         console.log('Error submitting post', err);
       });
-    //
   }
 
   render() {
     return (
-      <div>
+      <div style={{ textAlign: 'center' }}>
         <h1>
           <TabBar />
         </h1>
-        <h1>Submit page!!!!</h1>
-        {this.props.mediaType.includes('image') && <img src={this.props.urlState} alt="" />}
-
+        <h1 style={{ fontFamily: 'Roboto, sans-serif' }}>Review</h1>
+        {this.props.mediaType.includes('image') && (
+          <img height="300" width="300" src={this.props.urlState} />
+        )}
         {this.props.mediaType === 'video/mp4' && (
-          <video width="200" height="200" controls>
+          <video width="600" height="600" controls>
             <source src={this.props.urlState} type="video/mp4" />
           </video>
         )}

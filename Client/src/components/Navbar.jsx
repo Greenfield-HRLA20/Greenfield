@@ -7,12 +7,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import RaisedButton from 'material-ui/RaisedButton';
-import {
-  Toolbar,
-  ToolbarGroup,
-  ToolbarSeparator,
-  ToolbarTitle
-} from 'material-ui/Toolbar';
+import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
 import auth from '../Firebase';
 import { connect } from 'react-redux';
 import actions from '../redux/actions/index';
@@ -24,13 +19,13 @@ import Account from './Account.jsx';
 const mapDispatchToProps = dispatch => ({
   updateCurrentView: view => dispatch(actions.updateCurrentView(view)),
   logoutUser: () => dispatch(actions.logoutUser()),
-  updateNav: string => dispatch(actions.updateNav(string))
+  updateNav: string => dispatch(actions.updateNav(string)),
 });
 
 const mapStateToProps = state => ({
   currentView: state.currentView,
   currentUser: state.currentUser,
-  currentNav: state.currentNav
+  currentNav: state.currentNav,
 });
 
 class ConnectedBar extends React.Component {
@@ -44,7 +39,7 @@ class ConnectedBar extends React.Component {
     auth.firebase
       .auth()
       .signOut()
-      .catch(error => {
+      .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
@@ -86,11 +81,7 @@ class ConnectedBar extends React.Component {
                 primaryText="Account"
                 onClick={() => this.onClickUpdateView(<Account />, 'account')}
               />
-              <MenuItem
-                value="logout"
-                primaryText="Logout"
-                onClick={this.logout}
-              />
+              <MenuItem value="logout" primaryText="Logout" onClick={this.logout} />
             </DropDownMenu>
           </ToolbarGroup>
         </Toolbar>

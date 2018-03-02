@@ -18,10 +18,10 @@ class Request extends React.Component {
         targetId: this.props.request.targetId,
         responseType: value,
       })
-      .then((result) => {
+      .then(result => {
         this.props.updateRequestList(this.props.index);
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   }

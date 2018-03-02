@@ -135,14 +135,7 @@ class ConnectedPostCard extends React.Component {
         <CardTitle
           title={this.props.post.caption}
           subtitle={`${this.props.post.likeCount} likes`}
-<<<<<<< HEAD:Client/src/components/PostCard.jsx
-<<<<<<< HEAD:Client/src/components/PostCard.jsx
           subtitleStyle={{ fontSize: '20px' }}
-=======
->>>>>>> commit for rebase:Client/src/components/CardExampleWithAvatar.jsx
-=======
-          subtitleStyle={{ fontSize: '20px' }}
->>>>>>> commit for rebase, nothing should have changed:Client/src/components/PostCard.jsx
           children={
             <div onClick={this.clickLikeButton}>
               <LikeCheckbox
@@ -215,17 +208,8 @@ class ConnectedPostCard extends React.Component {
   }
 }
 
-<<<<<<< HEAD:Client/src/components/PostCard.jsx
-<<<<<<< HEAD:Client/src/components/PostCard.jsx
-const PostCard = connect(mapStateToProps, mapDispatchToProps)(ConnectedPostCard);
-=======
-const CardExampleWithAvatar = connect(mapStateToProps, mapDispatchToProps)(
-  ConnectedCardExampleWithAvatar
-=======
 const PostCard = connect(mapStateToProps, mapDispatchToProps)(
   ConnectedPostCard
->>>>>>> commit for rebase, nothing should have changed:Client/src/components/PostCard.jsx
 );
->>>>>>> commit for rebase:Client/src/components/CardExampleWithAvatar.jsx
 
 export default PostCard;

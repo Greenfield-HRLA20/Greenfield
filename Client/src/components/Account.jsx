@@ -8,11 +8,8 @@ import actions from '../redux/actions/index';
 import Request from './Request.jsx';
 import TabBar from './TabBar.jsx';
 import PostCard from './PostCard.jsx';
-<<<<<<< HEAD
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-=======
->>>>>>> commit for rebase, nothing should have changed
 
 class ConnectAccount extends React.Component {
   constructor(props) {
@@ -172,7 +169,6 @@ class ConnectAccount extends React.Component {
       );
     }
     return (
-<<<<<<< HEAD
       <div align="center">
         <RaisedButton
           label="Update Profile"
@@ -180,12 +176,6 @@ class ConnectAccount extends React.Component {
           onClick={() => this.setState({ wantUpdate: true })}
           style={{ margin: '7' }}
         />
-=======
-      <div>
-        <button onClick={() => this.setState({ wantUpdate: true })}>
-          Update Profile
-        </button>
->>>>>>> commit for rebase, nothing should have changed
       </div>
     );
   }

@@ -57,6 +57,7 @@ class ConnectedPostCard extends React.Component {
     const uid = this.props.currentUser.uid;
     const comment = this.state.comment;
     const handle = this.props.currentUser.displayName;
+    const profilePic = this.props.post.profilePic;
     axios
       .post('/addComment', {
         uid,
@@ -64,7 +65,7 @@ class ConnectedPostCard extends React.Component {
         comment: this.state.comment,
       })
       .then((result) => {
-        this.props.post.comments.push([handle, uid, comment]);
+        this.props.post.comments.push([handle, uid, profilePic, comment]);
         this.setState({
           comment: '',
         });

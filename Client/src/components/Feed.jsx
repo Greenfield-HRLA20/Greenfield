@@ -12,7 +12,7 @@ class ConnectedFeed extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      feedPosts: [],
+      feedPosts: []
     };
   }
 
@@ -20,15 +20,15 @@ class ConnectedFeed extends React.Component {
     axios
       .get('/showFeedPage', {
         params: {
-          user: this.props.currentUser.uid,
-        },
+          user: this.props.currentUser.uid
+        }
       })
-      .then((results) => {
+      .then(results => {
         this.setState({
-          feedPosts: results.data,
+          feedPosts: results.data
         });
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('Error getting all post', err);
       });
   }

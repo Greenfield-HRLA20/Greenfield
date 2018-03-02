@@ -9,7 +9,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 const mapDispatchToProps = dispatch => ({
-  updateCurrentView: view => dispatch(actions.updateCurrentView(view)),
+  updateCurrentView: view => dispatch(actions.updateCurrentView(view))
 });
 
 const mapStateToProps = state => ({ currentUser: state.currentUser });
@@ -19,7 +19,7 @@ class ConnectedPostEntry extends React.Component {
     super(props);
     this.state = {
       comment: '',
-      likeCount: this.props.post.likeCount,
+      likeCount: this.props.post.likeCount
     };
     this.setInput = this.setInput.bind(this);
     this.submitComment = this.submitComment.bind(this);
@@ -28,13 +28,15 @@ class ConnectedPostEntry extends React.Component {
   }
 
   visitUser(uid, username) {
-    this.props.updateCurrentView(<VisitUserPage visitUser={uid} username={username} />);
+    this.props.updateCurrentView(
+      <VisitUserPage visitUser={uid} username={username} />
+    );
   }
 
   setInput(e) {
     e.preventDefault();
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   }
 
@@ -46,15 +48,15 @@ class ConnectedPostEntry extends React.Component {
       .post('/addComment', {
         uid,
         postId: this.props.post.id,
-        comment: this.state.comment,
+        comment: this.state.comment
       })
-      .then((result) => {
+      .then(result => {
         this.props.post.comments.push([handle, uid, comment]);
         this.setState({
-          comment: '',
+          comment: ''
         });
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('Error submitting post ', err);
       });
   }
@@ -65,20 +67,20 @@ class ConnectedPostEntry extends React.Component {
     axios
       .post('/toggleLike', {
         uid,
-        postId,
+        postId
       })
-      .then((result) => {
+      .then(result => {
         if (result.data === true) {
           this.setState({
-            likeCount: this.props.post.likeCount++,
+            likeCount: this.props.post.likeCount++
           });
         } else {
           this.setState({
-            likeCount: this.props.post.likeCount--,
+            likeCount: this.props.post.likeCount--
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('Error toggling like button ', err);
       });
   }
@@ -87,12 +89,18 @@ class ConnectedPostEntry extends React.Component {
     return (
       <div>
         <div>
-          <a onClick={() => this.visitUser(this.props.post.uid, this.props.post.handle)}>
+          <a
+            onClick={() =>
+              this.visitUser(this.props.post.uid, this.props.post.handle)
+            }
+          >
             {' '}
             {this.props.post.handle}{' '}
           </a>{' '}
         </div>
-        {this.props.post.mediaType.includes('image') && <img src={this.props.post.url} />}
+        {this.props.post.mediaType.includes('image') && (
+          <img src={this.props.post.url} />
+        )}
 
         {this.props.post.mediaType === 'video/mp4' && (
           <video width="200" height="200" controls controlsList="nodownload">
@@ -114,7 +122,11 @@ class ConnectedPostEntry extends React.Component {
         </div>
         <ul>
           {this.props.post.comments.map((comment, i) => (
-            <CommentEntry comment={comment} key={i} visitUser={this.visitUser} />
+            <CommentEntry
+              comment={comment}
+              key={i}
+              visitUser={this.visitUser}
+            />
           ))}
         </ul>
         <input
@@ -130,6 +142,8 @@ class ConnectedPostEntry extends React.Component {
   }
 }
 
-const PostEntry = connect(mapStateToProps, mapDispatchToProps)(ConnectedPostEntry);
+const PostEntry = connect(mapStateToProps, mapDispatchToProps)(
+  ConnectedPostEntry
+);
 
 export default PostEntry;

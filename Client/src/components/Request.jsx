@@ -16,12 +16,16 @@ class Request extends React.Component {
       .post('/respondFollow', {
         userId: this.props.request.userId,
         targetId: this.props.request.targetId,
+<<<<<<< HEAD
         responseType: value,
+=======
+        responseType: e.target.value
+>>>>>>> commit for rebase, nothing should have changed
       })
-      .then((result) => {
+      .then(result => {
         this.props.updateRequestList(this.props.index);
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   }

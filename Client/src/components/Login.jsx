@@ -6,7 +6,7 @@ class Login extends React.Component {
     super();
     this.state = {
       username: '',
-      password: '',
+      password: ''
     };
 
     this.setInput = this.setInput.bind(this);
@@ -20,9 +20,9 @@ class Login extends React.Component {
     e.preventDefault();
     this.setState(
       {
-        [e.target.name]: e.target.value,
+        [e.target.name]: e.target.value
       },
-      () => console.log(this.state),
+      () => console.log(this.state)
     );
   }
 
@@ -30,7 +30,7 @@ class Login extends React.Component {
     auth.firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .catch((error) => {
+      .catch(error => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);

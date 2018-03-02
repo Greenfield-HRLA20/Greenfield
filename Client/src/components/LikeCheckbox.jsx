@@ -6,18 +6,18 @@ import axios from 'axios';
 
 const styles = {
   block: {
-    maxWidth: 250,
+    maxWidth: 250
   },
   checkbox: {
-    marginBottom: 16,
-  },
+    marginBottom: 16
+  }
 };
 
 class LikeCheckbox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checked: false,
+      checked: false
     };
     this.updateCheck = this.updateCheck.bind(this);
     this.checkLikeStatus = this.checkLikeStatus.bind(this);
@@ -25,7 +25,7 @@ class LikeCheckbox extends React.Component {
 
   updateCheck() {
     this.setState({
-      checked: !this.state.checked,
+      checked: !this.state.checked
     });
   }
 
@@ -36,13 +36,13 @@ class LikeCheckbox extends React.Component {
       .get('/getLikeStatus', {
         params: {
           userUid,
-          postId,
-        },
+          postId
+        }
       })
-      .then((result) => {
+      .then(result => {
         this.setState({ checked: result.data });
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   }

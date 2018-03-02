@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import ReactFilestack from 'filestack-react';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
+import api from '../../../filestack.config.js'
 
 //
 import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
@@ -132,7 +133,7 @@ class ConnectedHorizontalLinearStepper extends React.Component {
       case 0:
         return (
           <ReactFilestack
-            apikey="A00Yv3QHpR4GK06ER6lH9z"
+            apikey="Af1ngzPQpRbe6IOnEacPyz"
             buttonText="Upload!"
             style={{ fontSize: '400px', color: 'red' }}
             buttonClass="filestack"

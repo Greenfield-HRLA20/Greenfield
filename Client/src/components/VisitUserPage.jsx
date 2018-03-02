@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import TabBar from './TabBar.jsx';
 import PostCard from './PostCard.jsx';
 import RaisedButton from 'material-ui/RaisedButton';
+import Avatar from 'material-ui/Avatar';
 
 class ConnectedVisitUserPage extends React.Component {
   constructor(props) {
@@ -94,9 +95,8 @@ class ConnectedVisitUserPage extends React.Component {
           <TabBar />
         </h1>
         <div style={{ textAlign: 'center' }}>
-          <h1 style={{ fontFamily: 'Roboto, sans-serif' }}>
-            {`Welcome to ${this.props.username}'s page!`}
-          </h1>
+          <Avatar src={this.props.profilePic} size={200} />
+          <h1 style={{ fontFamily: 'Roboto, sans-serif' }}>{this.props.username}</h1>
           <RaisedButton
             label="Request to Follow"
             primary

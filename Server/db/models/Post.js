@@ -10,7 +10,7 @@ const Post = connection.define('post', {
     type: Sequelize.INTEGER,
     defaultValue: 0,
   },
-  mediaType: Sequelize.STRING
+  mediaType: Sequelize.STRING,
 });
 
 // associations

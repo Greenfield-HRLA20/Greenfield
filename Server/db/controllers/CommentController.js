@@ -30,6 +30,7 @@ module.exports = {
         filtered.push([
           await UserController.getUsername(result[i].userId),
           await UserController.getUid(result[i].userId),
+          await UserController.getProfilePic(result[i].userId),
           result[i].Comment,
         ]);
       }

@@ -1,10 +1,10 @@
 const User = require('../models/User.js');
 
 module.exports = {
-  checkAndOrSaveUser: async (username, userId) => {
+  checkAndOrSaveUser: async (username, userId, profilePic) => {
     try {
       const result = await User.findOrCreate({
-        where: { handle: username, uid: userId },
+        where: { handle: username, uid: userId, profilePic },
       });
       if (result[1]) {
         return result[0];
@@ -33,6 +33,15 @@ module.exports = {
     }
   },
 
+  getProfilePic: async (userId) => {
+    try {
+      const user = await User.findById(userId);
+      return user.dataValues.profilePic;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
   getUid: async (userId) => {
     try {
       const user = await User.findById(userId);
@@ -47,6 +56,17 @@ module.exports = {
       const user = await User.findOne({ where: { uid } });
       user.update({
         handle: username,
+      });
+    } catch (err) {
+      console.log('Error updating username ', err);
+    }
+  },
+
+  updateProfilePicture: async (photoURL, uid) => {
+    try {
+      const user = await User.findOne({ where: { uid } });
+      user.update({
+        profilePic: photoURL,
       });
     } catch (err) {
       console.log('Error updating username ', err);

@@ -41,10 +41,10 @@ class ConnectedPostCard extends React.Component {
     this.toggleComments = this.toggleComments.bind(this);
   }
 
-  visitUser(uid, username) {
+  visitUser(uid, username, profilePic) {
     console.log('visiting a user!!!!!!!');
     console.log(uid, username);
-    this.props.updateCurrentView(<VisitUserPage visitUser={uid} username={username} />);
+    this.props.updateCurrentView(<VisitUserPage visitUser={uid} username={username} profilePic={profilePic} />);
   }
 
   setInput(e) {
@@ -119,9 +119,10 @@ class ConnectedPostCard extends React.Component {
         onExpandChange={this.handleExpandChange}
       >
         <CardHeader
+          avatar={<Avatar src={this.props.post.profilePic} size={50}/>}
           titleStyle={{ fontSize: '38px' }}
           title={this.props.post.handle}
-          onClick={() => this.visitUser(this.props.post.uid, this.props.post.handle)}
+          onClick={() => this.visitUser(this.props.post.uid, this.props.post.handle, this.props.post.profilePic)}
         />
         <CardMedia>
           <img src={this.props.post.url} alt="" />

@@ -36,7 +36,8 @@ class ConnectedMain extends React.Component {
         this.props.updateUser(user);
         axios.post('/addUser', {
           uid: user.uid,
-          handle: user.displayName
+          handle: user.displayName,
+          profilePic: user.photoURL
         });
         this.props.updateCurrentView(<Feed />);
       }

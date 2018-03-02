@@ -28,23 +28,27 @@ class Request extends React.Component {
 
   render() {
     return (
-      <ul>
-        <div style={{ fontFamily: 'Roboto, sans-serif' }}>
+      // <ul style={{ textAlign: 'left', margin: 'auto' }}>
+      <div style={{ fontFamily: 'Roboto, sans-serif' }}>
+        <div style={{ marginBottom: '5px' }}>
           New follow request from: <strong>{this.props.request.handle}</strong>
-          <RaisedButton
-            label="Accept"
-            primary
-            onClick={() => this.respondToRequest('accept')}
-            style={{ margin: '8', paddingRight: '5px' }}
-          />
-          <RaisedButton
-            label="Deny"
-            secondary
-            onClick={() => this.respondToRequest('deny')}
-            style={{ margin: '8' }}
-          />
         </div>
-      </ul>
+        <RaisedButton
+          label="Accept"
+          primary
+          onClick={() => this.respondToRequest('accept')}
+          style={{ margin: '8', paddingRight: '5px' }}
+        />
+        <RaisedButton
+          label="Deny"
+          secondary
+          onClick={() => this.respondToRequest('deny')}
+          style={{ margin: '8' }}
+        />
+        <br />
+        <br />
+      </div>
+      // </ul>
     );
   }
 }

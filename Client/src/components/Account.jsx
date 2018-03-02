@@ -187,18 +187,19 @@ class ConnectAccount extends React.Component {
           <TabBar />
         </h1>
         {this.updateField()}
-        <div>
-          <ul>
-            {this.state.myRequests.map((request, i) => (
-              <Request
-                updateRequestList={this.updateRequestList}
-                request={request}
-                key={i}
-                index={i}
-              />
-            ))}
-          </ul>
+        {/* <div style={{ textAlign: 'center' }}> */}
+        <br />
+        <div style={{ textAlign: 'center' }}>
+          {this.state.myRequests.map((request, i) => (
+            <Request
+              updateRequestList={this.updateRequestList}
+              request={request}
+              key={i}
+              index={i}
+            />
+          ))}
         </div>
+        {/* </div> */}
         <ul>
           {this.state.myPosts.map(post => (
             <PostCard post={post} key={post.id} />

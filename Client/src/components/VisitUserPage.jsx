@@ -5,13 +5,14 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import TabBar from './TabBar.jsx';
 import PostCard from './PostCard.jsx';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class ConnectedVisitUserPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       userPosts: [],
-      disableButton: false
+      disableButton: false,
     };
     this.sendFollowRequest = this.sendFollowRequest.bind(this);
     this.checkFollowRelationship = this.checkFollowRelationship.bind(this);
@@ -33,15 +34,15 @@ class ConnectedVisitUserPage extends React.Component {
     axios
       .get('/showProfilePage', {
         params: {
-          user: uid
-        }
+          user: uid,
+        },
       })
-      .then(results => {
+      .then((results) => {
         this.setState({
-          userPosts: results.data
+          userPosts: results.data,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log('Error getting all post', err);
       });
   }
@@ -50,14 +51,14 @@ class ConnectedVisitUserPage extends React.Component {
     axios
       .post('/requestFollow', {
         userUid: this.props.currentUser.uid,
-        targetUserUid: this.props.visitUser
+        targetUserUid: this.props.visitUser,
       })
-      .then(results => {
+      .then((results) => {
         this.setState({
-          disableButton: true
+          disableButton: true,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
@@ -67,21 +68,21 @@ class ConnectedVisitUserPage extends React.Component {
       .get('/checkFollowRelationship', {
         params: {
           userUid: this.props.currentUser.uid,
-          targetUid: visitUser
-        }
+          targetUid: visitUser,
+        },
       })
-      .then(results => {
+      .then((results) => {
         if (results.data) {
           this.setState({
-            disableButton: true
+            disableButton: true,
           });
         } else {
           this.setState({
-            disableButton: false
+            disableButton: false,
           });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
@@ -92,21 +93,19 @@ class ConnectedVisitUserPage extends React.Component {
         <h1>
           <TabBar />
         </h1>
-        <h1>{`THIS IS ${this.props.username}'S PAGE`}</h1>
-        <div>
-          <button
+        <div style={{ textAlign: 'center' }}>
+          <h1 style={{ fontFamily: 'Roboto, sans-serif' }}>
+            {`Welcome to ${this.props.username}'s page!`}
+          </h1>
+          <RaisedButton
+            label="Request to Follow"
+            primary
+            style={{ margin: '12' }}
             disabled={this.state.disableButton}
             onClick={this.sendFollowRequest}
-          >
-            Follow
-          </button>
+          />
         </div>
-        <ul>
-          {this.state.userPosts.map(post => (
-            // <PostEntry post={post} key={post.id} />
-            <PostCard post={post} key={post.id} />
-          ))}
-        </ul>
+        <ul>{this.state.userPosts.map(post => <PostCard post={post} key={post.id} />)}</ul>
       </div>
     );
   }

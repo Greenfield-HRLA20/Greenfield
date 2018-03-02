@@ -6,7 +6,8 @@ const User = connection.define('user', {
     type: Sequelize.STRING,
     unique: true,
   },
-  handle: Sequelize.STRING
+  profilePic: Sequelize.STRING,
+  handle: Sequelize.STRING,
 });
 
 module.exports = User;

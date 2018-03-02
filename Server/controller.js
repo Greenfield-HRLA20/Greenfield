@@ -59,8 +59,10 @@ module.exports.showExplorePage = async (req, res) => {
       const result = await CommentController.getCommentsByPostId(posts[i].id);
       const handle = await UserController.getUsername(posts[i].userId);
       const uid = await UserController.getUid(posts[i].userId);
+      const profilePic = await UserController.getProfilePic(posts[i].userId); 
       posts[i].dataValues.comments = result;
       posts[i].dataValues.handle = handle;
+      posts[i].dataValues.profilePic = profilePic;
       posts[i].dataValues.uid = uid;
     }
     res.send(posts);
@@ -79,8 +81,10 @@ module.exports.showFeedPage = async (req, res) => {
       const result = await CommentController.getCommentsByPostId(userPosts[i].id);
       const handle = await UserController.getUsername(userPosts[i].userId);
       const uid = await UserController.getUid(userPosts[i].userId);
+      const profilePic = await UserController.getProfilePic(userPosts[i].userId);
       userPosts[i].dataValues.comments = result;
       userPosts[i].dataValues.handle = handle;
+      userPosts[i].dataValues.profilePic = profilePic;
       userPosts[i].dataValues.uid = uid;
     }
     res.send(userPosts);
@@ -99,9 +103,11 @@ module.exports.showProfilePage = async (req, res) => {
       const result = await CommentController.getCommentsByPostId(userPosts[i].id);
       const handle = await UserController.getUsername(userPosts[i].userId);
       const uid = await UserController.getUid(userPosts[i].userId);
+      const profilePic = await UserController.getProfilePic(userPosts[i].userId);
       userPosts[i].dataValues.comments = result;
       userPosts[i].dataValues.handle = handle;
-      userPosts[i].dataValues.uid = uid;
+      userPosts[i].dataValues.profilePic = profilePic;
+      userPosts[i].dataValues.uid = uid;      
     }
     res.send(userPosts);
   } catch (err) {
@@ -137,7 +143,7 @@ module.exports.addComment = async (req, res) => {
 
 module.exports.addUser = async (req, res) => {
   try {
-    const result = await UserController.checkAndOrSaveUser(req.body.handle, req.body.uid);
+    const result = await UserController.checkAndOrSaveUser(req.body.handle, req.body.uid, req.body.profilePic);
     res.send(result);
   } catch (err) {
     console.log('something went wrong with creating a user', err);
@@ -219,6 +225,15 @@ module.exports.updateUsername = async (req, res) => {
   try {
     await UserController.updateUsername(req.body.displayName, req.body.uid);
     res.send('Updated username!');
+  } catch (err) {
+    console.log('Error updating username ', err);
+  }
+};
+
+module.exports.updateProfilePicture = async (req, res) => {
+  try {
+    await UserController.updateProfilePicture(req.body.photoURL, req.body.uid);
+    res.send('Updated Profile Picture!');
   } catch (err) {
     console.log('Error updating username ', err);
   }

@@ -57,6 +57,10 @@ router.route('/updateUsername').put((req, res) => {
   controller.updateUsername(req, res);
 });
 
+router.route('/updateProfilePic').put((req, res) => {
+  controller.updateProfilePicture(req, res);
+});
+
 router.route('/getLikeStatus').get((req, res) => {
   controller.getLikeStatus(req, res);
 });

@@ -7,6 +7,7 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { grey400, darkBlack, lightBlack } from 'material-ui/styles/colors';
+import Avatar from 'material-ui/Avatar';
 
 const mapDispatchToProps = dispatch => ({
   updateCurrentView: view => dispatch(actions.updateCurrentView(view)),
@@ -22,10 +23,13 @@ class ConnectedSingleComment extends React.Component {
   render() {
     return (
       <ListItem
+        leftAvatar={<Avatar src={this.props.comment[2]} />}
         primaryText={this.props.comment[0]}
-        secondaryText={<p>{this.props.comment[2]}</p>}
+        secondaryText={<p>{this.props.comment[3]}</p>}
         secondaryTextLines={1}
-        onClick={() => this.props.visitUser(this.props.comment[1], this.props.comment[0])}
+        onClick={() =>
+          this.props.visitUser(this.props.comment[1], this.props.comment[0], this.props.comment[2])
+        }
       />
     );
   }

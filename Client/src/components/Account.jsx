@@ -10,6 +10,7 @@ import TabBar from './TabBar.jsx';
 import PostCard from './PostCard.jsx';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import Avatar from 'material-ui/Avatar';
 
 class ConnectAccount extends React.Component {
   constructor(props) {
@@ -80,10 +81,17 @@ class ConnectAccount extends React.Component {
         .updateProfile({
           photoURL: this.state.photoURL,
         })
-        .then(() => {
-          this.setState({
-            photoURL: '',
-          });
+        .then(() => {  
+          axios
+            .put('/updateProfilePic', {
+              uid: this.props.currentUser.uid,
+              photoURL: this.state.photoURL,
+            })
+            .then(() => {
+              this.setState({
+                photoURL: '',
+              });
+            });
           this.props.updateUser(user);
         })
         .catch((err) => {
@@ -162,7 +170,13 @@ class ConnectAccount extends React.Component {
               label="Submit"
               primary
               onClick={this.updateProfile}
-              style={{ margin: '12' }}
+              style={{ margin: '10', paddingRight: '5px' }}
+            />
+            <RaisedButton
+              label="Cancel"
+              secondary
+              onClick={() => this.setState({ wantUpdate: false })}
+              style={{ margin: '10' }}
             />
           </div>
         </div>
@@ -186,6 +200,9 @@ class ConnectAccount extends React.Component {
         <h1>
           <TabBar />
         </h1>
+        <div align="center" style={{height: 250, position: 'relative' }}>
+          <Avatar src={this.props.currentUser.photoURL} size={200} />
+        </div>
         {this.updateField()}
         {/* <div style={{ textAlign: 'center' }}> */}
         <br />

@@ -5,36 +5,32 @@ import actions from '../redux/actions/index';
 import { connect } from 'react-redux';
 import ReactFilestack from 'filestack-react';
 import TabBar from './TabBar.jsx';
-// import api from '../../../filestack.config.js'
+import RaisedButton from 'material-ui/RaisedButton';
 
 const mapDispatchToProps = dispatch => ({
   updateCurrentView: view => dispatch(actions.updateCurrentView(view)),
-  storeUrl: url => dispatch(actions.storeUrl(url))
+  storeUrl: url => dispatch(actions.storeUrl(url)),
 });
 
 const mapStateToProps = state => ({ currentView: state.currentView });
 
 const ConnectedCreate = props => (
-  <div>
+  <div style={{ textAlign: 'center' }}>
     <h1>
       <TabBar />
     </h1>
+
     <ReactFilestack
       apikey="A00Yv3QHpR4GK06ER6lH9z"
-      buttonText="Upload"
-      buttonClass="buttonClass"
+      buttonText="Upload!"
+      style={{ fontSize: '400px', color: 'red' }}
+      buttonClass="filestack"
       options={{
         accept: ['image/*', 'video/*'],
-        fromSources: [
-          'local_file_system',
-          'imagesearch',
-          'url',
-          'facebook',
-          'googledrive'
-        ],
-        maxFiles: 1
+        fromSources: ['local_file_system', 'imagesearch', 'url', 'facebook', 'googledrive'],
+        maxFiles: 1,
       }}
-      onSuccess={response => {
+      onSuccess={(response) => {
         console.log('I just uploaded:', response.filesUploaded[0]);
         if (response.filesUploaded[0].mimetype.includes('image')) {
           let rawUrl = response.filesUploaded[0].url;
@@ -45,9 +41,7 @@ const ConnectedCreate = props => (
         } else if (response.filesUploaded[0].mimetype === 'video/mp4') {
           props.storeUrl(response.filesUploaded[0].url);
         }
-        props.updateCurrentView(
-          <Submit mediaType={response.filesUploaded[0].mimetype} />
-        );
+        props.updateCurrentView(<Submit mediaType={response.filesUploaded[0].mimetype} />);
       }}
       onError={err => console.log(err)}
     />

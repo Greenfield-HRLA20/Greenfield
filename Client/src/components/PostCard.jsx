@@ -57,7 +57,7 @@ class ConnectedPostCard extends React.Component {
     const uid = this.props.currentUser.uid;
     const comment = this.state.comment;
     const handle = this.props.currentUser.displayName;
-    const profilePic = this.props.post.profilePic;
+    const profilePic = this.props.currentUser.photoURL;
     axios
       .post('/addComment', {
         uid,
@@ -109,6 +109,7 @@ class ConnectedPostCard extends React.Component {
   }
 
   renderCardWithWidth(widthAsPercent) {
+    {console.log(this.props.post.user)}
     return (
       <Card
         style={{
@@ -120,10 +121,10 @@ class ConnectedPostCard extends React.Component {
         onExpandChange={this.handleExpandChange}
       >
         <CardHeader
-          avatar={<Avatar src={this.props.post.profilePic} size={50}/>}
+          avatar={<Avatar src={this.props.post.user.profilePic} size={50}/>}
           titleStyle={{ fontSize: '38px' }}
-          title={this.props.post.handle}
-          onClick={() => this.visitUser(this.props.post.uid, this.props.post.handle, this.props.post.profilePic)}
+          title={this.props.post.user.handle}
+          onClick={() => this.visitUser(this.props.post.user.uid, this.props.post.user.handle, this.props.post.user.profilePic)}
         />
         <CardMedia>
           <img src={this.props.post.url} alt="" />

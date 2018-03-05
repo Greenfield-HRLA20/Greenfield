@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import ReactFilestack from 'filestack-react';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
-// import api from '../../../filestack.config.js'
+import api from '../../../filestack.config.js';
 import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
@@ -144,7 +144,7 @@ class ConnectedHorizontalLinearStepper extends React.Component {
       case 1:
         return (
           <div>
-            {console.log(this.state.mediaType, "!!!!!")}
+            {console.log(this.state.mediaType, '!!!!!')}
             {this.state.mediaType.includes('image') && (
               <img height="300" width="300" src={this.state.url} />
             )}

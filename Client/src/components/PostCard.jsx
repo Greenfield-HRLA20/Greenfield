@@ -115,13 +115,25 @@ class ConnectedPostCard extends React.Component {
         onExpandChange={this.handleExpandChange}
       >
         <CardHeader
-          avatar={<Avatar src={this.props.post.user.profilePic} size={50}/>}
+          avatar={<Avatar src={this.props.post.user.profilePic} size={50} />}
           titleStyle={{ fontSize: '38px' }}
           title={this.props.post.user.handle}
-          onClick={() => this.visitUser(this.props.post.user.uid, this.props.post.user.handle, this.props.post.user.profilePic)}
+          onClick={() =>
+            this.visitUser(
+              this.props.post.user.uid,
+              this.props.post.user.handle,
+              this.props.post.user.profilePic,
+            )
+          }
         />
         <CardMedia>
-          <img src={this.props.post.url} alt="" />
+          {this.props.post.mediaType.includes('image') && <img src={this.props.post.url} />}
+          {this.props.post.mediaType.includes('video') && (
+            <video controls>
+              <source src={this.props.post.url} type="video/mp4" />
+            </video>
+          )}
+          {/* <img src={this.props.post.url} alt="" /> */}
         </CardMedia>
         <CardTitle
           title={this.props.post.caption}

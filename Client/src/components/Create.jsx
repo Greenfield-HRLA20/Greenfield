@@ -128,7 +128,7 @@ class ConnectedHorizontalLinearStepper extends React.Component {
             {this.state.mediaType.includes('image') && (
               <img height="300" width="300" src={this.state.url} />
             )}
-            {this.state.mediaType === 'video/mp4' && (
+            {this.state.mediaType.includes('video') && (
               <video width="600" height="600" controls>
                 <source src={this.state.url} type="video/mp4" />
               </video>
@@ -138,10 +138,11 @@ class ConnectedHorizontalLinearStepper extends React.Component {
       case 1:
         return (
           <div>
+            {console.log(this.state.mediaType, "!!!!!")}
             {this.state.mediaType.includes('image') && (
               <img height="300" width="300" src={this.state.url} />
             )}
-            {this.state.mediaType === 'video/mp4' && (
+            {this.state.mediaType.includes('video') && (
               <video width="300" height="300" controls>
                 <source src={this.state.url} type="video/mp4" />
               </video>
@@ -152,7 +153,7 @@ class ConnectedHorizontalLinearStepper extends React.Component {
               hintText="Enter your caption here..."
               name="caption"
               onChange={e => this.setInput(e)}
-              style={{ width: '80%' }}
+              style={{ width: '80%', backgroundColor: 'white', opacity: '0.6' }}
             />
           </div>
         );
@@ -162,7 +163,7 @@ class ConnectedHorizontalLinearStepper extends React.Component {
             {this.state.mediaType.includes('image') && (
               <img height="300" width="300" src={this.state.url} />
             )}
-            {this.state.mediaType === 'video/mp4' && (
+            {this.state.mediaType.includes('video') && (
               <video width="600" height="600" controls>
                 <source src={this.state.url} type="video/mp4" />
               </video>

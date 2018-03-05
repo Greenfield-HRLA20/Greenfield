@@ -5,7 +5,6 @@ const Post = require('./Post');
 
 const Like = connection.define('like', {});
 
-// associations
 Like.belongsTo(User, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
 Like.belongsTo(Post, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
 

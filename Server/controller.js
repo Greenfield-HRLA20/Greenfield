@@ -10,7 +10,6 @@ const LikeController = require('./db/controllers/LikeController.js');
 const PostController = require('./db/controllers/PostController.js');
 const UserController = require('./db/controllers/UserController.js');
 
-// authenticate + sync sequelize tables
 connection.authenticate().then(() => {
   console.log('connected');
   User.sync({ force: false })
@@ -50,7 +49,6 @@ connection.authenticate().then(() => {
     });
 });
 
-/* Handle requests to each page */
 
 module.exports.showExplorePage = async (req, res) => {
   try {
@@ -58,12 +56,6 @@ module.exports.showExplorePage = async (req, res) => {
     for (let i = 0; i < posts.length; i++) {
       const result = await CommentController.getCommentsByPostId(posts[i].id);
       posts[i].dataValues.comments = result;
-      // const handle = await UserController.getUsername(posts[i].userId);
-      // const uid = await UserController.getUid(posts[i].userId);
-      // const profilePic = await UserController.getProfilePic(posts[i].userId); 
-      // posts[i].dataValues.handle = handle;
-      // posts[i].dataValues.profilePic = profilePic;
-      // posts[i].dataValues.uid = uid;
     }
     res.send(posts);
   } catch (err) {
@@ -87,10 +79,8 @@ module.exports.showFeedPage = async (req, res) => {
   }
 };
 
-// PROFILE ===================================================
 module.exports.showProfilePage = async (req, res) => {
   try {
-    // localhost:1337/showProfilePage?user=USERNAME_HERE
     const userId = [await UserController.getUserId(req.query.user)];
     const userPosts = await PostController.getFeedPosts(userId);
     for (let i = 0; i < userPosts.length; i++) {
@@ -103,7 +93,6 @@ module.exports.showProfilePage = async (req, res) => {
   }
 };
 
-/* User functionality/interaction functionality */
 module.exports.submitPost = async (req, res) => {
   try {
     const userId = await UserController.getUserId(req.body.uid);
@@ -223,6 +212,6 @@ module.exports.updateProfilePicture = async (req, res) => {
     await UserController.updateProfilePicture(req.body.photoURL, req.body.uid);
     res.send('Updated Profile Picture!');
   } catch (err) {
-    console.log('Error updating username ', err);
+    console.log('Error updating Profile Picture ', err);
   }
 };

@@ -1,7 +1,5 @@
 import React from 'react';
-import Bar from './Navbar.jsx';
 import TabBar from './TabBar.jsx';
-import Submit from './Submit.jsx';
 import Feed from './Feed.jsx';
 import actions from '../redux/actions/index';
 import { connect } from 'react-redux';
@@ -9,8 +7,6 @@ import ReactFilestack from 'filestack-react';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
 import api from '../../../filestack.config.js'
-
-//
 import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
@@ -27,43 +23,6 @@ const mapStateToProps = state => ({
   currentNav: state.currentNav,
   urlState: state.urlState,
 });
-
-// const ConnectedCreate = props => (
-//   <div style={{ textAlign: 'center' }}>
-//     <h1>
-//       <TabBar />
-//     </h1>
-// <ReactFilestack
-//   apikey="A00Yv3QHpR4GK06ER6lH9z"
-//   buttonText="Upload!"
-//   style={{ fontSize: '400px', color: 'red' }}
-//   buttonClass="filestack"
-//   options={{
-//     accept: ['image/*', 'video/*'],
-//     fromSources: ['local_file_system', 'imagesearch', 'url', 'facebook', 'googledrive'],
-//     maxFiles: 1,
-//   }}
-//   onSuccess={(response) => {
-//     console.log('I just uploaded:', response.filesUploaded[0]);
-//     if (response.filesUploaded[0].mimetype.includes('image')) {
-//       let rawUrl = response.filesUploaded[0].url;
-//       rawUrl = rawUrl.split('/');
-//       rawUrl[2] += '/resize=width:600,height:600,fit:crop';
-//       rawUrl = rawUrl.join('/');
-//       props.storeUrl(rawUrl);
-//     } else if (response.filesUploaded[0].mimetype === 'video/mp4') {
-//       props.storeUrl(response.filesUploaded[0].url);
-//     }
-//     props.updateCurrentView(<Submit mediaType={response.filesUploaded[0].mimetype} />);
-//   }}
-//   onError={err => console.log(err)}
-// />
-//   </div>
-// );
-
-// const Create = connect(mapStateToProps, mapDispatchToProps)(ConnectedCreate);
-
-// export default Create;
 
 class ConnectedHorizontalLinearStepper extends React.Component {
   constructor(props) {
@@ -106,8 +65,6 @@ class ConnectedHorizontalLinearStepper extends React.Component {
 
   handleNext() {
     const { stepIndex } = this.state;
-    console.log('before incrementing index is: ', this.state.stepIndex);
-
     if (stepIndex === 0.5) {
       this.setState({ stepIndex: 1 });
     } else {
@@ -128,7 +85,6 @@ class ConnectedHorizontalLinearStepper extends React.Component {
   }
 
   getStepContent(stepIndex) {
-    console.log('step index is', stepIndex);
     switch (stepIndex) {
       case 0:
         return (
@@ -143,7 +99,6 @@ class ConnectedHorizontalLinearStepper extends React.Component {
               maxFiles: 1,
             }}
             onSuccess={response => {
-              console.log('I just uploaded:', response.filesUploaded[0]);
               if (response.filesUploaded[0].mimetype.includes('image')) {
                 let rawUrl = response.filesUploaded[0].url;
                 rawUrl = rawUrl.split('/');
@@ -153,19 +108,16 @@ class ConnectedHorizontalLinearStepper extends React.Component {
                   url: rawUrl,
                   mediaType: 'image',
                 });
-                // props.storeUrl(rawUrl);
               } else if (response.filesUploaded[0].mimetype === 'video/mp4') {
                 this.setState({
                   url: response.filesUploaded[0].url,
                   mediaType: 'video',
                 });
-                // props.storeUrl(response.filesUploaded[0].url);
               }
               this.setState({
                 stepIndex: 0.5,
               });
               this.getStepContent(0.5);
-              // props.updateCurrentView(<Submit mediaType={response.filesUploaded[0].mimetype} />);
             }}
             onError={err => console.log(err)}
           />
@@ -233,9 +185,6 @@ class ConnectedHorizontalLinearStepper extends React.Component {
 
     return (
       <div>
-        <h1>
-          <TabBar />
-        </h1>
         <div style={{ width: '100%', maxWidth: 700, margin: 'auto' }}>
           <Stepper activeStep={stepIndex}>
             <Step>

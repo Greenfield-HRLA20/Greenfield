@@ -1,6 +1,4 @@
 import React from 'react';
-import Bar from './Navbar.jsx';
-import PostEntry from './PostEntry.jsx';
 import axios from 'axios';
 import auth from '../Firebase';
 import { connect } from 'react-redux';
@@ -81,7 +79,7 @@ class ConnectAccount extends React.Component {
         .updateProfile({
           photoURL: this.state.photoURL,
         })
-        .then(() => {  
+        .then(() => {
           axios
             .put('/updateProfilePic', {
               uid: this.props.currentUser.uid,
@@ -197,14 +195,10 @@ class ConnectAccount extends React.Component {
   render() {
     return (
       <div>
-        <h1>
-          <TabBar />
-        </h1>
-        <div align="center" style={{height: 250, position: 'relative' }}>
+        <div align="center" style={{ height: 250, position: 'relative', paddingTop: '15px' }}>
           <Avatar src={this.props.currentUser.photoURL} size={200} />
         </div>
         {this.updateField()}
-        {/* <div style={{ textAlign: 'center' }}> */}
         <br />
         <div style={{ textAlign: 'center' }}>
           {this.state.myRequests.map((request, i) => (
@@ -216,13 +210,7 @@ class ConnectAccount extends React.Component {
             />
           ))}
         </div>
-        {/* </div> */}
-        <ul>
-          {this.state.myPosts.map(post => (
-            <PostCard post={post} key={post.id} />
-            // <PostEntry post={post} key={post.id} />
-          ))}
-        </ul>
+        <ul>{this.state.myPosts.map(post => <PostCard post={post} key={post.id} />)}</ul>
       </div>
     );
   }

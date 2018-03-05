@@ -11,8 +11,6 @@ import TextField from 'material-ui/TextField';
 import LikeCheckbox from './LikeCheckbox.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
-//
 import { List, ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
@@ -42,8 +40,6 @@ class ConnectedPostCard extends React.Component {
   }
 
   visitUser(uid, username, profilePic) {
-    console.log('visiting a user!!!!!!!');
-    console.log(uid, username);
     this.props.updateCurrentView(<VisitUserPage visitUser={uid} username={username} profilePic={profilePic} />);
   }
 
@@ -76,7 +72,6 @@ class ConnectedPostCard extends React.Component {
   }
 
   clickLikeButton() {
-    console.log('hey!');
     const uid = this.props.currentUser.uid;
     const postId = this.props.post.id;
     axios
@@ -109,7 +104,6 @@ class ConnectedPostCard extends React.Component {
   }
 
   renderCardWithWidth(widthAsPercent) {
-    {console.log(this.props.post.user)}
     return (
       <Card
         style={{

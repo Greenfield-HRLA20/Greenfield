@@ -14,6 +14,8 @@ app.use(router);
 app.use('/', express.static(path.join(__dirname, '../Client/dist')));
 app.use(router);
 
-app.listen(1337, () => {
+var port = process.env.port || 1337;
+
+app.listen(port, () => {
   console.log('connected to port 1337!');
 });

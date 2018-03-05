@@ -5,6 +5,7 @@ import TabBar from './TabBar.jsx';
 import PostCard from './PostCard.jsx';
 import RaisedButton from 'material-ui/RaisedButton';
 import Avatar from 'material-ui/Avatar';
+import CircularProgress from 'material-ui/CircularProgress';
 
 class ConnectedVisitUserPage extends React.Component {
   constructor(props) {
@@ -12,9 +13,11 @@ class ConnectedVisitUserPage extends React.Component {
     this.state = {
       userPosts: [],
       disableButton: false,
+      loading: true,
     };
     this.sendFollowRequest = this.sendFollowRequest.bind(this);
     this.checkFollowRelationship = this.checkFollowRelationship.bind(this);
+    this.checkLoading = this.checkLoading.bind(this);
   }
 
   componentDidMount() {
@@ -39,6 +42,7 @@ class ConnectedVisitUserPage extends React.Component {
       .then((results) => {
         this.setState({
           userPosts: results.data,
+          loading: false,
         });
       })
       .catch((err) => {
@@ -86,7 +90,14 @@ class ConnectedVisitUserPage extends React.Component {
       });
   }
 
-  render() {
+  checkLoading() {
+    if (this.state.loading) {
+      return (
+        <div align="center" style={{ marginTop: '20%' }}>
+          <CircularProgress size={80} thickness={5} />
+        </div>
+      );
+    }
     return (
       <div>
         <div style={{ textAlign: 'center' }}>
@@ -105,6 +116,10 @@ class ConnectedVisitUserPage extends React.Component {
         <ul>{this.state.userPosts.map(post => <PostCard post={post} key={post.id} />)}</ul>
       </div>
     );
+  }
+
+  render() {
+    return <div>{this.checkLoading()}</div>;
   }
 }
 

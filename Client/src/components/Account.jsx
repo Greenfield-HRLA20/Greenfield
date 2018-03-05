@@ -9,6 +9,7 @@ import PostCard from './PostCard.jsx';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Avatar from 'material-ui/Avatar';
+import CircularProgress from 'material-ui/CircularProgress';
 
 class ConnectAccount extends React.Component {
   constructor(props) {
@@ -20,11 +21,13 @@ class ConnectAccount extends React.Component {
       photoURL: '',
       displayName: '',
       newPassword: '',
+      loading: true,
     };
     this.updateRequestList = this.updateRequestList.bind(this);
     this.setInput = this.setInput.bind(this);
     this.updateField = this.updateField.bind(this);
     this.updateProfile = this.updateProfile.bind(this);
+    this.checkLoading = this.checkLoading.bind(this);
   }
 
   updateRequestList(index) {
@@ -51,6 +54,7 @@ class ConnectAccount extends React.Component {
       .then((results) => {
         this.setState({
           myPosts: results.data,
+          loading: false
         });
       })
       .catch((err) => {
@@ -192,7 +196,14 @@ class ConnectAccount extends React.Component {
     );
   }
 
-  render() {
+  checkLoading() {
+    if (this.state.loading) {
+      return (
+        <div align="center" style={{ marginTop: '20%' }}>
+          <CircularProgress size={80} thickness={5} />
+        </div>
+      );
+    } else {
     return (
       <div>
         <div align="center" style={{ height: 250, position: 'relative', paddingTop: '15px' }}>
@@ -213,6 +224,11 @@ class ConnectAccount extends React.Component {
         <ul>{this.state.myPosts.map(post => <PostCard post={post} key={post.id} />)}</ul>
       </div>
     );
+  }
+  }
+
+  render() {
+    return <div>{this.checkLoading()}</div>;
   }
 }
 const mapStateToProps = state => ({ currentUser: state.currentUser });

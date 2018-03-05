@@ -57,13 +57,13 @@ module.exports.showExplorePage = async (req, res) => {
     const posts = await PostController.getAllPosts();
     for (let i = 0; i < posts.length; i++) {
       const result = await CommentController.getCommentsByPostId(posts[i].id);
-      const handle = await UserController.getUsername(posts[i].userId);
-      const uid = await UserController.getUid(posts[i].userId);
-      const profilePic = await UserController.getProfilePic(posts[i].userId); 
       posts[i].dataValues.comments = result;
-      posts[i].dataValues.handle = handle;
-      posts[i].dataValues.profilePic = profilePic;
-      posts[i].dataValues.uid = uid;
+      // const handle = await UserController.getUsername(posts[i].userId);
+      // const uid = await UserController.getUid(posts[i].userId);
+      // const profilePic = await UserController.getProfilePic(posts[i].userId); 
+      // posts[i].dataValues.handle = handle;
+      // posts[i].dataValues.profilePic = profilePic;
+      // posts[i].dataValues.uid = uid;
     }
     res.send(posts);
   } catch (err) {
@@ -79,13 +79,7 @@ module.exports.showFeedPage = async (req, res) => {
     const userPosts = await PostController.getFeedPosts(followedUsersIds);
     for (let i = 0; i < userPosts.length; i++) {
       const result = await CommentController.getCommentsByPostId(userPosts[i].id);
-      const handle = await UserController.getUsername(userPosts[i].userId);
-      const uid = await UserController.getUid(userPosts[i].userId);
-      const profilePic = await UserController.getProfilePic(userPosts[i].userId);
       userPosts[i].dataValues.comments = result;
-      userPosts[i].dataValues.handle = handle;
-      userPosts[i].dataValues.profilePic = profilePic;
-      userPosts[i].dataValues.uid = uid;
     }
     res.send(userPosts);
   } catch (err) {
@@ -101,13 +95,7 @@ module.exports.showProfilePage = async (req, res) => {
     const userPosts = await PostController.getFeedPosts(userId);
     for (let i = 0; i < userPosts.length; i++) {
       const result = await CommentController.getCommentsByPostId(userPosts[i].id);
-      const handle = await UserController.getUsername(userPosts[i].userId);
-      const uid = await UserController.getUid(userPosts[i].userId);
-      const profilePic = await UserController.getProfilePic(userPosts[i].userId);
-      userPosts[i].dataValues.comments = result;
-      userPosts[i].dataValues.handle = handle;
-      userPosts[i].dataValues.profilePic = profilePic;
-      userPosts[i].dataValues.uid = uid;      
+      userPosts[i].dataValues.comments = result; 
     }
     res.send(userPosts);
   } catch (err) {

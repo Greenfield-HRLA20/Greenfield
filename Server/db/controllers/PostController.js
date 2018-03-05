@@ -1,4 +1,5 @@
 const Post = require('../models/Post');
+const User = require('../models/User');
 const Sequelize = require('sequelize');
 
 const Op = Sequelize.Op;
@@ -6,7 +7,10 @@ const Op = Sequelize.Op;
 module.exports = {
   getAllPosts: async () => {
     try {
-      const result = await Post.findAll({ order: [['createdAt', 'DESC']] });
+      const result = await Post.findAll({
+        order: [['createdAt', 'DESC']],
+        include: [User],
+      });
       return result;
     } catch (err) {
       console.log('comment controller err', err);
@@ -35,6 +39,7 @@ module.exports = {
           },
         },
         order: [['createdAt', 'DESC']],
+        include: [User],
       });
       return result;
     } catch (err) {

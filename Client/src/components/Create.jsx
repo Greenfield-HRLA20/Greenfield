@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import ReactFilestack from 'filestack-react';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
-// import api from '../../../filestack.config.js'
+import api from '../../../filestack.config.js';
 import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
@@ -14,14 +14,14 @@ import TextField from 'material-ui/TextField';
 const mapDispatchToProps = dispatch => ({
   updateCurrentView: view => dispatch(actions.updateCurrentView(view)),
   storeUrl: url => dispatch(actions.storeUrl(url)),
-  updateNav: string => dispatch(actions.updateNav(string)),
+  updateNav: string => dispatch(actions.updateNav(string))
 });
 
 const mapStateToProps = state => ({
   currentView: state.currentView,
   currentUser: state.currentUser,
   currentNav: state.currentNav,
-  urlState: state.urlState,
+  urlState: state.urlState
 });
 
 class ConnectedHorizontalLinearStepper extends React.Component {
@@ -32,7 +32,7 @@ class ConnectedHorizontalLinearStepper extends React.Component {
       stepIndex: 0,
       url: '',
       mediaType: '',
-      caption: '',
+      caption: ''
     };
     this.handleNext = this.handleNext.bind(this);
     this.handlePrev = this.handlePrev.bind(this);
@@ -42,7 +42,7 @@ class ConnectedHorizontalLinearStepper extends React.Component {
   setInput(e) {
     e.preventDefault();
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   }
 
@@ -52,13 +52,13 @@ class ConnectedHorizontalLinearStepper extends React.Component {
         uid: this.props.currentUser.uid,
         caption: this.state.caption,
         postUrl: this.state.url,
-        mediaType: this.state.mediaType,
+        mediaType: this.state.mediaType
       })
-      .then((result) => {
+      .then(result => {
         this.props.updateCurrentView(<Feed />);
         this.props.updateNav('feed');
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('Error submitting post', err);
       });
   }
@@ -70,7 +70,7 @@ class ConnectedHorizontalLinearStepper extends React.Component {
     } else {
       this.setState({
         stepIndex: stepIndex + 1,
-        finished: stepIndex >= 2,
+        finished: stepIndex >= 2
       });
     }
   }
@@ -95,8 +95,14 @@ class ConnectedHorizontalLinearStepper extends React.Component {
             buttonClass="filestack"
             options={{
               accept: ['image/*', 'video/*'],
-              fromSources: ['local_file_system', 'imagesearch', 'url', 'facebook', 'googledrive'],
-              maxFiles: 1,
+              fromSources: [
+                'local_file_system',
+                'imagesearch',
+                'url',
+                'facebook',
+                'googledrive'
+              ],
+              maxFiles: 1
             }}
             onSuccess={response => {
               if (response.filesUploaded[0].mimetype.includes('image')) {
@@ -106,16 +112,16 @@ class ConnectedHorizontalLinearStepper extends React.Component {
                 rawUrl = rawUrl.join('/');
                 this.setState({
                   url: rawUrl,
-                  mediaType: 'image',
+                  mediaType: 'image'
                 });
               } else if (response.filesUploaded[0].mimetype === 'video/mp4') {
                 this.setState({
                   url: response.filesUploaded[0].url,
-                  mediaType: 'video',
+                  mediaType: 'video'
                 });
               }
               this.setState({
-                stepIndex: 0.5,
+                stepIndex: 0.5
               });
               this.getStepContent(0.5);
             }}
@@ -138,7 +144,7 @@ class ConnectedHorizontalLinearStepper extends React.Component {
       case 1:
         return (
           <div>
-            {console.log(this.state.mediaType, "!!!!!")}
+            {console.log(this.state.mediaType, '!!!!!')}
             {this.state.mediaType.includes('image') && (
               <img height="300" width="300" src={this.state.url} />
             )}
@@ -170,7 +176,9 @@ class ConnectedHorizontalLinearStepper extends React.Component {
             )}
             <br />
             <br />
-            <span style={{ fontSize: '20px', fontFamily: 'Roboto, sans-serif' }}>
+            <span
+              style={{ fontSize: '20px', fontFamily: 'Roboto, sans-serif' }}
+            >
               {this.state.caption}
             </span>
           </div>
@@ -215,7 +223,9 @@ class ConnectedHorizontalLinearStepper extends React.Component {
               </div>
             ) : (
               <div>
-                <div style={{ textAlign: 'center' }}>{this.getStepContent(stepIndex)}</div>
+                <div style={{ textAlign: 'center' }}>
+                  {this.getStepContent(stepIndex)}
+                </div>
                 <div style={{ marginTop: 12, textAlign: 'right' }}>
                   <FlatButton
                     label="Back"
@@ -239,6 +249,8 @@ class ConnectedHorizontalLinearStepper extends React.Component {
   }
 }
 
-const HorizontalLinearStepper = connect(mapStateToProps, mapDispatchToProps)(ConnectedHorizontalLinearStepper);
+const HorizontalLinearStepper = connect(mapStateToProps, mapDispatchToProps)(
+  ConnectedHorizontalLinearStepper
+);
 
 export default HorizontalLinearStepper;

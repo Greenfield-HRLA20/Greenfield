@@ -18,13 +18,13 @@ import Account from './Account.jsx';
 const mapDispatchToProps = dispatch => ({
   updateCurrentView: view => dispatch(actions.updateCurrentView(view)),
   logoutUser: () => dispatch(actions.logoutUser()),
-  updateNav: string => dispatch(actions.updateNav(string)),
+  updateNav: string => dispatch(actions.updateNav(string))
 });
 
 const mapStateToProps = state => ({
   currentView: state.currentView,
   currentUser: state.currentUser,
-  currentNav: state.currentNav,
+  currentNav: state.currentNav
 });
 
 class ConnectedTabBar extends React.Component {
@@ -38,7 +38,7 @@ class ConnectedTabBar extends React.Component {
     auth.firebase
       .auth()
       .signOut()
-      .catch((error) => {
+      .catch(error => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
@@ -62,7 +62,12 @@ class ConnectedTabBar extends React.Component {
             <Tab icon={<ExploreIcon />} label="Explore" value={<Explore />} />
             <Tab icon={<CreateIcon />} label="Create" value={<Create />} />
             <Tab icon={<FaceIcon />} label="Account" value={<Account />} />
-            <Tab icon={<LogoutIcon />} label="Logout" value="Logout" onActive={this.logout} />
+            <Tab
+              icon={<LogoutIcon />}
+              label="Logout"
+              value="Logout"
+              onActive={this.logout}
+            />
           </Tabs>
         </MuiThemeProvider>
         <div>{this.props.currentView}</div>

@@ -1,5 +1,12 @@
 import React from 'react';
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import {
+  Card,
+  CardActions,
+  CardHeader,
+  CardMedia,
+  CardTitle,
+  CardText
+} from 'material-ui/Card';
 import CommentEntry from './CommentEntry.jsx';
 import VisitUserPage from './VisitUserPage.jsx';
 import axios from 'axios';
@@ -18,7 +25,7 @@ import Avatar from 'material-ui/Avatar';
 import SingleComment from './SingleComment.jsx';
 
 const mapDispatchToProps = dispatch => ({
-  updateCurrentView: view => dispatch(actions.updateCurrentView(view)),
+  updateCurrentView: view => dispatch(actions.updateCurrentView(view))
 });
 
 const mapStateToProps = state => ({ currentUser: state.currentUser });
@@ -29,7 +36,7 @@ class ConnectedPostCard extends React.Component {
     this.state = {
       comment: '',
       likeCount: this.props.post.likeCount,
-      expanded: false,
+      expanded: false
     };
     this.setInput = this.setInput.bind(this);
     this.submitComment = this.submitComment.bind(this);
@@ -40,12 +47,18 @@ class ConnectedPostCard extends React.Component {
   }
 
   visitUser(uid, username, profilePic) {
-    this.props.updateCurrentView(<VisitUserPage visitUser={uid} username={username} profilePic={profilePic} />);
+    this.props.updateCurrentView(
+      <VisitUserPage
+        visitUser={uid}
+        username={username}
+        profilePic={profilePic}
+      />
+    );
   }
 
   setInput(e) {
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   }
 
@@ -58,15 +71,15 @@ class ConnectedPostCard extends React.Component {
       .post('/addComment', {
         uid,
         postId: this.props.post.id,
-        comment: this.state.comment,
+        comment: this.state.comment
       })
-      .then((result) => {
+      .then(result => {
         this.props.post.comments.push([handle, uid, profilePic, comment]);
         this.setState({
-          comment: '',
+          comment: ''
         });
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('Error submitting post ', err);
       });
   }
@@ -77,20 +90,20 @@ class ConnectedPostCard extends React.Component {
     axios
       .post('/toggleLike', {
         uid,
-        postId,
+        postId
       })
-      .then((result) => {
+      .then(result => {
         if (result.data === true) {
           this.setState({
-            likeCount: this.props.post.likeCount++,
+            likeCount: this.props.post.likeCount++
           });
         } else {
           this.setState({
-            likeCount: this.props.post.likeCount--,
+            likeCount: this.props.post.likeCount--
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('Error toggling like button ', err);
       });
   }
@@ -109,7 +122,7 @@ class ConnectedPostCard extends React.Component {
         style={{
           width: widthAsPercent,
           marginLeft: 'auto',
-          marginRight: 'auto',
+          marginRight: 'auto'
         }}
         expanded={this.state.expanded}
         onExpandChange={this.handleExpandChange}
@@ -122,12 +135,14 @@ class ConnectedPostCard extends React.Component {
             this.visitUser(
               this.props.post.user.uid,
               this.props.post.user.handle,
-              this.props.post.user.profilePic,
+              this.props.post.user.profilePic
             )
           }
         />
         <CardMedia>
-          {this.props.post.mediaType.includes('image') && <img src={this.props.post.url} />}
+          {this.props.post.mediaType.includes('image') && (
+            <img src={this.props.post.url} />
+          )}
           {this.props.post.mediaType.includes('video') && (
             <video controls>
               <source src={this.props.post.url} type="video/mp4" />
@@ -154,7 +169,11 @@ class ConnectedPostCard extends React.Component {
           <List>
             <Subheader>Comments</Subheader>
             {this.props.post.comments.map((comment, i) => (
-              <SingleComment comment={comment} key={i} visitUser={this.visitUser} />
+              <SingleComment
+                comment={comment}
+                key={i}
+                visitUser={this.visitUser}
+              />
             ))}
           </List>
         </CardText>
@@ -173,7 +192,10 @@ class ConnectedPostCard extends React.Component {
           onClick={this.submitComment}
         />
         <CardActions>
-          <FlatButton label="Show/Hide Comments" onClick={this.toggleComments} />
+          <FlatButton
+            label="Show/Hide Comments"
+            onClick={this.toggleComments}
+          />
         </CardActions>
       </Card>
     );
@@ -188,6 +210,8 @@ class ConnectedPostCard extends React.Component {
   }
 }
 
-const PostCard = connect(mapStateToProps, mapDispatchToProps)(ConnectedPostCard);
+const PostCard = connect(mapStateToProps, mapDispatchToProps)(
+  ConnectedPostCard
+);
 
 export default PostCard;

@@ -1,6 +1,4 @@
 import React from 'react';
-import Bar from './Navbar.jsx';
-import PostEntry from './PostEntry.jsx';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import TabBar from './TabBar.jsx';
@@ -60,7 +58,7 @@ class ConnectedVisitUserPage extends React.Component {
         });
       })
       .catch((err) => {
-        console.log(err);
+        console.log('Error sending follow request', err);
       });
   }
 
@@ -84,18 +82,17 @@ class ConnectedVisitUserPage extends React.Component {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.log('Error checking follow relationship', err);
       });
   }
 
   render() {
     return (
       <div>
-        <h1>
-          <TabBar />
-        </h1>
         <div style={{ textAlign: 'center' }}>
-          <Avatar src={this.props.profilePic} size={200} />
+          <div align="center" style={{ height: 250, position: 'relative', paddingTop: '15px' }}>
+            <Avatar src={this.props.profilePic} size={200} />
+          </div>
           <h1 style={{ fontFamily: 'Roboto, sans-serif' }}>{this.props.username}</h1>
           <RaisedButton
             label="Request to Follow"

@@ -13,7 +13,6 @@ const Post = connection.define('post', {
   mediaType: Sequelize.STRING,
 });
 
-// associations
 Post.belongsTo(User, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
 
 module.exports = Post;

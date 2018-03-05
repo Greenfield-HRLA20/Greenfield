@@ -1,6 +1,4 @@
 import React from 'react';
-import Bar from './Navbar.jsx';
-import PostEntry from './PostEntry.jsx';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import PostCard from './PostCard.jsx';
@@ -29,14 +27,10 @@ class ConnectedExplore extends React.Component {
   render() {
     return (
       <div>
-        <h1>
-          <TabBar />
-        </h1>
         <ul>
           {this.state.allPosts.map(post => (
             <div>
               <PostCard post={post} key={post.id} />
-              {/* <PostEntry post={post} key={post.id} /> */}
             </div>
           ))}
         </ul>

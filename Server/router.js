@@ -1,8 +1,6 @@
 const router = require('express').Router();
 const controller = require('./controller.js');
 
-/* GET requests to each page */
-
 router.route('/showExplorePage').get(controller.showExplorePage);
 
 router.route('/showFeedPage').get((req, res) => {
@@ -16,7 +14,7 @@ router.route('/showProfilePage').get((req, res) => {
 router.route('/showSpecificUserPage').get((req, res) => {
   controller.showSpecificUserPage(req, res);
 });
-/* User functionality/interaction routes */
+
 router.route('/submitPost').post((req, res) => {
   controller.submitPost(req, res);
 });

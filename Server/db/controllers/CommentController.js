@@ -1,9 +1,7 @@
 const Comment = require('../models/Comment');
 const UserController = require('./UserController');
 
-module.exports = {
-  // given message, userid, postID
-  // add a new comment to comments table
+module.exports = { 
   addComment: async (msg, postId, userId) => {
     try {
       const result = await Comment.create({
@@ -17,8 +15,6 @@ module.exports = {
     }
   },
 
-  // given a post ID
-  // give all of the comments for that post
   getCommentsByPostId: async (id) => {
     try {
       const result = await Comment.findAll({

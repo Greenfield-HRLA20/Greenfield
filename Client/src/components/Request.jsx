@@ -1,6 +1,4 @@
 import React from 'react';
-import Bar from './Navbar.jsx';
-// import PostEntry from './PostEntry.jsx'
 import axios from 'axios';
 import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -18,17 +16,16 @@ class Request extends React.Component {
         targetId: this.props.request.targetId,
         responseType: value,
       })
-      .then(result => {
+      .then((result) => {
         this.props.updateRequestList(this.props.index);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
 
   render() {
     return (
-      // <ul style={{ textAlign: 'left', margin: 'auto' }}>
       <div style={{ fontFamily: 'Roboto, sans-serif' }}>
         <div style={{ marginBottom: '5px' }}>
           New follow request from: <strong>{this.props.request.handle}</strong>
@@ -48,7 +45,6 @@ class Request extends React.Component {
         <br />
         <br />
       </div>
-      // </ul>
     );
   }
 }

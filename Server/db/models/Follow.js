@@ -7,7 +7,6 @@ const Follow = connection.define('follow', {
   requestStatus: { type: Sequelize.BOOLEAN, defaultValue: false },
 });
 
-// associations
 Follow.belongsTo(User, {
   foreignKey: { allowNull: false, name: 'userId' },
   onDelete: 'CASCADE',

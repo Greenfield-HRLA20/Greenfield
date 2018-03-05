@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import ReactFilestack from 'filestack-react';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
-import api from '../../../filestack.config.js'
+// import api from '../../../filestack.config.js'
 import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';

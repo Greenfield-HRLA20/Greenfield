@@ -133,7 +133,6 @@ class ConnectedPostCard extends React.Component {
               <source src={this.props.post.url} type="video/mp4" />
             </video>
           )}
-          {/* <img src={this.props.post.url} alt="" /> */}
         </CardMedia>
         <CardTitle
           title={this.props.post.caption}
